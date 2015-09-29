@@ -61,7 +61,9 @@ class BaseEtlSetUp(object):
                                     ETL_JOB_WHERE_PHRASE,
                                     ])
 
-    ETL_JOB_CUTOFF_OFFSET = datetime.timedelta(days=3)
+    ETL_JOB_CUTOFF_OFFSET = datetime.timedelta(days=5)
+
+    DERIVED_TABLE_CUTOFF_OFFSET = datetime.timedelta(days=1)
 
     def __new__(cls, *args, **kargs):
         """check that ETL_JOB_ID and ETL_JOB_NAME are set"""
@@ -152,6 +154,12 @@ class BaseEtlSetUp(object):
         """gets etl cutoff value - offset"""
 
         return self.etl_job_cutoff_at - self.ETL_JOB_CUTOFF_OFFSET
+
+    @_check_attr_set('etl_job_cutoff_at')
+    def get_derived_table_cutoff_value(self):
+        """gets etl cutoff value - derived table offset"""
+
+        return self.etl_job_cutoff_at - self.DERIVED_TABLE_CUTOFF_OFFSET
 
     def run_etl_job_start_statement(self):
         """sets the start datetime for etl job in SQL db"""

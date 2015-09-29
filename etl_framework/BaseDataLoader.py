@@ -82,11 +82,14 @@ class BaseDataLoader(object):
         saves connection to self.con
         """
 
-        #first clear old connection
-        print '\nSaving sql connection\n'
-        self._clear_connection()
+        if con is self.con:
+            print '\nResaving sql connection\n'
+        else:
+            #first clear old connection
+            print '\nSaving sql connection\n'
+            self._clear_connection()
 
-        self.con = con
+            self.con = con
 
     @staticmethod
     def yield_chunks(data, chunk_size):

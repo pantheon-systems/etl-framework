@@ -77,10 +77,20 @@ class BaseConfigParser(object):
 
         self.config_dir = config_dir
 
-    def _set_config_from_string(self, config_string):
+    @classmethod
+    def _get_config_from_string(cls, config_string):
         """helper method for set_config"""
 
-        self.config = json.loads(config_string)
+        #use raw config to replace reference_ids with table_names in config_string
+        raw_config = json.loads(config_string)
+        config_string = cls._replace_reference_ids(config_string, raw_config[cls.REFERENCE_IDS_ATTR])
+
+        return json.loads(config_string)
+
+    def _set_config(self, config):
+        """helper function to set config attribute"""
+
+        self.config = config
 
     def set_config(self, config_dir=None, config_filename=None):
         """sets configuration and config_filename"""
@@ -90,6 +100,15 @@ class BaseConfigParser(object):
 
         #do same for config_filename
         config_filename = config_filename or self.config_filename
+
+        #set all ConfiguationParser attributes
+        self._set_config(self.get_config(config_dir, config_filename))
+        self.config_dir = config_dir
+        self.config_filename = config_filename
+
+    @classmethod
+    def get_config(cls, config_dir, config_filename):
+        """helper function to return config"""
 
         #check that both config_dir and config_filename are non-null
         if not config_filename:
@@ -103,17 +122,9 @@ class BaseConfigParser(object):
         if not os.path.exists(filepath):
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
 
-        #set all ConfiguationParser attributes
         else:
-            self.config_dir = config_dir
-            self.config_filename = config_filename
-
             with open(filepath, 'r') as config_file:
                 config_string = config_file.read()
 
-            #use raw config to replace reference_ids with table_names in config_string
-            raw_config = json.loads(config_string)
-            config_string = self._replace_reference_ids(config_string, raw_config[self.REFERENCE_IDS_ATTR])
-
-            #set config
-            self._set_config_from_string(config_string)
+            #return config
+            return cls._get_config_from_string(config_string)

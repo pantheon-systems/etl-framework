@@ -1,0 +1,36 @@
+machine:
+  services:
+    - docker
+
+#checkout hack found online to allow caching of copying requirements.txt file in Dockerfile
+checkout:
+  post:
+    - touch -t $(date -d "$(git log -1 --format=%ci requirements.txt)" +%y%m%d%H%M.%S) requirements.txt
+
+dependencies:
+  override:
+    - pip install --allow-all-external -r requirements.txt
+  cache_directories:
+    - venv
+
+database:
+  override:
+    #- mysql -u ubuntu circle_test < cassandra_scripts/all_tables_schema.sql
+
+test:
+    override:
+        # Syntax Checks
+        - find . -path ./venv -prune -o -name "*.py" -print
+        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 python -m py_compile
+
+        # Lint
+        # Lint json files (the 'exit 255' fails xargs fast):
+        - find . -name "*.json" -print | grep -v '/test/' | grep -v 'vendor' | xargs -Ixx bash -c "echo JSON linting xx 1>&2; cat xx | python -mjson.tool > /dev/null || exit 255"
+
+        # Cutsie hack to find files for pylint.
+        - find . -path ./venv -prune -o -name "*.py" -print
+        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
+
+        #run below line to run tests outside of docker 
+        - python -m unittest discover etl_framework.tests
+

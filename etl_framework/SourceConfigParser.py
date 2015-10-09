@@ -35,7 +35,7 @@ class SourceConfigParser(BaseConfigParser):
 
         def __init__(self, phrases, sql_keyword='', phrase_prefix='',
                     phrase_separator=',\n', phrase_suffix='', phrase_indents=1,
-                    indents=0, header='', footer=''):
+                    indents=0, header='', footer='', fixify_clauses=False):
             """initializes object"""
 
             self.sql_keyword = sql_keyword
@@ -48,6 +48,7 @@ class SourceConfigParser(BaseConfigParser):
             self.indents = indents
             self.phrases = []
             self.child_clauses = []
+            self.fixify_clauses = fixify_clauses
 
             #this sets phrases and child_clauses
             self.set_phrases(phrases)
@@ -221,10 +222,19 @@ class SourceConfigParser(BaseConfigParser):
 
                 #get sql_phrase and strip off leading outer_indent_string
                 sql_phrase = phrase.get_sql_clause(outer_indent_string=outer_indent_string)[len(outer_indent_string):]
+
+                if self.fixify_clauses:
+                    sql_phrase = self._add_phrase_fixes(sql_phrase)
+
             else:
-                sql_phrase = self.phrase_prefix + phrase + self.phrase_suffix
+                sql_phrase = self._add_phrase_fixes(phrase)
 
             return self.get_phrase_indent_string() + sql_phrase
+
+        def _add_phrase_fixes(self, phrase):
+            """helper function to add phrase suffix and prefix"""
+
+            return self.phrase_prefix + phrase + self.phrase_suffix
 
     @staticmethod
     def join_phrases(phrases, joiner=None, prefix=None):

@@ -165,7 +165,7 @@ class DerivedTableConfigParser(SqlSchemaConfigParser):
         return alter_table_statement
 
     def get_derived_table_upsert_statement(self, min_datetime=None, max_datetime=None,
-                                            db_type='mysql'):
+                                            coalesce=True, db_type='mysql'):
         """returns derived table upsert statement"""
 
         if db_type == 'mysql':
@@ -205,7 +205,7 @@ class DerivedTableConfigParser(SqlSchemaConfigParser):
 
         #get update clause
         update_columns = self.remove_target_unique_keys(target_columns)
-        update_clause = self._create_update_clause(update_columns, coalesce=True, target_table=target_table)
+        update_clause = self._create_update_clause(update_columns, coalesce=coalesce, target_table=target_table)
 
         #get datetime cutoff phrase
         if source_sync_field:

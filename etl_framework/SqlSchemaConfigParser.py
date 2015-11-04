@@ -158,7 +158,9 @@ class SqlSchemaConfigParser(SourceConfigParser):
         else:
             target_table_str = ''
 
-        if coalesce:
+        if coalesce == 'old_canonical':
+            right_update_str = 'COALESCE(%s{0}, VALUES({0}))'%(target_table_str, )
+        elif coalesce:
             right_update_str = 'COALESCE(VALUES({0}), %s{0})'%(target_table_str, )
         else:
             right_update_str = 'VALUES({0})'

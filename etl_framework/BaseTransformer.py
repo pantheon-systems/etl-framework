@@ -72,7 +72,7 @@ class BaseTransformer(object):
     def run_transformation(self, data, field_splits=None):
         """transforms, filters, and renames data"""
 
-        print 'Transforming data for {0}'.format(self.identifier)
+        #print 'Transforming data for {0}'.format(self.identifier)
 
         data = self._transform_data(data)
         data = self._filter_data(data)

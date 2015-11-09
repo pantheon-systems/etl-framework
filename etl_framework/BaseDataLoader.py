@@ -128,14 +128,8 @@ class BaseDataLoader(object):
             self.con = con
 
     @staticmethod
-    def yield_chunks(data, chunk_size=None):
+    def yield_chunks(data, chunk_size):
         """Yield successive n-sized chunks from data"""
-
-        if chunk_size is None:
-            if self._chunk_size is None:
-                raise Exception('Chunk size not specified')
-            else:
-                chunk_size = self._chunk_size
 
         for offset in xrange(0, len(data), chunk_size):
             print 'Yielding data rows: %d to %d'%(offset, min(len(data), offset+chunk_size) -1)

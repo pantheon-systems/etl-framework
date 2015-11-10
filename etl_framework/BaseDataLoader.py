@@ -45,8 +45,8 @@ class BaseDataLoader(object):
     def run_statement_chunk(self):
         """helper method to run statement with set chunk values"""
 
-        #if chunk_values is not null, run statement
-        if not self._chunk_values:
+        #run statement if there are chunk_values
+        if self._chunk_values:
             self.run_statement(self._sql_statement, multiple_values=self._chunk_values, commit=True)
             self._reset_chunk_values()
 

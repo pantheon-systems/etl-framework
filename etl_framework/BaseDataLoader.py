@@ -21,10 +21,46 @@ class BaseDataLoader(object):
 
         self.con = None
         self.db_credentials = None
+        self._sql_statement = None
+        self._chunk_size = None
+        self._chunk_values = None
+
+        #set _chunk_values
+        self._reset_chunk_values()
 
         #set db_credentials only if argument was set
         if db_credentials:
             self.set_db_credentials(db_credentials)
+
+    def set_sql_statement(self, sql_statement):
+        """sets default sql_statement"""
+
+        self._sql_statement = sql_statement
+
+    def set_chunk_size(self, chunk_size):
+        """sets default chunk size"""
+
+        self._chunk_size = chunk_size
+
+    def run_statement_chunk(self):
+        """helper method to run statement with set chunk values"""
+
+        #run statement if there are chunk_values
+        if self._chunk_values:
+            self.run_statement(self._sql_statement, multiple_values=self._chunk_values, commit=True)
+            self._reset_chunk_values()
+
+    def append_chunk_values(self, next_values):
+        """appends to chunk values and writes to db when _chunk_size is reached"""
+
+        self._chunk_values.append(next_values)
+        if len(self._chunk_values) >= self._chunk_size:
+            self.run_statement_chunk()
+
+    def _reset_chunk_values(self):
+        """resets values to empty tuple"""
+
+        self._chunk_values = list()
 
     @classmethod
     def create_from_dsn(cls, dsn):
@@ -100,9 +136,16 @@ class BaseDataLoader(object):
             yield data[offset:offset+chunk_size]
 
     @_check_attr_set('db_credentials')
-    def run_statement(self, sql_statement, new_con=True, save_con=False,
+    def run_statement(self, sql_statement=None, new_con=True, save_con=False,
                     fetch_data=False, commit=False, params=None, multiple_values=None):
         """method to run an sql statement"""
+
+
+        if sql_statement is None:
+            if self._sql_statement is None:
+                raise Exception('Sql Statement isnt specified!')
+            else:
+                sql_statement = self._sql_statement
 
         print '\nsql_statement is :\n%s\n'%(sql_statement,)
 

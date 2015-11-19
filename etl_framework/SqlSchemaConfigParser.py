@@ -276,7 +276,7 @@ class SqlSchemaConfigParser(SourceConfigParser):
         """returns statement to upsert data"""
 
         if param_names is None:
-            param_names = [value[[1] for value in self.config[self.COLUMN_MAPPINGS_ATTR].values()]
+            param_names = [value[1] for value in self.config[self.COLUMN_MAPPINGS_ATTR].values()]
 
         table_name = self.get_target_table_name()
 

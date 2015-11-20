@@ -84,13 +84,16 @@ class BaseDataLoader(object):
     def set_db_credentials(self, db_credentials):
         """sets the database credentials"""
 
-    def _get_connection(self, new_con=True):
+    def _get_connection(self, new_con=True, verbose=True):
         """returns connection object to data warehouse"""
 
         #clear saved connnection if you want a new connection
         if new_con:
             self._clear_connection()
-            print 'Creating new connection'
+
+            if verbose:
+                print 'Creating new connection'
+
             return self._create_connection()
 
         #check if self.con is set
@@ -99,7 +102,9 @@ class BaseDataLoader(object):
 
         #return old connection
         else:
-            print 'Reusing old connection'
+            if verbose:
+                print 'Reusing old connection'
+
             return self.con
 
     @abc.abstractmethod
@@ -155,7 +160,7 @@ class BaseDataLoader(object):
         if verbose:
             print '\nsql_statement is :\n%s\n'%(sql_statement,)
 
-        con = self._get_connection(new_con)
+        con = self._get_connection(new_con, verbose=verbose)
 
         #make sure to close con
         try:

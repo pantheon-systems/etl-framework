@@ -373,4 +373,4 @@ class SourceConfigParser(BaseConfigParser):
         """gets target delete field for current configuration"""
 
         field_mappings = self.get_field_mappings()
-        return field_mappings[self.get_source_delete_field()]
+        return field_mappings[self.get_source_delete_field()][1]

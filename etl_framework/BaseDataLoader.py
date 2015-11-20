@@ -137,7 +137,8 @@ class BaseDataLoader(object):
 
     @_check_attr_set('db_credentials')
     def run_statement(self, sql_statement=None, new_con=True, save_con=False,
-                    fetch_data=False, commit=False, params=None, multiple_values=None):
+                    fetch_data=False, commit=False, params=None, multiple_values=None,
+                    verbose=True):
         """method to run an sql statement"""
 
 
@@ -147,7 +148,8 @@ class BaseDataLoader(object):
             else:
                 sql_statement = self._sql_statement
 
-        print '\nsql_statement is :\n%s\n'%(sql_statement,)
+        if verbose:
+            print '\nsql_statement is :\n%s\n'%(sql_statement,)
 
         con = self._get_connection(new_con)
 

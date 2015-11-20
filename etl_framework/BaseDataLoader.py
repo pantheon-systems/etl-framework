@@ -113,16 +113,20 @@ class BaseDataLoader(object):
         sets self.con value to None and closes existing connection
         """
 
-    def _save_connection(self, con):
+    def _save_connection(self, con, verbose=True):
         """
         saves connection to self.con
         """
 
         if con is self.con:
-            print '\nResaving sql connection\n'
+            if verbose:
+                print '\nResaving sql connection\n'
+
         else:
             #first clear old connection
-            print '\nSaving sql connection\n'
+            if verbose:
+                print '\nSaving sql connection\n'
+
             self._clear_connection()
 
             self.con = con
@@ -163,10 +167,13 @@ class BaseDataLoader(object):
                 else:
                     cursor.execute(sql_statement)
 
-                print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )
+                if verbose:
+                    print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )
 
                 if fetch_data:
-                    print '\nFetching data\n'
+                    if verbose:
+                        print '\nFetching data\n'
+
                     values = cursor.fetchall()
                     try:
                         columns = [desc[0] for desc in cursor.description]
@@ -184,7 +191,7 @@ class BaseDataLoader(object):
 
         finally:
             if save_con:
-                self._save_connection(con)
+                self._save_connection(con, verbose=verbose)
             else:
                 con.close()
 

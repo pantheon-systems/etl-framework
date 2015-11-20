@@ -1,10 +1,27 @@
 class DataRow(dict):
     """object for holding row of data"""
 
+    def __init__(self, *args, **kwargs):
+        """creates instance of DataRow"""
+
+        super(DataRow, self).__init__(*args, **kwargs)
+
+        self.target_table = None
+
     def row_values(self, field_names, default_value=None):
         """returns row value of specified field_names"""
 
         return tuple(self.get(field_name, default_value) for field_name in field_names)
+
+    def set_target_table(self, target_table):
+        """sets target table attribute"""
+
+        self.target_table = target_table
+
+    def get_target_table(self):
+        """returns target table attribute"""
+
+        return self.target_table
 
 class DataTable(object):
     """object for holding data"""

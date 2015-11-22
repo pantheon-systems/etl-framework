@@ -173,7 +173,7 @@ class DerivedTableConfigParser(SqlSchemaConfigParser):
         else:
             raise Exception('%s is not a supported db_type for upsert statement creation'%(db_type, ))
 
-        field_mappings = {key: value[1] for key, value in self.get_field_mappings().iteritems()}
+        field_mappings = self.get_field_mappings()
 
         source_table = self.get_source_table_name()
         target_table = self.get_target_table_name()

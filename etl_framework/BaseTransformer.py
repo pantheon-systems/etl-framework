@@ -43,22 +43,14 @@ class BaseTransformer(object):
         return list(set(list1) - set(list2))
 
     @staticmethod
-    def _split_data(data, field_splits):
+    def _split_data(data_row, field_splits):
         """splits data into different parts (to write to multiple tables etc.)"""
 
         for field_names in field_splits:
-            #if field_names is None, use 1 of each field
-            if field_names is None:
-                field_names = data.keys()
-            else:
-                #add in missing fields with null value to data
-                missing_fields = BaseTransformer._set_subtract(field_names, data.keys())
-                for field in missing_fields:
-                    data[field] = None
 
-            values = [tuple(value) for value in data[field_names].values]
+            row = data_row.row_values(field_names)
 
-            yield values, field_names
+            yield row, field_names
 
     def _filter_data(self, transformed_data):
         """filters transformed data"""

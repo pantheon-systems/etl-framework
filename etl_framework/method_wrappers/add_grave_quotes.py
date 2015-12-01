@@ -31,7 +31,7 @@ def _add_grave_quotes(arg_position, arg_name):
                 else:
                     args = list(args)
                     args[arg_position] = ['`' + entry.strip('`') + '`' for entry in input_args]
-                    args = tuple(args)
+                    args = tuple(args)#pylint: disable=redefined-variable-type
 
             #if keyword arg, replace keyword arg with quoted version
             else:

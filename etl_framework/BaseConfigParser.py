@@ -67,10 +67,7 @@ class BaseConfigParser(object):
     def config_is_set(self):
         """checks if config attribute is set"""
 
-        if self.config:
-            return True
-        else:
-            return False
+        return bool(self.config)
 
     def set_config_dir(self, config_dir):
         """ sets config_dir attribute"""

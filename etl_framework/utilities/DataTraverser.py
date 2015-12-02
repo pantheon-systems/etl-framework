@@ -2,6 +2,8 @@
 
 import json
 
+from etl_framework.utilities.DataTable import DataRow
+
 class DataTraverser(object):
     """class to traverse JSON-like data"""
 
@@ -69,8 +71,8 @@ class DataTraverser(object):
             for value in DataTraverser.traverse_path(source_data, field_paths[0][1]):
                 data = {field_paths[0][0]: value}
                 for extra_data in DataTraverser.normalize(source_data, field_paths[1:]):
-                    yield dict(data, **extra_data)
+                    yield DataRow(data, **extra_data)
         else:
             for value in DataTraverser.traverse_path(source_data, field_paths[0][1]):
-                yield {field_paths[0][0]: value}
+                yield DataRow({field_paths[0][0]: value})
 

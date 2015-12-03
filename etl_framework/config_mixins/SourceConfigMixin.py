@@ -2,7 +2,7 @@
 #pylint: disable=relative-import
 from method_wrappers.check_config_attr import check_config_attr
 
-class SourceConfigMixIn(object):
+class SourceConfigMixin(object):
     """parses configuration files"""
 
     SOURCE_SYNC_FIELD_ATTR = 'source_sync_field'

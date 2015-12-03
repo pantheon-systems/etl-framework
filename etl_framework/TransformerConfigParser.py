@@ -1,14 +1,14 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
 
-from ConfigurationParser import ConfigurationParser
-from DestinationConfigMixIn import DestinationConfigMixIn
-from FieldSplitsConfigMixIn import FieldSplitsConfigMixIn
-from FieldMappingsConfigMixIn import FieldMappingsConfigMixIn
+from config_mixins.ConfigurationParser import ConfigurationParser
+from config_mixins.DestinationConfigMixin import DestinationConfigMixin
+from config_mixins.FieldSplitsConfigMixin import FieldSplitsConfigMixin
+from config_mixins.FieldMappingsConfigMixin import FieldMappingsConfigMixin
 
 class TransformerConfigParser(ConfigurationParser,
-                            DestinationConfigMixIn,
-                            FieldSplitsConfigMixIn,
-                            FieldMappingsConfigMixIn):
+                            DestinationConfigMixin,
+                            FieldSplitsConfigMixin,
+                            FieldMappingsConfigMixin):
     """parses configuration files"""
 

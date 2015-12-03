@@ -3,7 +3,7 @@
 
 from method_wrappers.check_config_attr import check_config_attr
 
-class FieldSplitsConfigMixIn(object):
+class FieldSplitsConfigMixin(object):
     """parses configuration files"""
 
     FIELD_SPLITS_ATTR = 'field_splits'

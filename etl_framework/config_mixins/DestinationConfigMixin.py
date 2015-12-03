@@ -2,7 +2,7 @@
 #pylint: disable=relative-import
 from method_wrappers.check_config_attr import check_config_attr
 
-class DestinationConfigMixIn(object):
+class DestinationConfigMixin(object):
     """parses configuration files"""
 
     DESTINATION_ATTR = 'destination'

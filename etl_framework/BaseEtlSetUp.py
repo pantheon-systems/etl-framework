@@ -14,6 +14,11 @@ class BaseEtlSetUp(object):
 
     CONFIG_DIR = ''
 
+    EXTRACTOR_CONFIG_DIR = ''
+    TRANSFORMER_CONFIG_DIR = ''
+    LOADER_CONFIG_DIR = ''
+    SCHEMA_CONFIG_DIR = ''
+
     ETL_JOB_EARLIEST_TIME = datetime.datetime(1000, 01, 01, 0, 0, 0, 0)
     ETL_JOBS_TABLE = '_etl_jobs_'
     ETL_JOBS_STARTED_AT_FIELD = 'most_recent_started_at'
@@ -110,6 +115,30 @@ class BaseEtlSetUp(object):
         """returns path to configuration dir"""
 
         return cls.CONFIG_DIR
+
+    @classmethod
+    def get_extractor_config_dir(cls):
+        """returns path to configuration dir"""
+
+        return cls.EXTRACTOR_CONFIG_DIR
+
+    @classmethod
+    def get_transformer_config_dir(cls):
+        """returns path to configuration dir"""
+
+        return cls.TRANSFORMER_CONFIG_DIR
+
+    @classmethod
+    def get_loader_config_dir(cls):
+        """returns path to configuration dir"""
+
+        return cls.LOADER_CONFIG_DIR
+
+    @classmethod
+    def get_schema_config_dir(cls):
+        """returns path to configuration dir"""
+
+        return cls.SCHEMA_CONFIG_DIR
 
     def get_bi_dsn(self):
         """returns dns to connect to data warehouse"""

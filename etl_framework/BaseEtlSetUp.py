@@ -89,7 +89,7 @@ class BaseEtlSetUp(object):
         self.bi_dsn = None
         self.etl_job_cutoff_at = None
 
-    def _set_from_env_variable(self, attribute_name, env_variable, display=True):
+    def _set_from_env_variable(self, attribute_name, env_variable, display=False):
         """sets attribute from environment variable"""
 
         try:

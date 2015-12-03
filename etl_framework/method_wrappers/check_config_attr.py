@@ -2,15 +2,8 @@
 
 from functools import wraps
 
-class ConfigAttrNotSetException(Exception):
-    """exception to throw if attribute not set"""
-
-    pass
-
-class ConfigNotSetException(Exception):
-   """exception to throw if config not set"""
-
-   pass
+from etl_framework.Exceptions import ConfigAttrNotSetException,\
+                                    ConfigNotSetException
 
 def check_config_attr(method):
     """wrapper to check config attribute is set"""

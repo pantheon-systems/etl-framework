@@ -6,7 +6,7 @@ import json
 
 from method_wrappers.check_config_attr import check_config_attr
 
-class ConfigurationParser(object):
+class BaseConfig(object):
     """parses configuration files"""
 
     IDENTIFIER_ATTR = 'identifier'
@@ -72,6 +72,6 @@ class ConfigurationParser(object):
 
         try:
             with open(filepath, 'r') as config_file:
-                ConfigParser._get_config_from_string(config_file.read())
+                return BaseConfig._get_config_from_string(config_file.read())
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))

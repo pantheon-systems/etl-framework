@@ -1,9 +1,9 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
 
-from method_wrappers.check_config_attr import check_config_attr
+from etl_framework.method_wrappers.check_config_attr import check_config_attr
 
-class FieldSplitsConfigMixin(object):
+class FieldSplitsMixin(object):
     """parses configuration files"""
 
     FIELD_SPLITS_ATTR = 'field_splits'

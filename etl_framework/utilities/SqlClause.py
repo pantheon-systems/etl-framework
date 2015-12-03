@@ -54,7 +54,7 @@ class SqlClause(object):
         """sets phrases"""
 
         self.phrases = self._clean_phrases(phrases)
-        self.child_clauses = [phrase for phrase in self.phrases if isinstance(phrase, SourceConfigParser.SqlClause)]
+        self.child_clauses = [phrase for phrase in self.phrases if isinstance(phrase, SqlClause)]
 
     def remove_phrases(self):
         """removes phrases"""
@@ -141,7 +141,7 @@ class SqlClause(object):
     def stringify_phrase(self, phrase, outer_indent_string=''):
         """returns string version of phrase (which can be a str object of SqlClause object)"""
 
-        if isinstance(phrase, SourceConfigParser.SqlClause):
+        if isinstance(phrase, SqlClause):
             outer_indent_string += self.get_indent_string() + self.get_phrase_indent_string()
 
             #get sql_phrase and strip off leading outer_indent_string

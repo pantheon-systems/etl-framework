@@ -1,8 +1,8 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
-from method_wrappers.check_config_attr import check_config_attr
+from etl_framework.method_wrappers.check_config_attr import check_config_attr
 
-class TargetConfigMixin(object):
+class TargetMixin(object):
     """parses configuration files"""
 
     TARGET_FIELDS_ATTR = 'target_fields'

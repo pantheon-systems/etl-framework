@@ -4,7 +4,7 @@
 import os
 import json
 
-from method_wrappers.check_config_attr import check_config_attr
+from method_wrappers.check_config_attr import check_config_attr_default_none
 
 class BaseConfig(object):
     """parses configuration files"""
@@ -28,7 +28,7 @@ class BaseConfig(object):
             else:
                 self.set_config_dir(config_dir=config_dir)
 
-    @check_config_attr
+    @check_config_attr_default_none
     def get_identifier(self):
         """gets identifier for current configuration"""
 

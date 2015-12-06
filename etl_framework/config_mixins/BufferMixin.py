@@ -1,6 +1,6 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
-from etl_framework.method_wrappers.check_config_attr import check_config_attr
+from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none
 
 class BufferMixin(object):
     """parses configuration files"""
@@ -9,19 +9,19 @@ class BufferMixin(object):
     SQL_STATEMENT_ATTR = 'sql_statement'
     SQL_FIELDS_ATTR = 'sql_fields'
 
-    @check_config_attr
+    @check_config_attr_default_none
     def get_buffer_size(self):
         """stuff"""
 
         return self.config[self.BUFFER_SIZE_ATTR]
 
-    @check_config_attr
+    @check_config_attr_default_none
     def get_sql_statement(self):
         """stuff"""
 
         return self.config[self.SQL_STATEMENT_ATTR]
 
-    @check_config_attr
+    @check_config_attr_default_none
     def get_sql_fields(self):
         """stuff"""
 
@@ -32,19 +32,19 @@ class BufferMixin(object):
 
         return self.get_sql_fields(), self.get_sql_statement()
 
-    @check_config_attr
+    @check_config_attr_default_none
     def set_buffer_size(self, buffer_size):
         """stuff"""
 
         self.config[self.BUFFER_SIZE_ATTR] = buffer_size
 
-    @check_config_attr
+    @check_config_attr_default_none
     def set_sql_statement(self, sql_statement):
         """stuff"""
 
         self.config[self.SQL_STATEMENT_ATTR] = sql_statement
 
-    @check_config_attr
+    @check_config_attr_default_none
     def set_sql_fields(self, sql_fields):
         """stuff"""
 

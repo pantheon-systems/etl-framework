@@ -19,3 +19,18 @@ def check_config_attr(method):
             raise ConfigNotSetException(set(e))
 
     return wrapped_method
+
+def check_config_attr_default_none(method):
+    """wrapper to check config attribute is set"""
+
+    @wraps(method)
+    def wrapped_method(self, *args, **kwargs):
+        """wrapped method to check config set first"""
+        try:
+            return method(self, *args, **kwargs)
+        except KeyError as e:
+            return None
+        except AttributeError as e:
+            raise ConfigNotSetException(set(e))
+
+    return wrapped_method

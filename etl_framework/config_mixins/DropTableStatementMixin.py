@@ -10,12 +10,12 @@ class DropTableStatementMixin(object):
         """stuff"""
 
         if statement_string:
-            return SqlClause(header='DROP TABLE IF EXISTS `{}`'.format(table)).get_sql_clause()
+            return [], SqlClause(header='DROP TABLE IF EXISTS `{}`'.format(table)).get_sql_clause()
         else:
-            return SqlClause(header='DROP TABLE IF EXISTS `{}`'.format(table))
+            return [], SqlClause(header='DROP TABLE IF EXISTS `{}`'.format(table))
 
     def get_drop_table_statement(self):
         """stuff"""
 
-        return  self.create_drop_table_statement(table=self.get_target_table(),
+        return  self.create_drop_table_statement(table=self.get_table(),
                                                 statement_string=True)

@@ -23,12 +23,12 @@ class MySqlSchemaModifier(MySqlDatabase,
     def drop_table(self):
         """stuff"""
 
-        self.run_statement(self.config.get_drop_table_statement(), commit=True)
+        self.run_statement(self.config.get_drop_table_statement()[1], commit=True)
 
     def create_table(self):
         """stuff"""
 
-        self.run_statement(self.config.get_create_table_statement(), commit=True)
+        self.run_statement(self.config.get_create_table_statement()[1], commit=True)
 
     def recreate_table(self):
         """stuff"""

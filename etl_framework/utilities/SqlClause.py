@@ -5,7 +5,7 @@ class SqlClause(object):
 
     INDENT_CHAR = '\t'
 
-    def __init__(self, phrases, sql_keyword='', phrase_prefix='',
+    def __init__(self, phrases=None, sql_keyword='', phrase_prefix='',
                 phrase_separator=',\n', phrase_suffix='', phrase_indents=1,
                 indents=0, header='', footer='', fixify_clauses=False):
         """initializes object"""
@@ -27,6 +27,9 @@ class SqlClause(object):
 
     def _clean_phrases(self, phrases):
         """returns only non-trivial phrases"""
+
+        if phrases is None:
+            return []
 
         return [phrase for phrase in phrases if phrase]
 
@@ -113,15 +116,7 @@ class SqlClause(object):
     def get_sql_clause(self, outer_indent_string=''):
         """returns sql clause as a string"""
 
-        #if no phrases, return empty string
-        if not self.phrases:
-            return ''
-
         indent_string = outer_indent_string +  self.get_indent_string()
-
-        #get phrases string
-        phrases_string = [indent_string + phrase for phrase in self.get_stringified_phrases(outer_indent_string)]
-        phrases_string = self.phrase_separator.join(phrases_string)
 
         #create clause elements with inden string added
         clause_elements = list()
@@ -131,7 +126,11 @@ class SqlClause(object):
         if self.sql_keyword:
             clause_elements.append(indent_string + self.sql_keyword)
 
-        clause_elements.append(phrases_string)
+        #get phrases string
+        if self.phrases:
+            phrases_string = [indent_string + phrase for phrase in self.get_stringified_phrases(outer_indent_string)]
+            phrases_string = self.phrase_separator.join(phrases_string)
+            clause_elements.append(phrases_string)
 
         if self.footer:
             clause_elements.append(indent_string + self.footer)

@@ -19,12 +19,14 @@ class CreateTableStatementMixin(object):
             return []
 
         #im sorry
-        return [cls.CONSTRAINTS_MAP[constraint_type] + ' `{0}` ({1})'.format(constraint_name,
+        return [
+                cls.CONSTRAINTS_MAP[constraint_type] + ' `{0}` ({1})'.format(constraint_name,
                                         ', '.join(['`{}`'.format(field) for field in fields]))
-                for constraint_name, fields in constraints if constraint_name
-                else
-                cls.CONSTRAINTS_MAP[constraint_type] + '({1})'
-                                        .format(', '.join(['`{}`'.format(field) for field in fields]))]
+                if constraint_name else
+                cls.CONSTRAINTS_MAP[constraint_type] + ' ({0})'
+                                        .format(', '.join(['`{}`'.format(field) for field in fields]))
+                for constraint_name, fields in constraints
+                ]
 
     @classmethod
     def create_create_table_statement(cls,
@@ -40,10 +42,10 @@ class CreateTableStatementMixin(object):
 
         if primary_key:
             #primary key is list, but pass dictionary since create_constraints requires list of lists
-            schema_lines.extend(cls.create_constraint_lines('primary', [['', primary_key]])
+            schema_lines.extend(cls.create_constraint_lines('primary', [['', primary_key]]))
 
-        schema_lines.extend(cls.create_constraint_lines('unique', unique_keys)
-        schema_lines.extend(cls.create_constraint_lines('index', indexes)
+        schema_lines.extend(cls.create_constraint_lines('unique', unique_keys))
+        schema_lines.extend(cls.create_constraint_lines('index', indexes))
 
         if statement_string:
             return [], SqlClause(header='CREATE TABLE `{}` ('.format(table),
@@ -58,9 +60,9 @@ class CreateTableStatementMixin(object):
     def get_create_table_statement(self):
         """returns statement to upsert data"""
 
-        return  self.create_create_table_statement(table=self.get_target_table(),
+        return  self.create_create_table_statement(table=self.get_table(),
                                             fields=self.get_fields(),
                                             primary_key=self.get_primary_key(),
-                                            unique_keys=self.get_unqiue_keys(),
+                                            unique_keys=self.get_unique_keys(),
                                             indexes=self.get_indexes(),
                                             statement_string=True)

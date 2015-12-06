@@ -27,7 +27,7 @@ class SqlDatabase(object):
     def create_from_dsn(cls, dsn):
         """creates instance of data_loader from dsn (i.e. a sql url)"""
 
-        return cls(cls.parse_dsn(dsn))
+        return cls(db_credentials=cls.parse_dsn(dsn))
 
     def set_db_credentials_from_dsn(self, dsn):
         """sets credentials from dsn"""
@@ -71,7 +71,8 @@ class SqlDatabase(object):
 
         #check if self.con is set
         elif not self.con:
-            raise Exception('Cant return old connection object. self.con isnt set!')
+            print 'Cant return old connection because self.con isnt set. Creating new connection'
+            return self._create_connection()
 
         #return old connection
         else:

@@ -62,7 +62,7 @@ class SqlDatabase(object):
 
         #clear saved connnection if you want a new connection
         if new_con:
-            self._clear_connection()
+            self.clear_connection()
 
             if verbose:
                 print 'Creating new connection'
@@ -85,7 +85,7 @@ class SqlDatabase(object):
         """returns a new connection object"""
 
     @abc.abstractmethod
-    def _clear_connection(self):
+    def clear_connection(self):
         """
         sets self.con value to None and closes existing connection
         """
@@ -104,11 +104,11 @@ class SqlDatabase(object):
             if verbose:
                 print '\nSaving sql connection\n'
 
-            self._clear_connection()
+            self.clear_connection()
 
             self.con = con
 
-    def run_statement(self, sql_statement=None, new_con=True, save_con=False,
+    def run_statement(self, sql_statement=None, new_con=False, save_con=True,
                     fetch_data=False, commit=False, params=None, multiple_values=None,
                     verbose=True):
         """method to run an sql statement"""

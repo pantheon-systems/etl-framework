@@ -5,23 +5,20 @@
 #pylint: disable=abstract-class-instantiated
 
 from MySqlDatabase import MySqlDatabase
+from loader_mixins.SetConfigMixin import SetConfigMixin
 
-class Loader(MySqlDatabase):
+class Loader(MySqlDatabase,
+            SetConfigMixin):
     """loads data into database"""
 
     def __init__(self, config, *args, **kwargs):
         """initializes base data loader"""
 
-        self.config = config
+        self.config = None
 
         super(Loader, self).__init__(*args, **kwargs)
 
-        self.set_db_credentials_from_config()
-
-    def set_db_credentials_from_config(self):
-        """stuff"""
-
-        self.set_db_credentials_from_dsn(self.config.get_dsn())
+        self.set_config_and_db_credentials(config)
 
     def load(self, row):
         """stuff"""

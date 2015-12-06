@@ -11,7 +11,7 @@ from SqlDatabase import SqlDatabase
 class MySqlDatabase(SqlDatabase):
     """loads data into database"""
 
-    def _clear_connection(self):
+    def clear_connection(self):
         """closes existing connection object and resets self.con to None"""
 
         #if no connection saved, do nothing

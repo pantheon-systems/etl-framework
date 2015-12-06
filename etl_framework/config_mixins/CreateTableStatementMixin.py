@@ -3,7 +3,7 @@
 from etl_framework.utilities.SqlClause import SqlClause
 
 class CreateTableStatementMixin(object):
-    """requires TargetMixin and FieldsMixin"""
+    """requires SchemaMixin"""
 
     CONSTRAINTS_MAP = {
                       'primary': 'PRIMARY KEY',

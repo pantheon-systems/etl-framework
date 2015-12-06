@@ -3,7 +3,7 @@
 from etl_framework.utilities.SqlClause import SqlClause
 
 class DropTableStatementMixin(object):
-    """requires TargetMixin and FieldsMixin"""
+    """requires SchemaMixin"""
 
     @staticmethod
     def create_drop_table_statement(table, statement_string=False):

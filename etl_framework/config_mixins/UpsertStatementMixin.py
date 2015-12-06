@@ -4,7 +4,7 @@ from etl_framework.utilities.SqlClause import SqlClause
 from InsertStatementMixin import InsertStatementMixin
 
 class UpsertStatementMixin(InsertStatementMixin):
-    """requires TargetMixin and FieldsMixin"""
+    """requires LoaderMixin"""
 
     COALESCE_MAP = {
                     None: 'VALUES(`{0}`)',
@@ -42,5 +42,5 @@ class UpsertStatementMixin(InsertStatementMixin):
     def get_upsert_statement(self):
         """returns statement to upsert data"""
 
-        return  self.create_upsert_statement(table=self.get_target_table(),
-                                                fields=self.get_fields(), statement_string=True)
+        return  self.create_upsert_statement(table=self.get_loader_table(),
+                                                fields=self.get_loader_fields(), statement_string=True)

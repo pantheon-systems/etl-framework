@@ -18,10 +18,10 @@ class UpsertStatementMixin(InsertStatementMixin):
         coalesce_string = self.COALESCE_MAP[coalesce]
 
         if statement_string:
-            return [], SqlClause(sql_keyword='ON DUPLICATE KEY UPDATE',
+            return [], SqlClause(header='ON DUPLICATE KEY UPDATE',
                 phrases=['`{}` = '.format(field) + coalesce_string.format(field) for field in fields]).get_sql_clause()
         else:
-            return [], SqlClause(sql_keyword='ON DUPLICATE KEY UPDATE',
+            return [], SqlClause(header='ON DUPLICATE KEY UPDATE',
                 phrases=['`{}` = '.format(field) + coalesce_string.format(field) for field in fields])
 
     def create_upsert_statement(self, table, fields, statement_string=False):

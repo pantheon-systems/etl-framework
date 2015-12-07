@@ -8,7 +8,7 @@ class InsertStatementMixin(object):
     def create_insert_statement(self, table, fields, statement_string=False):
         """returns insert statement"""
 
-        insert_clause = SqlClause(sql_keyword='INSERT INTO {} ('.format(table),
+        insert_clause = SqlClause(header='INSERT INTO {} ('.format(table),
                                     footer=')',
                                     phrases=['`{0}`'.format(field) for field in fields])
         insert_values = 'VALUES (' + ', '.join(['%s']*len(fields)) + ')'

@@ -4,26 +4,14 @@
 #pylint: disable=too-many-arguments
 
 import MySQLdb
-from MySQLdb import ProgrammingError
 
 from SqlDatabase import SqlDatabase
 
 class MySqlDatabase(SqlDatabase):
     """loads data into database"""
 
-    def clear_connection(self):
-        """closes existing connection object and resets self.con to None"""
-
-        #if no connection saved, do nothing
-        if not self.con:
-            return
-
-        try:
-            self.con.close()
-        except ProgrammingError:
-            print 'Saved connection was already closed'
-
-        self.con = None
+    CONNECTION_GONE_EXCEPTION = MySQLdb.OperationalError
+    CONNECTION_CLOSED_EXCEPTION = MySQLdb.ProgrammingError
 
     def _create_connection(self):
         """

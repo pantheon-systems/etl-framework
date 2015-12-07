@@ -12,6 +12,20 @@ class SqlDatabase(object):
 
     __metaclass__ = abc.ABCMeta
 
+    #CONNECTION_CLOSED_EXCEPTION = 'THIS NEEDS TO BE SET'
+    #CONNECTION_GONE_EXCEPTION = 'THIS NEEDS TO BE SET'
+
+    def __new__(cls, *args, **kargs):
+        """check that ETL_JOB_ID and ETL_JOB_NAME are set"""
+
+        if hasattr(cls, 'CONNECTION_CLOSED_EXCEPTION') and hasattr(cls, 'CONNECTION_GONE_EXCEPTION'):
+            pass
+        else:
+            raise NotImplementedError('EtlSetUp should have CONNECTION_CLOSED_EXCEPTION and \
+                                        CONNECTION_GONE_EXCEPTION attributes set!')
+
+        return object.__new__(cls, *args, **kargs)
+
     def __init__(self, db_credentials=None, *args, **kwargs):
         """initializes base data loader"""
 
@@ -85,11 +99,21 @@ class SqlDatabase(object):
     def _create_connection(self):
         """returns a new connection object"""
 
-    @abc.abstractmethod
     def clear_connection(self):
         """
         sets self.con value to None and closes existing connection
         """
+
+        #if no connection saved, do nothing
+        if not self.con:
+            return
+
+        try:
+            self.con.close()
+        except self.CONNECTION_CLOSED_EXCEPTION:
+            print 'Saved connection was already closed'
+
+        self.con = None
 
     def _save_connection(self, con, verbose=True):
         """
@@ -109,6 +133,17 @@ class SqlDatabase(object):
 
             self.con = con
 
+    @staticmethod
+    def _execute_statement(cursor, sql_statement, multiple_values=None, params=None):
+        """helper method to execute statement"""
+
+        if multiple_values:
+            cursor.executemany(sql_statement, multiple_values)
+        elif params:
+            cursor.execute(sql_statement, params)
+        else:
+            cursor.execute(sql_statement)
+
     def run_statement(self, sql_statement=None, new_con=False, save_con=True,
                     fetch_data=False, commit=False, params=None, multiple_values=None,
                     verbose=True):
@@ -122,12 +157,19 @@ class SqlDatabase(object):
         #make sure to close con
         try:
             with closing(con.cursor()) as cursor:
-                if multiple_values:
-                    cursor.executemany(sql_statement, multiple_values)
-                elif params:
-                    cursor.execute(sql_statement, params)
-                else:
-                    cursor.execute(sql_statement)
+                try:
+                    self._execute_statement(cursor=cursor,
+                                        sql_statement=sql_statement,
+                                        multiple_values=multiple_values,
+                                        params=params)
+
+                except self.CONNECTION_GONE_EXCEPTION:
+                    print 'WARNING: Attempting reconnect to MySQL db. Uncommitted transactions will rollback!'
+                    con.ping(True)
+                    self._execute_statement(cursor=cursor,
+                                            sql_statement=sql_statement,
+                                            multiple_values=multiple_values,
+                                            params=params)
 
                 if verbose:
                     print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )

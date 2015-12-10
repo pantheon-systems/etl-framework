@@ -2,7 +2,7 @@
 #pylint: disable=relative-import
 from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none
 
-class SourceMixin(object):
+class ExtractorMixin(object):
     """parses configuration files"""
 
     EXTRACTOR_FIELDS_ATTR = 'extractor_fields'

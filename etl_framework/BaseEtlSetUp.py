@@ -6,6 +6,7 @@ import abc
 import datetime
 
 from method_wrappers.check_attr_set import _check_attr_set
+from utilities.DatetimeConverter import DatetimeConverter
 
 class BaseEtlSetUp(object):
     """class to setup etl process, get etl settings/credentials, and teardown"""
@@ -178,11 +179,17 @@ class BaseEtlSetUp(object):
             cutoff_value = self.ETL_JOB_EARLIEST_TIME
 
         self.etl_job_cutoff_at = cutoff_value
+
     @_check_attr_set('etl_job_cutoff_at')
     def get_etl_job_cutoff_value(self):
         """gets etl cutoff value - offset"""
 
         return self.etl_job_cutoff_at - self.ETL_JOB_CUTOFF_OFFSET
+
+    def get_etl_cutoff_timestamp(self):
+        """returns etl_cutoff in unix timestamp format"""
+
+        return DatetimeConverter.get_timestamp(self.get_etl_job_cutoff_value())
 
     @_check_attr_set('etl_job_cutoff_at')
     def get_derived_table_cutoff_value(self):

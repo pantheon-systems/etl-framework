@@ -29,7 +29,7 @@ class FieldMappingsMixin(object):
 
         return {key: value[0](row[key]) for key, value in mappings.iteritems()}
 
-    def map_and_filter_fields(self, row):
+    def filter_and_map_fields(self, row):
         """stuff"""
 
         mapped_row = DataRow()
@@ -39,7 +39,7 @@ class FieldMappingsMixin(object):
 
         return mapped_row
 
-    def rename_and_filter_fields(self, row):
+    def filter_and_rename_fields(self, row):
         """stuff"""
 
         mappings = self.config.get_field_mappings()

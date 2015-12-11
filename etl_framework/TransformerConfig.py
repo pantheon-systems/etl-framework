@@ -2,6 +2,7 @@
 #pylint: disable=relative-import
 
 from BaseConfig import BaseConfig
+from config_mixins.AddFiltersMixin import AddFiltersMixin
 from config_mixins.DestinationMixin import DestinationMixin
 from config_mixins.FieldSplitsMixin import FieldSplitsMixin
 from config_mixins.FieldMappingsMixin import FieldMappingsMixin
@@ -11,6 +12,7 @@ class TransformerConfig(BaseConfig,
                             DestinationMixin,
                             FieldSplitsMixin,
                             FieldMappingsMixin,
-                            FiltersMixin):
+                            FiltersMixin,
+                            AddFiltersMixin):
     """parses configuration files"""
 

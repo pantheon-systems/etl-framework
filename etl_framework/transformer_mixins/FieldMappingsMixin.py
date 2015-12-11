@@ -11,7 +11,8 @@ class FieldMappingsMixin(object):
         mapped_row = DataRow()
 
         for traverse_path, mapped_field_name in self.config.get_field_mapping_fields().iteritems():
-            mapped_row[mapped_field_name] = reduce(lambda key, value: key[value], traverse_path.split('|'), row)
+            mapped_row[mapped_field_name] = reduce(lambda key, value: key[value] if key else None,
+                                                    traverse_path.split('|'), row)
 
         return mapped_row
 
@@ -35,7 +36,8 @@ class FieldMappingsMixin(object):
         mapped_row = DataRow()
 
         for traverse_path, mapping in self.config.get_field_mappings().iteritems():
-            mapped_row[mapping[1]] = mapping[0](reduce(lambda key, value: key[value], traverse_path.split('|'), row))
+            mapped_row[mapping[1]] = mapping[0](reduce(lambda key, value: key[value] if key else None,
+                                                        traverse_path.split('|'), row))
 
         return mapped_row
 

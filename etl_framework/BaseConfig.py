@@ -4,9 +4,9 @@
 import os
 import json
 
-from method_wrappers.check_config_attr import check_config_attr
+from method_wrappers.check_config_attr import check_config_attr_default_none
 
-class ConfigurationParser(object):
+class BaseConfig(object):
     """parses configuration files"""
 
     IDENTIFIER_ATTR = 'identifier'
@@ -28,7 +28,7 @@ class ConfigurationParser(object):
             else:
                 self.set_config_dir(config_dir=config_dir)
 
-    @check_config_attr
+    @check_config_attr_default_none
     def get_identifier(self):
         """gets identifier for current configuration"""
 
@@ -72,6 +72,6 @@ class ConfigurationParser(object):
 
         try:
             with open(filepath, 'r') as config_file:
-                ConfigParser._get_config_from_string(config_file.read())
+                return BaseConfig._get_config_from_string(config_file.read())
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))

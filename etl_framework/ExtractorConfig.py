@@ -10,5 +10,6 @@ from config_mixins.CredentialsMixin import CredentialsMixin
 class ExtractorConfig(BaseConfig,
                     ExtractorMixin,
                     CredentialsMixin,
-                    AddFiltersMixin):
+                    AddFiltersMixin,
+                    DestinationMixin):
     """parses configuration files"""

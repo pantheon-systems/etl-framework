@@ -1,5 +1,7 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
+#pylint cant tell AddFiltersMixin is new class
+#pylint: disable=super-on-old-class
 
 from etl_framework.config_mixins.AddFiltersMixin import AddFiltersMixin
 from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none

@@ -5,7 +5,8 @@ from etl_framework.utilities.SqlClause import SqlClause
 class InsertStatementMixin(object):
     """requires LoaderMixin"""
 
-    def create_insert_statement(self, table, fields, statement_string=False):
+    @staticmethod
+    def create_insert_statement(table, fields, statement_string=False):
         """returns insert statement"""
 
         insert_clause = SqlClause(header='INSERT INTO {} ('.format(table),

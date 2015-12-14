@@ -3,8 +3,6 @@
 
 import abc
 
-from method_wrappers.check_attr_set import _check_attr_set
-
 class Transformer(object):
     """transforms extracted data and filters"""
 

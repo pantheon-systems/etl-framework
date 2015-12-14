@@ -3,8 +3,6 @@
 
 import abc
 
-from method_wrappers.run_check import _run_check
-
 class Extractor(object):
     """class for authenticating to api and extracting data"""
 

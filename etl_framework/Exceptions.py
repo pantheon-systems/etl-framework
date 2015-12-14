@@ -6,7 +6,7 @@ class ConfigAttrNotSetException(Exception):
     pass
 
 class ConfigNotSetException(Exception):
-   """exception to throw if config not set"""
+    """exception to throw if config not set"""
 
-   pass
+    pass
 

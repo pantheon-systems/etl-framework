@@ -12,7 +12,7 @@ class UpsertStatementMixin(InsertStatementMixin):
                     'old_values': 'COALESCE(`{0}`, VALUES(`{0}`))'
                     }
 
-    def create_on_duplicate_key_update_statement(self, table, fields, coalesce=None, statement_string=False):
+    def create_on_duplicate_key_update_statement(self, fields, coalesce=None, statement_string=False):
         """returns update statement for upsert"""
 
         coalesce_string = self.COALESCE_MAP[coalesce]
@@ -28,7 +28,7 @@ class UpsertStatementMixin(InsertStatementMixin):
         """returns update statement"""
 
         insert_fields, insert_statement = self.create_insert_statement(table, fields)
-        update_fields, update_statement = self.create_on_duplicate_key_update_statement(table, fields)
+        update_fields, update_statement = self.create_on_duplicate_key_update_statement(fields)
 
         if statement_string:
             return insert_fields + update_fields, SqlClause(phrases=[insert_statement, update_statement],

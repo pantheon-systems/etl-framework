@@ -1,4 +1,5 @@
 """Sql Clause creates Sql statements"""
+#pylint: disable=too-many-arguments
 
 class SqlClause(object):
     """class for holding sql_phrase info"""
@@ -25,7 +26,8 @@ class SqlClause(object):
         #this sets phrases and child_clauses
         self.set_phrases(phrases)
 
-    def _clean_phrases(self, phrases):
+    @staticmethod
+    def _clean_phrases(phrases):
         """returns only non-trivial phrases"""
 
         if phrases is None:

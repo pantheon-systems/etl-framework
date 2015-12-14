@@ -1,5 +1,7 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
+#pylint: disable=too-many-arguments
+
 from etl_framework.utilities.SqlClause import SqlClause
 
 class CreateTableStatementMixin(object):

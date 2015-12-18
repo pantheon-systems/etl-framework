@@ -10,7 +10,7 @@ class SchemaMixin(object):
     INDEXES_ATTR = 'indexes'
     PRIMARY_KEY_ATTR = 'primary_key'
     UNIQUE_KEYS_ATTR = 'unique_keys'
-    DELETE_FIELD_ATTR = 'delete_field'
+    RECORD_DELETED_FIELD_ATTR = 'record_deleted_field'
     SYNC_FIELD_ATTR = 'sync_field'
     RECORD_UPDATED_FIELD_ATTR = 'record_updated_field'
 
@@ -50,10 +50,10 @@ class SchemaMixin(object):
         return self.config[self.UNIQUE_KEYS_ATTR]
 
     @check_config_attr_default_none
-    def get_delete_field(self):
+    def get_record_deleted_field(self):
         """stuff"""
 
-        return self.config[self.DELETE_FIELD_ATTR]
+        return self.config[self.RECORD_DELETED_FIELD_ATTR]
 
     @check_config_attr_default_none
     def get_sync_field(self):

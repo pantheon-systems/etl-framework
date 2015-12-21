@@ -20,9 +20,10 @@ class Extractor(object):
 
         return self.config.get_credentials()
 
-    @abc.abstractmethod
     def extract(self):
         """extracts data"""
+
+        raise NotImplementedError
 
     @abc.abstractmethod
     def iter_extract(self):

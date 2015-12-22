@@ -20,3 +20,8 @@ class DestinationMixin(object):
 
         return self.config[self.DESTINATION_CHOOSER_ATTR]
 
+    @check_config_attr_default_none
+    def set_destination_chooser(self, destination_chooser):
+        """gets destination chooser function"""
+
+        self.config[self.DESTINATION_CHOOSER_ATTR] = destination_chooser

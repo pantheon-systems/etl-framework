@@ -160,7 +160,7 @@ class BaseEtlSetUp(object):
         during Etl setUp
         """
 
-    def set_up(self):
+    def set_up(self, datetime_cutoff=None):
         """do set up for etl"""
 
         self._set_bi_dsn()
@@ -168,24 +168,28 @@ class BaseEtlSetUp(object):
 
         #set start time of etl job and get cutoff value from SQL db
         self.run_etl_job_start_statement()
-        self.set_etl_job_cutoff_value()
+        self.set_etl_job_cutoff_value(datetime_cutoff=datetime_cutoff)
 
     def tear_down(self):
         """do teardown for etl"""
 
         self.run_etl_job_cutoff_statement()
 
-    def set_etl_job_cutoff_value(self):
+    def set_etl_job_cutoff_value(self, datetime_cutoff=None):
         """sets etl cutoff datetime value"""
 
-        sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.ETL_JOB_ID, )
+        if datetime_cutoff:
+            pass
 
-        cutoff_value = self.sql_database.run_statement(sql_statement, fetch_data=True)[0][0][0]
+        else:
+            sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.ETL_JOB_ID, )
 
-        if cutoff_value is None:
-            cutoff_value = self.ETL_JOB_EARLIEST_TIME
+            datetime_cutoff = self.sql_database.run_statement(sql_statement, fetch_data=True)[0][0][0]
 
-        self.etl_job_cutoff_at = cutoff_value
+            if datetime_cutoff is None:
+                datetime_cutoff = self.ETL_JOB_EARLIEST_TIME
+
+        self.etl_job_cutoff_at = datetime_cutoff
 
     @_check_attr_set('etl_job_cutoff_at')
     def get_etl_job_cutoff_value(self):

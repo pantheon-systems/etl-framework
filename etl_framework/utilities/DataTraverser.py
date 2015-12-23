@@ -32,10 +32,7 @@ class DataTraverser(object):
         if isinstance(source_data, basestring):
             source_data = json.loads(source_data)
 
-        if source_data is None:
-            yield None
-
-        elif len(field_path) > 1:
+        if len(field_path) > 1:
             if isinstance(source_data, list):
                 if field_path[0] is None:
                     for element in source_data:
@@ -43,14 +40,14 @@ class DataTraverser(object):
                             yield value
                 else:
                     for element in source_data:
-                        for value in DataTraverser.traverse_path(element.get(field_path[0]), field_path[1:]):
+                        for value in DataTraverser.traverse_path(element[field_path[0]], field_path[1:]):
                             yield value
             else:
                 if field_path[0] is None:
-                    for value in DataTraverser.traverse_path(source_data.get(field_path[0]), field_path[1:]):
+                    for value in DataTraverser.traverse_path(source_data[field_path[0]], field_path[1:]):
                         yield value
                 else:
-                    for value in DataTraverser.traverse_path(source_data.get(field_path[0]), field_path[1:]):
+                    for value in DataTraverser.traverse_path(source_data[field_path[0]], field_path[1:]):
                         yield value
         else:
             if isinstance(source_data, list):
@@ -59,12 +56,12 @@ class DataTraverser(object):
                         yield element
                 else:
                     for element in source_data:
-                        yield element.get(field_path[0])
+                        yield element[field_path[0]]
             else:
                 if field_path[0] is None:
                     yield source_data
                 else:
-                    yield source_data.get(field_path[0])
+                    yield source_data[field_path[0]]
 
     @staticmethod
     def normalize(source_data, field_paths):

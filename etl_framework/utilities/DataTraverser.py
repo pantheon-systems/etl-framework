@@ -1,8 +1,11 @@
 """utility to traverse JSON-like data"""
 
 import json
+import itertools
 
 from etl_framework.utilities.DataTable import DataRow
+from etl_framework.utilities.CyclicIterator import CyclicIterator
+from etl_framework.utilities.AlternatingIterator import AlternatingIterator
 
 class DataTraverser(object):
     """class to traverse JSON-like data"""
@@ -65,14 +68,22 @@ class DataTraverser(object):
 
     @staticmethod
     def normalize(source_data, field_paths):
-        """yields normalized data"""
+        """
+        yields normalized data
+        field_paths : [[fieldname, [path_element1, path_element2, ...] ], ....]
+        """
 
-        if len(field_paths) > 1:
-            for value in DataTraverser.traverse_path(source_data, field_paths[0][1]):
-                data = {field_paths[0][0]: value}
-                for extra_data in DataTraverser.normalize(source_data, field_paths[1:]):
-                    yield DataRow(data, **extra_data)
-        else:
-            for value in DataTraverser.traverse_path(source_data, field_paths[0][1]):
-                yield DataRow({field_paths[0][0]: value})
+        field_names = tuple(field_path[0] for field_path in field_paths)
+        field_iterators = [CyclicIterator(DataTraverser.traverse_path, source_data, path[1])
+                            for path in field_paths]
+        alternating_iterator = AlternatingIterator([iterator.get_iterator()
+                                                    for iterator in field_iterators]).get_iterator()
 
+        while True:
+            row = DataRow({name: value for name, value in itertools.izip(field_names, alternating_iterator)})
+
+            #only yield row if not all iterators have cycled through
+            if not all(field_iterator.is_cycled() for field_iterator in field_iterators):
+                yield row
+            else:
+                break

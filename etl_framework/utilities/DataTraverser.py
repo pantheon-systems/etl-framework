@@ -3,6 +3,7 @@
 import json
 import itertools
 
+from etl_framework.Exceptions import BadIteratorException
 from etl_framework.utilities.DataTable import DataRow
 from etl_framework.utilities.CyclicIterator import CyclicIterator
 from etl_framework.utilities.AlternatingIterator import AlternatingIterator
@@ -74,8 +75,15 @@ class DataTraverser(object):
         """
 
         field_names = tuple(field_path[0] for field_path in field_paths)
-        field_iterators = [CyclicIterator(DataTraverser.traverse_path, source_data, path[1])
+
+
+        #if there are iterators that yield nothing, BadIterationException will be raised
+        try:
+            field_iterators = [CyclicIterator(DataTraverser.traverse_path, source_data, path[1])
                             for path in field_paths]
+        except BadIteratorException:
+            return
+
         alternating_iterator = AlternatingIterator([iterator.get_iterator()
                                                     for iterator in field_iterators]).get_iterator()
 

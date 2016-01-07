@@ -1,5 +1,7 @@
 """Cyclic Iterator class"""
 
+from etl_framework.Exceptions import BadIteratorException
+
 class CyclicIterator(object):
     """class that wraps iterator to make it cycle and flags if its cycled once"""
 
@@ -16,7 +18,20 @@ class CyclicIterator(object):
         self._kwargs = kwargs or {}
         self._creator = creator
 
-        self._create_component_iterator()
+        self.check_valid_iterator()
+
+        self._set_component_iterator()
+
+
+    def check_valid_iterator(self):
+        """checks that iterator iterates something"""
+
+        test_iterator = self._creator(*self._args, **self._kwargs)
+
+        try:
+            test_iterator.next()
+        except StopIteration:
+            raise BadIteratorException('Iterator doesnt yield anything')
 
     def get_iterator(self):
         """return iterator"""
@@ -29,7 +44,7 @@ class CyclicIterator(object):
                     yield value
 
                 self._cycled = True
-                self._create_component_iterator()
+                self._set_component_iterator()
 
         if self._iterator is None:
             self._iterator = iterate()
@@ -43,4 +58,9 @@ class CyclicIterator(object):
     def _create_component_iterator(self):
         """recreates iterator"""
 
-        self._component_iterator = self._creator(*self._args, **self._kwargs)
+        return self._creator(*self._args, **self._kwargs)
+
+    def _set_component_iterator(self):
+        """recreates iterator"""
+
+        self._component_iterator = self._create_component_iterator()

@@ -23,8 +23,10 @@ class DataTraverserTestCases(unittest.TestCase):
 
         source_data = {'id': 'id_value',
                         'id2': 'id_value2',
+                        'null_names': [],
                         'names': ['name1', 'name2', 'name3'],
                         'values': ['value1', 'value2', 'value3'],
+                        'null_names_values': [],
                         'name_values': [
                                     {'name': 'name1', 'value': 'value1'},
                                     {'name': 'name2', 'value': 'value2'},
@@ -75,8 +77,24 @@ class DataTraverserTestCases(unittest.TestCase):
                                 {'output_id': 'id_value', 'output_name': 'name3', 'output_value': 'value3'}
                             ]
 
-        inputs = [field_paths1, field_paths2, field_paths3, field_paths4, field_paths5]
-        expected_outputs = [expected_output1, expected_output2, expected_output3, expected_output4, expected_output5]
+        field_paths6 = [['output_id', ['id']],
+                        ['null_name', ['null_names_values', 'names']],
+                        ['null_value', ['null_names_values', 'values']]
+                        ]
+
+        expected_output6 = [
+                            ]
+
+        field_paths7 = [['output_id', ['id']],
+                        ['null_name', ['null_names', None]]
+                        ]
+
+        expected_output7 = [
+                            ]
+
+        inputs = [field_paths1, field_paths2, field_paths3, field_paths4, field_paths5, field_paths6, field_paths7]
+        expected_outputs = [expected_output1, expected_output2, expected_output3, expected_output4, expected_output5,
+                            expected_output6, expected_output7]
 
         unformatted_fail_string = '\nFailed with\ninput: {0}\nexpected output:{1}\noutput:{2}\n'
 

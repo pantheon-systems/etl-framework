@@ -6,14 +6,14 @@ import json
 class PubsubMessage(object):
     """Pubsub message object"""
 
-    def __init__(data, attributes=None):
+    def __init__(self):
         """
         data is a dictionary
         attributes is a dictionary
         """
 
-        self.data = data
-        self.attributes = attributes or {}
+        self.data = None
+        self.attributes = None
 
     def set_data(self, data):
         """sets data attribute"""
@@ -25,10 +25,14 @@ class PubsubMessage(object):
 
         self.attributes = attributes
 
-    def get_message(self):
-        """returns pubsub message"""
+    @staticmethod
+    def format_data(data):
+        """turns data into format necessary to send to pubsub"""
 
-        return {
-                'data': base64.b64encode(json.loads(self.data)),
-                'attributes': self.attributes
-                }
+        return base64.b64encode(json.dumps(data))
+
+    @staticmethod
+    def unformat_data(data):
+        """turns formatted pubsub data into native python object"""
+
+        return json.loads(base64.b64decode(str(data)))

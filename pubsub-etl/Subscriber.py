@@ -33,8 +33,8 @@ class Subscriber(PubsubClient):
 
         return received_messages
 
-    def iter_pull_messages(self, auto_ack=True):
-        """iteratively pulls pubsub messages and ackId's"""
+    def iter_pull(self, auto_ack=True):
+        """iteratively pulls pubsub request messages"""
 
         while True:
 
@@ -43,11 +43,18 @@ class Subscriber(PubsubClient):
             #yield recieved pubsub messages one at a time
             if received_messages is not None:
                 for received_message in received_messages:
-                    yield SubscribeMessage(received_message)
+                    if received_message is not None:
+                        yield received_message
 
             #this checks if we should stop
             if self.stop_pulling(received_messages):
                 break
+
+    def iter_pull_messages(self, auto_ack=True):
+        """iteratively pulls pubsub Subscribe message objects"""
+
+        for received_message in self.iter_pull(auto_ack=True):
+            yield SubscribeMessage(received_message)
 
     def ack_messages(self, ack_ids):
         """acks the messages"""

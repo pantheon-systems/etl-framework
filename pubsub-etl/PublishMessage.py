@@ -2,9 +2,6 @@
 pubsub publish message object
 """
 
-import base64
-import json
-
 from PubsubMessage import PubsubMessage
 
 class PublishMessage(PubsubMessage):

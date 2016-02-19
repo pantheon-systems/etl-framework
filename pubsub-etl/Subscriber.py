@@ -53,7 +53,7 @@ class Subscriber(PubsubClient):
     def iter_pull_messages(self, auto_ack=True):
         """iteratively pulls pubsub Subscribe message objects"""
 
-        for received_message in self.iter_pull(auto_ack=True):
+        for received_message in self.iter_pull(auto_ack=auto_ack):
             yield SubscribeMessage(received_message)
 
     def ack_messages(self, ack_ids):
@@ -77,8 +77,5 @@ class Subscriber(PubsubClient):
             5. some user_input
         """
 
-        if received_messages is None or len(received_messages) < self.batch_size:
-            return True
-        else:
-            return False
+        return received_messages is None or len(received_messages) < self.batch_size
 

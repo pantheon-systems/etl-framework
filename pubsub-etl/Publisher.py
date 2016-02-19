@@ -28,4 +28,3 @@ class Publisher(PubsubClient):
                         num_retries=self.num_retries)
 
         return resp
- 

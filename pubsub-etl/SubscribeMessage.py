@@ -2,9 +2,6 @@
 pubsub subscribe message object
 """
 
-import base64
-import json
-
 from PubsubMessage import PubsubMessage
 
 class SubscribeMessage(PubsubMessage):

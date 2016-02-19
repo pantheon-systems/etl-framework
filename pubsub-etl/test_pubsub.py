@@ -11,7 +11,6 @@ from Publisher import Publisher
 from Subscriber import Subscriber
 from TopicLogger import TopicLogger
 from PublishMessage import PublishMessage
-from SubscribeMessage import SubscribeMessage
 
 class PubSubTestCases(unittest.TestCase):
     """tests pubsub classes"""

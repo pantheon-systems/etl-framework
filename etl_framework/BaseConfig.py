@@ -28,6 +28,17 @@ class BaseConfig(object):
             else:
                 self.set_config_dir(config_dir=config_dir)
 
+    @classmethod
+    def create_from_filepath(cls, filepath, *args, **kwargs):
+        """creates instance of Config from filepath"""
+
+        config_dir, config_filename = os.path.split(filepath)
+        return cls(config_dir=config_dir,
+            config_filename=config_filename,
+            *args,
+            **kwargs
+        )
+
     @check_config_attr_default_none
     def get_identifier(self):
         """gets identifier for current configuration"""

@@ -1,6 +1,5 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
-import os
 
 from etl_framework.method_wrappers.check_config_attr import check_config_attr
 

@@ -5,6 +5,7 @@ import os
 import abc
 import datetime
 
+from Exceptions import EnvironmentVariableNotSetException
 from method_wrappers.check_attr_set import _check_attr_set
 from utilities.DatetimeConverter import DatetimeConverter
 
@@ -97,7 +98,7 @@ class BaseEtlSetUp(object):
         try:
             setattr(self, attribute_name, os.environ[env_variable])
         except KeyError:
-            raise Exception('%s must be set as ENV'%(env_variable, ))
+            raise EnvironmentVariableNotSetException('%s must be set as ENV'%(env_variable, ))
         else:
             if display:
                 print 'self.%s is : %s'%(attribute_name, getattr(self, attribute_name))

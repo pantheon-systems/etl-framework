@@ -1,5 +1,10 @@
 """some exceptions"""
 
+class EnvironmentVariableNotSetException(Exception):
+    """Raise this when an environment variable isn't set"""
+
+    pass
+
 class BadIteratorException(Exception):
     """raise this when component iterator doesnt iterate anything"""
 

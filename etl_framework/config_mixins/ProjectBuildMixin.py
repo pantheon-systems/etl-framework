@@ -13,11 +13,10 @@ class ProjectBuildMixin(object):
     def get_project_build(self):
         """gets configurations"""
 
-        return self.config[self.project_build]
+        return self.config[self.PROJECT_BUILD_ATTR]
 
-    @check_config_attr
     def set_project_build(self, project_build):
         """sets configurations"""
 
-        self.config[self.project_build] = project_build
+        self.config[self.PROJECT_BUILD_ATTR] = project_build
 

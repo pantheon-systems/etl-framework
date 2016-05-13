@@ -18,6 +18,11 @@ class DatetimeConverter(object):
 
         return datetime.datetime.today() + datetime.timedelta(days=1)
 
+    @staticmethod
+    def get_yesterday():
+
+        return datetime.datetime.today() - datetime.timedelta(days=1)
+
     @classmethod
     def get_timestamp(cls, datetime_obj):
         """helper method to return timestamp fo datetime object"""
@@ -29,3 +34,8 @@ class DatetimeConverter(object):
         """stuff"""
 
         return cls.get_timestamp(cls.get_tomorrow())
+
+    @classmethod
+    def get_yesterday_timestamp(cls):
+
+        return cls.get_timestamp(cls.get_yesterday())

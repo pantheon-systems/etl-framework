@@ -20,5 +20,5 @@ class SetConfigMixin(object):
     def set_db_credentials_from_config(self):
         """stuff"""
 
-        self.set_db_credentials_from_dsn(self.config.get_dsn())
+        raise NotImplementedError
 

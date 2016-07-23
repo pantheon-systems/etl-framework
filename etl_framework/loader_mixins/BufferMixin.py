@@ -12,12 +12,17 @@ class BufferMixin(object):
         #set _buffered_values
         self._reset_buffered_values()
 
+    def load_buffered(self):
+        """runs load for BufferedMixin"""
+
+        raise NotImplementedError
+
     def flush_buffer(self):
         """helper method to run statement with set buffered values"""
 
         #run statement if there are buffered_values
         if self._buffered_values:
-            self.run_statement(self.config.get_sql_statement(), multiple_values=self._buffered_values, commit=True)
+            self.load_buffered()
             self._reset_buffered_values()
 
     def write_to_buffer(self, next_values):

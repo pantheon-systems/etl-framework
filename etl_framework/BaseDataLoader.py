@@ -89,7 +89,7 @@ class BaseDataLoader(object):
 
         #clear saved connnection if you want a new connection
         if new_con:
-            self._clear_connection()
+            self.clear_connection()
 
             if verbose:
                 print 'Creating new connection'
@@ -113,7 +113,7 @@ class BaseDataLoader(object):
 
 
     @abc.abstractmethod
-    def _clear_connection(self):
+    def clear_connection(self):
         """
         sets self.con value to None and closes existing connection
         """
@@ -132,7 +132,7 @@ class BaseDataLoader(object):
             if verbose:
                 print '\nSaving sql connection\n'
 
-            self._clear_connection()
+            self.clear_connection()
 
             self.con = con
 

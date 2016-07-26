@@ -63,7 +63,7 @@ class BaseMySqlLoader(BaseDataLoader):
         #self.passwd = db_password
         #self.database = db_database
 
-    def _clear_connection(self):
+    def clear_connection(self):
         """closes existing connection object and resets self.con to None"""
 
         #if no connection saved, do nothing

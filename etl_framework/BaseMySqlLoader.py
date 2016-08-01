@@ -1,4 +1,8 @@
-"""Base class to load data into mysql database"""
+"""
+Base class to load data into mysql database
+NOTE: This class should be deprecated. Use Loader and MySqldatabase
+instead
+"""
 # pylint: disable=too-many-arguments
 #for some reason, pylint doesn't pick up MySQLdb attributes
 # pylint: disable=no-member
@@ -63,7 +67,7 @@ class BaseMySqlLoader(BaseDataLoader):
         #self.passwd = db_password
         #self.database = db_database
 
-    def _clear_connection(self):
+    def clear_connection(self):
         """closes existing connection object and resets self.con to None"""
 
         #if no connection saved, do nothing

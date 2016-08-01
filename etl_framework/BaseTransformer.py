@@ -1,6 +1,6 @@
 """Base class to transform extracted data before loading"""
 #pylint: disable=relative-import
-
+# NOTE This will be deprecated. Dont use.
 import abc
 
 from method_wrappers.check_attr_set import _check_attr_set

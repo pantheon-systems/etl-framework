@@ -1,4 +1,6 @@
 """parses configuration and can return sql schemas from configs"""
+# NOTE : This is deprecated. Dont use
+
 #pylint: disable=relative-import
 
 from SourceConfigParser import SourceConfigParser

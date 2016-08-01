@@ -1,4 +1,9 @@
-"""Base class to load data into data warehouse"""
+"""
+Base class to load data into data warehouse
+
+NOTE: This class should be completely deprecated. Use a 
+Sqldatabase and Loader with BufferedMixin instead
+"""
 #pylint: disable=relative-import
 #pylint: disable=too-many-function-args
 #pylint: disable=too-many-arguments

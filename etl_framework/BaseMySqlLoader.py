@@ -1,4 +1,8 @@
-"""Base class to load data into mysql database"""
+"""
+Base class to load data into mysql database
+NOTE: This class should be deprecated. Use Loader and MySqldatabase
+instead
+"""
 # pylint: disable=too-many-arguments
 #for some reason, pylint doesn't pick up MySQLdb attributes
 # pylint: disable=no-member

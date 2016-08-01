@@ -4,6 +4,8 @@
 #pylint: disable=too-many-function-args
 #pylint: disable=too-many-locals
 
+# NOTE This is deprecated. Dont use
+
 from SqlSchemaConfigParser import SqlSchemaConfigParser
 
 class NoParentConfigException(Exception):

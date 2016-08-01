@@ -1,4 +1,8 @@
-"""returns filter functions for Transformer object"""
+"""
+returns filter functions for Transformer object
+"""
+
+# NOTE: This is deprecated. Use a dictionary objectinstead
 
 import abc
 

@@ -1,4 +1,8 @@
-"""Class for data api to extract data"""
+"""
+Class for data api to extract data
+"""
+
+# NOTE: This is deprecated class.  Use Extractor class instead
 #pylint: disable=relative-import
 
 import abc

@@ -1,4 +1,9 @@
-"""parses configuration and returns useful things"""
+"""
+parses configuration and returns useful things
+"""
+
+# NOTE: this is deprecated. Dont use.
+
 #pylint: disable=relative-import
 #pylint: disable=too-many-arguments
 #pylint: disable=too-many-locals

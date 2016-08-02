@@ -20,3 +20,12 @@ class ConfigNotSetException(Exception):
 
     pass
 
+class SchemaValidationException(Exception):
+    """SchemaValidationExcpetion is thrown when validating against a
+    JSON-schema fails."""
+
+    pass
+
+class SchemaNotFoundException(Exception):
+    """SchemaNotFoundException is thrown when a jsl schema is not provided
+    when necessary"""

@@ -18,9 +18,16 @@ class FiltersMixin(AddFiltersMixin):
 
         super(FiltersMixin, self).add_filters(filter_mappings)
 
-        self.set_pre_filter(filter_mappings.get(self.get_pre_filter()))
-        self.set_filter(filter_mappings.get(self.get_filter()))
-        self.set_post_filter(filter_mappings.get(self.get_post_filter()))
+        # NOTE this should be removed but currently there are ETLs that expect
+        # filter_mappings to be a dictionary
+        if isinstance(filter_mappings, dict):
+            self.set_pre_filter(filter_mappings.get(self.get_pre_filter()))
+            self.set_filter(filter_mappings.get(self.get_filter()))
+            self.set_post_filter(filter_mappings.get(self.get_post_filter()))
+        else:
+            self.set_pre_filter(getattr(filter_mappings, self.get_pre_filter()))
+            self.set_filter(getattr(filter_mappings, self.get_filter()))
+            self.set_post_filter(getattr(filter_mappings, self.get_post_filter()))
 
     @check_config_attr_default_none
     def get_pre_filter(self):

@@ -1,4 +1,6 @@
 """adds Buffer functionality to Loader"""
+# NOTE: this requires clear_connection method on Loader, which
+# should be included as part of datastore interface(yet to be enforced)
 
 class SetConfigMixin(object):
     """stuff"""

@@ -28,8 +28,7 @@ class BufferMixin(object):
     def write_to_buffer(self, next_values):
         """appends to buffered values and writes to db when _buffer_size is reached"""
 
-        #assume next_values is DataRow object
-        self._buffered_values.append(next_values.row_values(self.config.get_sql_fields()))
+        self._buffered_values.append(next_values)
 
         if len(self._buffered_values) >= self.config.get_buffer_size():
             self.flush_buffer()

@@ -23,4 +23,4 @@ class BufferedLoader(Loader, BufferMixin):
     def load(self, values):
         """stuff"""
 
-        self.write_to_buffer(values)
+        self.write_to_buffer(values.row_values(self.config.get_sql_fields()))

@@ -1,8 +1,10 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
 from etl_framework.utilities.SqlClause import SqlClause
+from etl_framework.config_mixins.LoaderMixin import LoaderMixin
+from etl_framework.config_mixins.SqlStatementMixin import SqlStatementMixin
 
-class UpdateStatementMixin(object):
+class UpdateStatementMixin(LoaderMixin, SqlStatementMixin):
     """requires LoaderMixin and SqlStatement Mixin"""
 
     @staticmethod
@@ -27,7 +29,7 @@ class UpdateStatementMixin(object):
             )
 
             # Statement fields are fields + where_fields
-            statement_fields = fields + where_fields
+            statement_fields = fields + [field["field_name"] for field in where_fields]
             phrases = [update_clause, update_values, where_phrase]
 
         else:

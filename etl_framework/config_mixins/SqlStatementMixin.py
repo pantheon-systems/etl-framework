@@ -5,6 +5,7 @@ from etl_framework.method_wrappers.check_config_attr import check_config_attr_de
 class SqlStatementMixin(object):
     """parses configuration files"""
 
+    SQL_FIELDS_AND_STATEMENT_LIST_ATTR = 'sql_fields_and_statement_list'
     SQL_STATEMENT_ATTR = 'sql_statement'
     SQL_FIELDS_ATTR = 'sql_fields'
 
@@ -47,3 +48,17 @@ class SqlStatementMixin(object):
         """stuff"""
 
         raise NotImplementedError
+
+    @check_config_attr_default_none
+    def set_sql_fields_and_statement_list(self,
+        sql_fields_and_statement_list):
+        """Sets a list of (fields, statement) tuples"""
+
+        self.config[self.SQL_FIELDS_AND_STATEMENT_LIST_ATTR] =\
+            sql_fields_and_statement_list
+
+    @check_config_attr_default_none
+    def get_sql_fields_and_statement_list(self):
+        """Returns a list of (fields, statement) tuples"""
+
+        return self.config[SQL_FIELDS_AND_STATEMENT_LIST_ATTR]

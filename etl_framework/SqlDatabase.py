@@ -99,6 +99,15 @@ class SqlDatabase(object):
     def _create_connection(self):
         """returns a new connection object"""
 
+    def commit_connection(self):
+        """
+        commits the saved connection
+        """
+
+        if self.con is not None:
+            print '\nCommitting sql transaction\n'
+            self.con.commit()
+
     def clear_connection(self):
         """
         sets self.con value to None and closes existing connection

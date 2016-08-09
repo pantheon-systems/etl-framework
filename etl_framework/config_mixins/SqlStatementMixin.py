@@ -8,6 +8,7 @@ class SqlStatementMixin(object):
     SQL_FIELDS_AND_STATEMENT_LIST_ATTR = 'sql_fields_and_statement_list'
     SQL_STATEMENT_ATTR = 'sql_statement'
     SQL_FIELDS_ATTR = 'sql_fields'
+    SQL_WHERE_FIELDS_ATTR = 'sql_where_fields'
 
     @check_config_attr_default_none
     def get_sql_statement(self):
@@ -56,6 +57,21 @@ class SqlStatementMixin(object):
 
         self.config[self.SQL_FIELDS_AND_STATEMENT_LIST_ATTR] =\
             sql_fields_and_statement_list
+
+    @check_config_attr_default_none
+    def get_sql_where_fields(self):
+        """
+        Returns where_fields attribute, which is in format:
+            [
+                {
+                    "field_name": "field1",
+                    "operator": "<"
+                },
+                ...
+            ]
+        """
+
+        return self.config[self.SQL_WHERE_FIELDS_ATTR]
 
     @check_config_attr_default_none
     def get_sql_fields_and_statement_list(self):

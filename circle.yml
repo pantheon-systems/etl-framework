@@ -32,5 +32,5 @@ test:
         - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
 
         #run below line to run tests outside of docker 
-        - python -m unittest discover tests
+        - python -m unittest discover .
 

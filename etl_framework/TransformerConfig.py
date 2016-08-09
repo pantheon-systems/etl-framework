@@ -1,5 +1,6 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
+#pylint: disable=too-many-ancestors
 
 from BaseConfig import BaseConfig
 from config_mixins.AddFiltersMixin import AddFiltersMixin

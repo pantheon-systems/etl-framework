@@ -2,7 +2,7 @@
 
 import functools
 
-from etl_classes.utilities.MultiCaller import MultiCaller
+from etl_framework.utilities.MultiCaller import MultiCaller
 
 class MultiCallerManager(object):
     """handles many MultiCallers"""

@@ -61,4 +61,4 @@ class SqlStatementMixin(object):
     def get_sql_fields_and_statement_list(self):
         """Returns a list of (fields, statement) tuples"""
 
-        return self.config[SQL_FIELDS_AND_STATEMENT_LIST_ATTR]
+        return self.config[self.SQL_FIELDS_AND_STATEMENT_LIST_ATTR]

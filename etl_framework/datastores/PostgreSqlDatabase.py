@@ -2,7 +2,7 @@
 #pylint: disable=relative-import
 #pylint: disable=too-many-function-args
 #pylint: disable=too-many-arguments
-
+# pylint: disable=no-init
 import psycopg2
 
 from SqlDatabase import SqlDatabase

@@ -183,7 +183,32 @@ class SqlDatabase(object):
                 if verbose:
                     print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )
 
-                if fetch_data:
+                if fetch_data == "stream":
+                    if verbose:
+                        print '\nFetching data\n'
+
+                    try:
+                        columns = [desc[0] for desc in cursor.description]
+                    except TypeError:
+                        columns = None
+
+                    #cursor is generator to yield data
+                    output = cursor, columns
+
+                elif fetch_data == "fetch_all":
+                    if verbose:
+                        print '\nFetching data\n'
+
+                    values = cursor.fetchall()
+                    try:
+                        columns = [desc[0] for desc in cursor.description]
+                    except TypeError:
+                        columns = None
+
+                    output = values, columns
+
+                # NOTE: This is a catch-all for when fetch-data is set to true (done with earlier ETLs)
+                elif fetch_data:
                     if verbose:
                         print '\nFetching data\n'
 

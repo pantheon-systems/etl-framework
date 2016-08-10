@@ -10,20 +10,28 @@ class BaseConfig(object):
     """parses configuration files"""
 
     IDENTIFIER_ATTR = 'identifier'
+    ETL_CLASS_ATTR = 'etl_class'
+    CONFIG_CLASS_ATTR = 'config_class'
 
-    def __init__(self, config_dir=None, config_filename=None):
+    def __init__(self, config_dir=None, config_filename=None, config_dict=None):
         """intialize Parser"""
 
         self.config_dir = None
         self.config_filename = None
         #self.config will be set later
 
-        if config_dir:
+        # If you create config with config_dict, filename and directory attributes
+        # will be left as None
+        if config_dict:
+            self.config = config_dict
+
+        elif config_dir:
 
             #set config only if config_filename and dir given.
             if config_filename:
                 self.set_config(config_dir=config_dir, config_filename=config_filename)
 
+            # NOTE this logic should just be removed
             #set config dir only if config dir given
             else:
                 self.set_config_dir(config_dir=config_dir)
@@ -44,6 +52,16 @@ class BaseConfig(object):
         """gets identifier for current configuration"""
 
         return self.config[self.IDENTIFIER_ATTR]
+
+    def get_etl_class(self):
+        """gets etl class name for current configuration"""
+
+        return self.config[self.ETL_CLASS_ATTR]
+
+    def get_config_class(self):
+        """gets config class name for current configuration"""
+
+        return self.config[self.CONFIG_CLASS_ATTR]
 
     def set_config_dir(self, config_dir):
         """ sets config_dir attribute"""
@@ -86,6 +104,28 @@ class BaseConfig(object):
                 return BaseConfig._get_config_from_string(config_file.read())
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
+
+    def morph(self, configs):
+        """
+        returns a config of different class
+        configs should be a module with config classes
+        """
+
+        config_class_name = self.get_config_class()
+        ConfigClass = getattr(configs, config_class_name)
+
+        return ConfigClass(config_dict=self.config)
+
+    def create(self, etl_classes):
+        """
+        returns an EtlClass object with this config
+        etl_classes should be a module with Etl Classes
+        """
+
+        etl_class_name = self.get_etl_class()
+        EtlClass = getattr(etl_classes, etl_class_name)
+
+        return EtlClass(config=self)
 
     @classmethod
     def show_example_config(cls):

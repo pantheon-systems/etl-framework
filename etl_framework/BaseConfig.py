@@ -86,3 +86,13 @@ class BaseConfig(object):
                 return BaseConfig._get_config_from_string(config_file.read())
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
+
+    @classmethod
+    def show_example_config(cls):
+        """prints out an example config"""
+
+        example = {getattr(cls, attribute): "" for attribute in dir(cls)
+            if attribute.endswith("_ATTR") or attribute.endswith("_ATTRIBUTE")
+        }
+
+        print json.dumps(example, indent=4, sort_keys=True)

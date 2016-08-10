@@ -5,7 +5,7 @@
 # pylint: disable=no-init
 import psycopg2
 
-from SqlDatabase import SqlDatabase
+from etl_framework.SqlDatabase import SqlDatabase
 
 class PostgreSqlDatabase(SqlDatabase):
     """loads data into database"""

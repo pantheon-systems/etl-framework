@@ -183,9 +183,12 @@ class BaseEtlSetUp(object):
             pass
 
         else:
-            sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.ETL_JOB_ID, )
+                sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.ETL_JOB_ID, )
 
-            datetime_cutoff = self.sql_database.run_statement(sql_statement, fetch_data=True)[0][0][0]
+            try:
+                datetime_cutoff = self.sql_database.run_statement(sql_statement, fetch_data=True)[0][0][0]
+            except IndexError as e:
+                datetime_cutoff = None
 
             if datetime_cutoff is None:
                 datetime_cutoff = self.ETL_JOB_EARLIEST_TIME

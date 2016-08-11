@@ -22,6 +22,16 @@ class FieldMappingsMixin(AddFiltersMixin):
         else:
             raise Exception
 
+    def add_filters_from_module(self, filters_module):
+        """override add_filters_from_module method of config object"""
+
+        super(FieldMappingsMixin, self).add_filters_from_module(filters_module)
+        if self.get_field_mappings():
+            self.set_field_mappings({key: [getattr(filters_module, value[0]), value[1]]
+                                        for key, value in self.get_field_mappings().iteritems()})
+        else:
+            raise Exception
+
     @check_config_attr_default_none
     def get_field_mappings(self):
         """yup"""

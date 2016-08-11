@@ -88,6 +88,11 @@ class BaseEtlSetUp(object):
 
         super(BaseEtlSetUp, self).__init__(*args, **kwargs)
 
+        # NOTE etl_job_id and etl_job_name should be specified by JobConfig.
+        # This is a quick fix before remaking BaseEtlSetup to do this
+        self.etl_job_id = self.ETL_JOB_ID
+        self.etl_job_name = self.ETL_JOB_NAME
+
         self.sql_database = sql_database
         self.bi_dsn = None
         self.etl_job_cutoff_at = None
@@ -183,7 +188,7 @@ class BaseEtlSetUp(object):
             pass
 
         else:
-            sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.ETL_JOB_ID, )
+            sql_statement = self.ETL_JOB_SELECT_CUTOFF_STATEMENT%(self.etl_job_id, )
 
             datetime_cutoff = self.sql_database.run_statement(sql_statement, fetch_data=True)[0][0][0]
 
@@ -212,17 +217,17 @@ class BaseEtlSetUp(object):
     def run_etl_job_start_statement(self):
         """sets the start datetime for etl job in SQL db"""
 
-        sql_statement = self.ETL_JOB_SET_START_STATEMENT%(self.ETL_JOB_ID, )
+        sql_statement = self.ETL_JOB_SET_START_STATEMENT%(self.etl_job_id, )
         self.sql_database.run_statement(sql_statement, commit=True)
 
     def run_etl_job_cutoff_statement(self):
         """sets the new cutoff  datetime for etl job in SQL db"""
 
-        sql_statement = self.ETL_JOB_SET_CUTOFF_STATEMENT%(self.ETL_JOB_ID)
+        sql_statement = self.ETL_JOB_SET_CUTOFF_STATEMENT%(self.etl_job_id)
         self.sql_database.run_statement(sql_statement, commit=True)
 
     def run_etl_job_clear_cutoff_date(self):
         """sets the cutoff datetime to earliest value in SQL db (to reset db during tests)"""
 
-        sql_statement = self.ETL_JOB_CLEAR_CUTOFF_STATEMENT%(self.ETL_JOB_ID)
+        sql_statement = self.ETL_JOB_CLEAR_CUTOFF_STATEMENT%(self.etl_job_id)
         self.sql_database.run_statement(sql_statement, commit=True)

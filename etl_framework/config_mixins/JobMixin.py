@@ -7,6 +7,8 @@ from etl_framework.method_wrappers.check_config_attr import check_config_attr
 class JobMixin(object):
     """parses configuration files"""
 
+    JOB_ID_ATTR = 'job_id'
+    JOB_NAME_ATTR = 'job_name'
     CONFIGURATION_GROUPS_ATTR = 'configuration_groups'
     TRANSFORMER_CONFIG_ATTR = 'transformers'
     SCHEMA_CONFIG_ATTR = 'schemas'
@@ -14,6 +16,18 @@ class JobMixin(object):
     LOADER_CONFIG_ATTR = 'loaders'
     CONFIG_DIR_ATTR = 'config_dir'
     CONFIG_FILENAMES_ATTR = 'config_filenames'
+
+    @check_config_attr
+    def get_job_id(self):
+        """gets configurations """
+
+        return self.config[self.JOB_ID_ATTR]
+
+    @check_config_attr
+    def get_job_name(self):
+        """gets configurations """
+
+        return self.config[self.JOB_NAME_ATTR]
 
     @check_config_attr
     def get_configuration_groups(self):

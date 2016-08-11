@@ -6,6 +6,7 @@
 from etl_framework.config_mixins.AddFiltersMixin import AddFiltersMixin
 from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none
 
+
 class FiltersMixin(AddFiltersMixin):
     """parses configuration files"""
 
@@ -20,14 +21,35 @@ class FiltersMixin(AddFiltersMixin):
 
         # NOTE this should be removed but currently there are ETLs that expect
         # filter_mappings to be a dictionary
-        if isinstance(filter_mappings, dict):
-            self.set_pre_filter(filter_mappings.get(self.get_pre_filter()))
-            self.set_filter(filter_mappings.get(self.get_filter()))
-            self.set_post_filter(filter_mappings.get(self.get_post_filter()))
+        self.set_pre_filter(filter_mappings.get(self.get_pre_filter()))
+        self.set_filter(filter_mappings.get(self.get_filter()))
+        self.set_post_filter(filter_mappings.get(self.get_post_filter()))
+
+    def add_filters_from_module(self, filter_module):
+        """
+        :summary: takes in a filter module and matches filters from it to
+        filters mentioned in config
+        :param filter_module: mpython module where filters reside
+        """
+        super(FiltersMixin, self).add_filters_from_module(filter_module)
+
+        if self.get_pre_filter() is None:
+            self.set_pre_filter(None)
         else:
-            self.set_pre_filter(getattr(filter_mappings, self.get_pre_filter()))
-            self.set_filter(getattr(filter_mappings, self.get_filter()))
-            self.set_post_filter(getattr(filter_mappings, self.get_post_filter()))
+            pre_filter = getattr(filter_module, self.get_pre_filter())
+            self.set_pre_filter(pre_filter)
+
+        if self.get_filter() is None:
+            self.set_filter(None)
+        else:
+            flter = getattr(filter_module, self.get_filter())
+            self.set_filter(flter)
+
+        if self.get_post_filter() is None:
+            self.set_post_filter(None)
+        else:
+            post_filter = getattr(filter_module, self.get_post_filter())
+            self.set_post_filter(post_filter)
 
     @check_config_attr_default_none
     def get_pre_filter(self):

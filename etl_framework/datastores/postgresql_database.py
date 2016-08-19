@@ -5,9 +5,9 @@
 # pylint: disable=no-init
 import psycopg2
 
-from etl_framework.SqlDatabase import SqlDatabase
+from etl_framework.datastore_interfaces.sql_database_interface import SqlDatabaseInterface
 
-class PostgreSqlDatabase(SqlDatabase):
+class PostgreSqlDatabase(SqlDatabaseInterface):
     """loads data into database"""
 
     CONNECTION_GONE_EXCEPTION = psycopg2.OperationalError

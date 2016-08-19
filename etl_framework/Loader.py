@@ -13,8 +13,8 @@ class Loader(
 ):
     """loads data into database"""
 
-    def set_db_credentials_from_config(self):
+    def set_credentials_from_config(self):
         """stuff"""
 
-        self.set_db_credentials_from_dsn(self.config.get_dsn())
+        self.set_credentials_from_dsn(self.config.get_dsn())
 

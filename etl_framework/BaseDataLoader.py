@@ -19,13 +19,13 @@ class BaseDataLoader(object):
 
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, db_credentials=None, *args, **kwargs):
+    def __init__(self, credentials=None, *args, **kwargs):
         """initializes base data loader"""
 
         super(BaseDataLoader, self).__init__(*args, **kwargs)
 
         self.con = None
-        self.db_credentials = None
+        self.credentials = None
         self._sql_statement = None
         self._chunk_size = None
         self._chunk_values = None
@@ -33,9 +33,9 @@ class BaseDataLoader(object):
         #set _chunk_values
         self._reset_chunk_values()
 
-        #set db_credentials only if argument was set
-        if db_credentials:
-            self.set_db_credentials(db_credentials)
+        #set credentials only if argument was set
+        if credentials:
+            self.set_credentials(credentials)
 
     def set_sql_statement(self, sql_statement):
         """sets default sql_statement"""
@@ -73,10 +73,10 @@ class BaseDataLoader(object):
 
         raise NotImplementedError
 
-    def set_db_credentials_from_dsn(self, dsn):
+    def set_credentials_from_dsn(self, dsn):
         """sets credentials from dsn"""
 
-        self.set_db_credentials(self.parse_dsn(dsn))
+        self.set_credentials(self.parse_dsn(dsn))
 
     @staticmethod
     def parse_dsn(dsn):
@@ -86,7 +86,7 @@ class BaseDataLoader(object):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def set_db_credentials(self, db_credentials):
+    def set_credentials(self, credentials):
         """sets the database credentials"""
 
     def _get_connection(self, new_con=True, verbose=True):
@@ -149,7 +149,7 @@ class BaseDataLoader(object):
             print 'Yielding data rows: %d to %d'%(offset, min(len(data), offset+chunk_size) -1)
             yield data[offset:offset+chunk_size]
 
-    @_check_attr_set('db_credentials')
+    @_check_attr_set('credentials')
     def run_statement(self, sql_statement=None, new_con=True, save_con=False,
                     fetch_data=False, commit=False, params=None, multiple_values=None,
                     verbose=True):

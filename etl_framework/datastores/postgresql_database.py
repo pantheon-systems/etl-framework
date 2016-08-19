@@ -19,9 +19,9 @@ class PostgreSqlDatabase(SqlDatabaseInterface):
         """
 
         return psycopg2.connect(
-            host=self.db_credentials[0],
-            port=self.db_credentials[1],
-            user=self.db_credentials[2],
-            password=self.db_credentials[3],
-            database=self.db_credentials[4],
+            host=self.credentials[0],
+            port=self.credentials[1],
+            user=self.credentials[2],
+            password=self.credentials[3],
+            database=self.credentials[4],
         )

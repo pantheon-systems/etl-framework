@@ -16,7 +16,7 @@ class BaseLoader(SetConfigMixin):
 
         super(BaseLoader, self).__init__(*args, **kwargs)
 
-        self.set_config_and_db_credentials(config)
+        self.set_config_and_credentials(config)
 
     def load(self, row):
         """stuff"""

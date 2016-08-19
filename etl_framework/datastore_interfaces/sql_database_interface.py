@@ -33,12 +33,12 @@ class SqlDatabaseInterface(DatastoreInterface):
     def create_from_dsn(cls, dsn):
         """creates instance of data_loader from dsn (i.e. a sql url)"""
 
-        return cls(db_credentials=cls.parse_dsn(dsn))
+        return cls(credentials=cls.parse_dsn(dsn))
 
-    def set_db_credentials_from_dsn(self, dsn):
+    def set_credentials_from_dsn(self, dsn):
         """sets credentials from dsn"""
 
-        self.set_db_credentials(self.parse_dsn(dsn))
+        self.set_credentials(self.parse_dsn(dsn))
 
     @staticmethod
     def parse_dsn(dsn):
@@ -55,13 +55,13 @@ class SqlDatabaseInterface(DatastoreInterface):
 
         return (host, port, user, password, database)
 
-    def set_db_credentials(self, db_credentials):
+    def set_credentials(self, credentials):
         """sets the database credentials"""
 
-        if len(db_credentials) != 5:
-            raise Exception('Db credentials must be array of 5 items. %d given'%len(db_credentials))
+        if len(credentials) != 5:
+            raise Exception('Db credentials must be array of 5 items. %d given'%len(credentials))
 
-        self.db_credentials = db_credentials
+        self.credentials = credentials
 
     def get_connection(self):
         """Satisfies Datastore Interface"""

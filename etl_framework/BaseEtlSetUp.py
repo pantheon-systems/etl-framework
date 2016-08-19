@@ -170,7 +170,7 @@ class BaseEtlSetUp(object):
         """do set up for etl"""
 
         self._set_bi_dsn()
-        self.sql_database.set_db_credentials_from_dsn(self.get_bi_dsn())
+        self.sql_database.set_credentials_from_dsn(self.get_bi_dsn())
 
         #set start time of etl job and get cutoff value from SQL db
         self.run_etl_job_start_statement()

@@ -29,7 +29,7 @@ class BaseMySqlLoader(BaseDataLoader):
         #self.passwd = None
         #self.database = None
 
-        #this will run set_db_credentials
+        #this will run set_credentials
         super(BaseMySqlLoader, self).__init__(*args, **kwargs)
 
     @staticmethod
@@ -53,13 +53,13 @@ class BaseMySqlLoader(BaseDataLoader):
 
         return cls(cls.parse_dsn(dsn))
 
-    def set_db_credentials(self, db_credentials):
+    def set_credentials(self, credentials):
         """sets the credentials"""
 
-        if len(db_credentials) != 5:
-            raise Exception('Db credentials must be array of 5 items. %d given'%len(db_credentials))
+        if len(credentials) != 5:
+            raise Exception('Db credentials must be array of 5 items. %d given'%len(credentials))
 
-        self.db_credentials = db_credentials
+        self.credentials = credentials
 
         #self.host = db_host
         #self.port = db_port
@@ -85,11 +85,11 @@ class BaseMySqlLoader(BaseDataLoader):
         """
         returns new sql connection object
         """
-        con = MySQLdb.connect(host=self.db_credentials[0],
-                              port=self.db_credentials[1],
-                              user=self.db_credentials[2],
-                              passwd=self.db_credentials[3],
-                              db=self.db_credentials[4],
+        con = MySQLdb.connect(host=self.credentials[0],
+                              port=self.credentials[1],
+                              user=self.credentials[2],
+                              passwd=self.credentials[3],
+                              db=self.credentials[4],
                               charset='utf8')
 
         return con

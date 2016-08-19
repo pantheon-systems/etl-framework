@@ -12,16 +12,16 @@ class SetConfigMixin(object):
 
         self.config = config
 
-    def set_config_and_db_credentials(self, config):
+    def set_config_and_credentials(self, config):
         """sets config"""
 
         self.set_config(config)
 
         if config:
-            self.set_db_credentials_from_config()
+            self.set_credentials_from_config()
             self.clear_connection()
 
-    def set_db_credentials_from_config(self):
+    def set_credentials_from_config(self):
         """stuff"""
 
         raise NotImplementedError

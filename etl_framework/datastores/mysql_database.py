@@ -5,7 +5,7 @@
 
 import MySQLdb
 
-from etl_framework.datastore_interface.sql_database_interface import SqlDatabaseInterface
+from etl_framework.datastore_interfaces.sql_database_interface import SqlDatabaseInterface
 
 class MySqlDatabase(SqlDatabaseInterface):
     """loads data into database"""

@@ -1,5 +1,10 @@
 """some exceptions"""
 
+class InvalidCredentialsException(Exception):
+    """Raise when credentials arent valid"""
+
+    pass
+
 class EnvironmentVariableNotSetException(Exception):
     """Raise this when an environment variable isn't set"""
 

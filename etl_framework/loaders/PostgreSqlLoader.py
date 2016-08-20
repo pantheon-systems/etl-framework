@@ -4,7 +4,7 @@
 #pylint: disable=too-many-arguments
 #pylint: disable=abstract-class-instantiated
 
-from etl_framework.datastores import PostgreSqlDatabase
+from etl_framework.datastores.postgresql_database import PostgreSqlDatabase
 from etl_framework.BaseLoader import BaseLoader
 
 class PostgreSqlLoader(

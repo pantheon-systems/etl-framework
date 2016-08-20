@@ -4,7 +4,7 @@
 #pylint: disable=too-many-arguments
 #pylint: disable=abstract-class-instantiated
 
-from etl_framework.datastores import MySqlDatabase
+from etl_framework.datastores.mysql_database import MySqlDatabase
 from BaseLoader import BaseLoader
 
 class Loader(

@@ -1,1 +1,2 @@
-raise Exception("Class has moved. Import SqlDatabaseInterface from etl_framework.datastore_interfaces instead!!")
+raise Exception("Class has moved. Import `MySqlDatabase` from \
+    `etl_framework.datastore_interfaces.mysql_database instead`!")

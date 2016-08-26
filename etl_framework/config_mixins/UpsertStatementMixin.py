@@ -32,7 +32,7 @@ class MySqlUpsertStatementMixin(MySqlInsertStatementMixin):
 
         sql = SqlClause(phrases=[insert_statement, update_statement],
                         phrase_indents=0,
-                        phrase_separator='\n').get_sql_clause()
+                        phrase_separator='\n')
 
         if statement_string:
             sql = sql.get_sql_clause()

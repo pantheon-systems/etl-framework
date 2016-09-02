@@ -37,7 +37,8 @@ class CreateTableStatementMixin(object):
                                 primary_key=None,
                                 unique_keys=None,
                                 indexes=None,
-                                statement_string=False):
+                                statement_string=False,
+                                if_not_exists=False):
         """returns create table statement"""
 
         schema_lines = ['`{0}` {1}'.format(field, datatype) for field, datatype in fields.iteritems()]
@@ -49,17 +50,22 @@ class CreateTableStatementMixin(object):
         schema_lines.extend(cls.create_constraint_lines('unique', unique_keys))
         schema_lines.extend(cls.create_constraint_lines('index', indexes))
 
+        if if_not_exists:
+            create_table_header = 'CREATE TABLE IF NOT EXISTS `{}` ('
+        else:
+            create_table_header = 'CREATE TABLE `{}` ('
+
         if statement_string:
-            return [], SqlClause(header='CREATE TABLE `{}` ('.format(table),
+            return [], SqlClause(header=create_table_header.format(table),
                                 phrases=schema_lines,
                                 footer=') ENGINE=InnoDB DEFAULT CHARSET=utf8').get_sql_clause()
 
         else:
-            return [], SqlClause(header='CREATE TABLE `{}` ('.format(table),
+            return [], SqlClause(header=create_table_header.format(table),
                                 phrases=schema_lines,
                                 footer=') ENGINE=InnoDB DEFAULT CHARSET=utf8')
 
-    def get_create_table_statement(self):
+    def get_create_table_statement(self, if_not_exists=False):
         """returns statement to upsert data"""
 
         return  self.create_create_table_statement(table=self.get_table(),
@@ -67,4 +73,5 @@ class CreateTableStatementMixin(object):
                                             primary_key=self.get_primary_key(),
                                             unique_keys=self.get_unique_keys(),
                                             indexes=self.get_indexes(),
-                                            statement_string=True)
+                                            statement_string=True,
+                                            if_not_exists=if_not_exists)

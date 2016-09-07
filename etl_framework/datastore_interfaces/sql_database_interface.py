@@ -167,11 +167,12 @@ class SqlDatabaseInterface(DatastoreInterface):
 
                 except self.CONNECTION_GONE_EXCEPTION:
                     print 'WARNING: Attempting reconnect to MySQL db. Uncommitted transactions will rollback!'
-                    con.ping(True)
-                    self._execute_statement(cursor=cursor,
-                                            sql_statement=sql_statement,
-                                            multiple_values=multiple_values,
-                                            params=params)
+                    con = self._get_connection(new_con=True)
+                    with closing(con.cursor()) as cursor:
+                        self._execute_statement(cursor=cursor,
+                                                sql_statement=sql_statement,
+                                                multiple_values=multiple_values,
+                                                params=params)
 
                 if verbose:
                     print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )

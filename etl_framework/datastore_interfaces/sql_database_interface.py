@@ -46,20 +46,37 @@ class SqlDatabaseInterface(DatastoreInterface):
         parse dsn and outputs credential parameters
         """
 
-        url_segments = dsn.split(':')
-        user = url_segments[1].replace('/', '')
-        password, host = url_segments[2].split('@')
-        port, database = url_segments[3].split('/')
+        # Unix socket connection
+        if '(' in dsn:
+            segment_start, segment_end = dsn.split('@')
+            user, password = segment_start.replace('//', '').split(':')[1:3]
+            unix_socket = segment_end[
+                segment_end.find("(") + 1: segment_end.find(")")
+            ]
 
-        port = int(port)
+            database = segment_end.split('/')[-1]
 
-        return (host, port, user, password, database)
+            return (user, password, unix_socket, database)
+
+        # Tcp connection
+        else:
+
+            url_segments = dsn.split(':')
+            user = url_segments[1].replace('/', '')
+            password, host = url_segments[2].split('@')
+            port, database = url_segments[3].split('/')
+
+            port = int(port)
+
+            return (host, port, user, password, database)
 
     def set_credentials(self, credentials):
         """sets the database credentials"""
 
-        if len(credentials) != 5:
-            raise Exception('Db credentials must be array of 5 items. %d given'%len(credentials))
+        if len(credentials) not in [4, 5]:
+            raise Exception('Db credentials must be array of 4(for unix socket) or ' +\
+                '5(for tcp connection) items. %d given'%len(credentials)
+            )
 
         self.credentials = credentials
 

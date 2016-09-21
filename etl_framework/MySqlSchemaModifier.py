@@ -47,3 +47,7 @@ class MySqlSchemaModifier(MySqlDatabase,
         self.drop_table()
         self.create_table()
 
+    def truncate_table(self):
+        """ stuff """
+
+        self.run_statement(self.config.get_truncate_table_statement()[1], commit=True)

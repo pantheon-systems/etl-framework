@@ -18,9 +18,25 @@ class MySqlDatabase(SqlDatabaseInterface):
         returns new sql connection object
         """
 
-        return MySQLdb.connect(host=self.credentials[0],
-                              port=self.credentials[1],
-                              user=self.credentials[2],
-                              passwd=self.credentials[3],
-                              db=self.credentials[4],
-                              charset='utf8')
+        # Unix socket connection
+        if len(self.credentials) == 4:
+
+            return MySQLdb.connect(
+                user=self.credentials[0],
+                passwd=self.credentials[1],
+                unix_socket=self.credentials[2],
+                db=self.credentials[3],
+                charset='utf8'
+            )
+
+        # Tcp connection
+        elif len(self.credentials) == 5:
+
+            return MySQLdb.connect(
+                host=self.credentials[0],
+                port=self.credentials[1],
+                user=self.credentials[2],
+                passwd=self.credentials[3],
+                db=self.credentials[4],
+                charset='utf8'
+            )

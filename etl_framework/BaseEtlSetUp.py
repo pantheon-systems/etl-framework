@@ -33,6 +33,25 @@ class BaseEtlSetUp(object):
     #ETL_JOB_ID = None
     #ETL_JOB_NAME = None
 
+    ETL_JOB_CREATE_TABLE_IF_NOT_EXISTS_STATEMENT =\
+    """
+    CREATE TABLE IF NOT EXISTS `{0}` (
+      `id` int(8) NOT NULL AUTO_INCREMENT,
+      `{1}` int(8) NOT NULL,
+      `{2}` varchar(31) DEFAULT NULL,
+      `{3}` datetime DEFAULT NULL,
+      `{4}` datetime DEFAULT NULL,
+      PRIMARY KEY (`id`),
+      KEY `job_id` (`{1}`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8
+    """.format(
+        ETL_JOBS_TABLE,
+        ETL_JOBS_ID_FIELD,
+        ETL_JOBS_NAME_FIELD,
+        ETL_JOBS_CUTOFF_AT_FIELD,
+        ETL_JOBS_STARTED_AT_FIELD
+    )
+
     ETL_JOB_WHERE_PHRASE = '\n'.join([
                                     'WHERE',
                                     '\t{0} = %d'.format(ETL_JOBS_ID_FIELD),
@@ -185,6 +204,7 @@ class BaseEtlSetUp(object):
         self.sql_database.set_credentials_from_dsn(self.get_bi_dsn())
 
         #set start time of etl job and get cutoff value from SQL db
+        self.create_etl_job_table_if_not_exists()
         self.create_etl_job_row_if_not_exists()
         self.run_etl_job_start_statement()
         self.set_etl_job_cutoff_value(datetime_cutoff=datetime_cutoff)
@@ -193,6 +213,12 @@ class BaseEtlSetUp(object):
         """do teardown for etl"""
 
         self.run_etl_job_cutoff_statement()
+
+    def create_etl_job_table_if_not_exists(self):
+        """ Creates _etl_job_ table if it doesnt already exist"""
+
+        sql_statement = self.ETL_JOB_CREATE_TABLE_IF_NOT_EXISTS_STATEMENT
+        self.sql_database.run_statement(sql_statement)
 
     def create_etl_job_row_if_not_exists(self):
         """ Inserts the requisite row into the ETL job table if it does not yet exist """

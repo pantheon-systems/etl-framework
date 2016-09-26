@@ -50,11 +50,11 @@ class SqlDatabaseInterface(DatastoreInterface):
         if '(' in dsn:
             segment_start, segment_end = dsn.split('@')
             user, password = segment_start.replace('//', '').split(':')[1:3]
-            unix_socket = segment_end[
-                segment_end.find("(") + 1: segment_end.find(")")
-            ]
+            paren_start = segment_end.find("(")
+            paren_end = segment_end.find(")")
+            unix_socket = segment_end[paren_start + 1: paren_end]
 
-            database = segment_end.split('/')[-1]
+            database = segment_end[paren_end + 1:].strip("/")
 
             return (user, password, unix_socket, database)
 

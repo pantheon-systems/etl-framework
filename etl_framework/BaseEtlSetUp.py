@@ -201,11 +201,14 @@ class BaseEtlSetUp(object):
         """do set up for etl"""
 
         self._set_bi_dsn()
-        self.sql_database.set_credentials_from_dsn(self.get_bi_dsn())
 
-        #set start time of etl job and get cutoff value from SQL db
+        # This also sets the db_credentials
+        self.create_database_if_not_exists()
+
         self.create_etl_job_table_if_not_exists()
         self.create_etl_job_row_if_not_exists()
+
+        #set start time of etl job and get cutoff value from SQL db
         self.run_etl_job_start_statement()
         self.set_etl_job_cutoff_value(datetime_cutoff=datetime_cutoff)
 
@@ -213,6 +216,25 @@ class BaseEtlSetUp(object):
         """do teardown for etl"""
 
         self.run_etl_job_cutoff_statement()
+
+    def create_database_if_not_exists(self):
+        """creates database if it doesn't exist"""
+
+        #This assumes dsn has a database
+        dsn = self.get_bi_dsn()
+        db_start = dsn.rfind('/')
+        dsn_without_db = dsn[: db_start]
+        db = dsn[db_start + 1:]
+
+        # Set credentials without the database in order to create db
+        self.sql_database.set_credentials_from_dsn(dsn_without_db)
+
+        self.sql_database.run_statement(
+            "CREATE DATABASE IF NOT EXISTS {}".format(db)
+        )
+
+        # Reset credentials to dsn
+        self.sql_database.set_credentials_from_dsn(dsn)
 
     def create_etl_job_table_if_not_exists(self):
         """ Creates _etl_job_ table if it doesnt already exist"""

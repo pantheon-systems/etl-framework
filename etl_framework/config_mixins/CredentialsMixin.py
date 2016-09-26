@@ -7,6 +7,7 @@ class CredentialsMixin(object):
     """parses configuration files"""
 
     CREDENTIALS_ATTR = 'credentials'
+    CREDENTIALS_TYPE = 'cred_type'
 
     @check_config_attr_default_none
     def get_credentials(self):
@@ -19,3 +20,6 @@ class CredentialsMixin(object):
         """yup"""
 
         self.config[self.CREDENTIALS_ATTR] = credentials
+
+    def set_credentials_from_credential_type(self, etl_setup):
+        self.set_credentials(getattr(etl_setup, self.config[self.CREDENTIALS_TYPE]))

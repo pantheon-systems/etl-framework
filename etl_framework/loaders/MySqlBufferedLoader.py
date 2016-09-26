@@ -4,11 +4,11 @@
 #pylint: disable=too-many-arguments
 #pylint: disable=abstract-class-instantiated
 
-from etl_framework.loaders import PostgreSqlLoader
+from etl_framework.loaders.MySqlLoader import MySqlLoader
 from etl_framework.loader_mixins.BufferMixin import BufferMixin
 
 
-class PostgreSqlBufferedLoader(PostgreSqlLoader, BufferMixin):
+class MySqlBufferedLoader(MySqlLoader, BufferMixin):
     """loads data into database"""
 
     def load_buffered(self):
@@ -24,4 +24,4 @@ class PostgreSqlBufferedLoader(PostgreSqlLoader, BufferMixin):
     def load(self, values):
         """stuff"""
 
-        self.write_to_buffer(values)
+        self.write_to_buffer(values.row_values(self.config.get_sql_fields()))

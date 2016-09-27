@@ -223,7 +223,7 @@ class BaseEtlSetUp(object):
         #This assumes dsn has a database
         dsn = self.get_bi_dsn()
         db_start = dsn.rfind('/')
-        dsn_without_db = dsn[: db_start]
+        dsn_without_db = dsn[: db_start + 1]
         db = dsn[db_start + 1:]
 
         # Set credentials without the database in order to create db

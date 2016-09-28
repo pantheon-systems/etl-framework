@@ -20,7 +20,7 @@ class MySqlUpsertStatementMixin(MySqlInsertStatementMixin):
 
         coalesce_string = cls.COALESCE_MAP[coalesce]
         sql_obj = SqlClause(header='ON DUPLICATE KEY UPDATE',
-            phrases=['{} = '.format(field) + coalesce_string.format(field) for field in fields])
+            phrases=['`{}` = '.format(field) + coalesce_string.format(field) for field in fields])
 
         return sql_obj
 

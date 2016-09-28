@@ -14,8 +14,10 @@ class JobMixin(object):
     SCHEMA_CONFIG_ATTR = 'schemas'
     EXTRACTOR_CONFIG_ATTR = 'extractors'
     LOADER_CONFIG_ATTR = 'loaders'
+    ENVIRONMENT_CONFIG_ATTR = 'environment'
     CONFIG_DIR_ATTR = 'config_dir'
     CONFIG_FILENAMES_ATTR = 'config_filenames'
+    CONFIG_FILENAME_ATTR = 'config_filename'
 
     @check_config_attr
     def get_job_id(self):
@@ -41,6 +43,23 @@ class JobMixin(object):
         """gets config directory of configurations"""
 
         return configurations[cls.CONFIG_DIR_ATTR]
+
+    @classmethod
+    @check_config_attr
+    def get_configuration_filename(cls, configuration):
+        """gets config filename of singular configuration"""
+
+        return configuration[cls.CONFIG_FILENAME_ATTR]
+
+    @classmethod
+    @check_config_attr
+    def get_configuration_filepath(cls, configuration):
+        """ gets the filepath of a singular configuration """
+
+        config_dir = cls.get_configuration_directory(configuration)
+        filename = cls.get_configuration_filename(configuration)
+
+        return os.path.join(config_dir, filename)
 
     @classmethod
     @check_config_attr
@@ -83,6 +102,18 @@ class JobMixin(object):
         """gets schema configurations"""
 
         return self.get_configuration_groups()[self.SCHEMA_CONFIG_ATTR]
+
+    @check_config_attr
+    def get_environment_configuration(self):
+        """gets environment configuration"""
+
+        return self.config[self.ENVIRONMENT_CONFIG_ATTR]
+
+    @check_config_attr
+    def get_environment_configuration_filepath(self):
+        """ returns environment configuration filepath """
+
+        return self.get_configuration_filepath(self.get_environment_configuration())
 
     @check_config_attr
     def iter_transformer_configuration_filepaths(self):

@@ -1,0 +1,29 @@
+{
+    "job_id": 0,
+    "job_name": "test",
+    "environment": {
+        "config_dir": "fixtures",
+        "config_filename": "environment.json"
+    },
+    "configuration_groups": {
+        "extractors": {
+            "config_dir": "fixtures", 
+            "config_filenames": [
+                "extractor.json"
+            ]
+        }, 
+        "loaders": {
+            "config_dir": "fixtures", 
+            "config_filenames": [
+                "loader.json"
+            ]
+        }, 
+        "transformers": {
+            "config_dir": "fixtures", 
+            "config_filenames": [
+                "transformer.json"
+            ]
+        }
+    }, 
+    "identifier": "job.test"
+}

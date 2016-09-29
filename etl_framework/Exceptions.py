@@ -1,5 +1,10 @@
 """some exceptions"""
 
+class EnvironmentSettingNotFoundException(Exception):
+    """ Raises an exception when an environment setting cant be found from source """
+
+    pass
+
 class EnvironmentVariableNotSetException(Exception):
     """Raise this when an environment variable isn't set"""
 

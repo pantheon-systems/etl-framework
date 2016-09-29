@@ -1,0 +1,23 @@
+{
+    "environment_settings": [
+        {
+            "default": 0,
+            "from_attribute": "environment_variable_attribute",
+            "to_attribute": "A",
+            "type": "environment_variable"
+        },
+        {
+            "default": 1,
+            "from_filepath": "test.txt",
+            "to_attribute": "B",
+            "type": "file"
+        },
+        {
+            "default": 2,
+            "from_filepath": "test.json",
+            "to_attribute": "C",
+            "type": "json_file"
+        }
+    ],
+    "identifier": "test_environment_config"
+}

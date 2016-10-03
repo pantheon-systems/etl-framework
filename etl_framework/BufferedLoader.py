@@ -1,2 +1,2 @@
-raise Exception("Class has moved. Import `BufferedLoader` from \
-    `etl_framework.datastores.MySqlBufferedLoader instead`!")
+raise Exception("Class has moved. Import `MySqlBufferedLoader` from \
+    `etl_framework.loaders.MySqlBufferedLoader instead`!")

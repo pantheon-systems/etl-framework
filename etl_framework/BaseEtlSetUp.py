@@ -38,7 +38,7 @@ class BaseEtlSetUp(object):
     CREATE TABLE IF NOT EXISTS `{0}` (
       `id` int(8) NOT NULL AUTO_INCREMENT,
       `{1}` int(8) NOT NULL,
-      `{2}` varchar(31) DEFAULT NULL,
+      `{2}` varchar(127) DEFAULT NULL,
       `{3}` datetime DEFAULT NULL,
       `{4}` datetime DEFAULT NULL,
       PRIMARY KEY (`id`),

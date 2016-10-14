@@ -5,52 +5,50 @@
 #pylint: disable=abstract-class-instantiated
 
 from etl_framework.datastores.mysql_database import MySqlDatabase
-from loader_mixins.SetConfigMixin import SetConfigMixin
+from etl_framework.schemas.schema_interface import SchemaInterface
 
-print "WARNING this class is deprecated.\n" + \
-    "Use class etl_framework.schemas.mysql_schema.MySqlSchema instead"
-
-class MySqlSchemaModifier(MySqlDatabase,
-                        SetConfigMixin):
+class MySqlSchema(
+    SchemaInterface,
+    MySqlDatabase
+):
     """This inherits from a datastore class and uses SetConfigMixin"""
-
-    def __init__(self, config=None, *args, **kwargs):
-        """initializes base data loader"""
-
-        self.config = None
-
-        super(MySqlSchemaModifier, self).__init__(*args, **kwargs)
-
-        self.set_config_and_credentials(config)
 
     def set_credentials_from_config(self):
         """stuff"""
 
         self.set_credentials_from_dsn(self.config.get_dsn())
 
-    def drop_table(self):
+    def delete(self):
         """stuff"""
 
         self.run_statement(self.config.get_drop_table_statement()[1], commit=True)
 
-    def create_table(self):
+    def create(self):
         """stuff"""
 
         self.run_statement(self.config.get_create_table_statement()[1], commit=True)
 
-    def create_table_if_not_exists(self):
+    def create_if_not_exists(self):
         """stuff"""
 
         self.run_statement(self.config.get_create_table_statement(if_not_exists=True)[1],
             commit=True)
 
-    def recreate_table(self):
+    def delete_if_exists(self):
+        """stuff"""
+
+        # Drop statement already only drops if it doesnt exist
+        self.run_statement(self.config.get_drop_table_statement()[1],
+            commit=True
+        )
+
+    def recreate(self):
         """stuff"""
 
         self.drop_table()
         self.create_table()
 
-    def truncate_table(self):
+    def truncate(self):
         """ stuff """
 
         self.run_statement(self.config.get_truncate_table_statement()[1], commit=True)

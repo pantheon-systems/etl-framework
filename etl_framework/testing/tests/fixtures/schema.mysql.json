@@ -1,0 +1,16 @@
+{
+    "config_class": "SqlSchemaConfig",
+    "etl_class": "MySqlSchema",
+    "fields": {
+		"field1": "varchar(31)",
+		"field2": "int(8)"
+    },
+    "identifier": "schema.mysql",
+    "indexes": [
+    ],
+    "primary_key": [
+    ],
+    "table": "test",
+    "unique_keys": [
+    ]
+}

@@ -55,10 +55,12 @@ class MySqlResultTestCases(unittest.TestCase):
             ['field2', 'field1']
         )
 
+        config = MagicMock()
+        config.schema = self.schema
+        config.expected_result = None
+        config.match_type = "exact"
         result = MySqlResult(
-            schema=self.schema,
-            expected_result=None,
-            match_type='exact'
+            config=config
         )
 
         raw_result = result.raw_result()

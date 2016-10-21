@@ -18,6 +18,21 @@ class ResultConfig(BaseConfig):
         return self.config["schema"]["from_filepath"]
 
     @property
+    def schema(self):
+
+        return self.config["schema"]
+
+    @schema.setter
+    def schema(self, schema):
+
+        self.config["schema"] = schema
+
+    @property
+    def expected_result(self):
+
+        return self.config["expected_result"]
+
+    @property
     def data(self):
 
         return self.config["data"]

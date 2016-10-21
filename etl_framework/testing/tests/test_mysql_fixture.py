@@ -61,9 +61,11 @@ class MySqlFixtureTestCases(unittest.TestCase):
         mock_run_statement = MagicMock()
         MySqlDatabase.run_statement = mock_run_statement
 
+        config = MagicMock()
+        config.schema = self.schema
+        config.data = self.data
         fixture = MySqlFixture(
-            schema=self.schema,
-            data=self.data
+            config=config
         )
 
         fixture.load()

@@ -2,6 +2,7 @@
 import unittest
 from mock import MagicMock
 
+from etl_framework.testing.configs.fixture import FixtureConfig
 from etl_framework.testing.fixtures import FixtureInterface, \
     Fixtures
 
@@ -44,9 +45,14 @@ class FixtureInterfaceTestCases(unittest.TestCase):
         self.data = [{}]
         FixtureInterface.load = MagicMock()
 
+        self.config = FixtureConfig()
+        self.config.config = {
+            "schema": self.mock_schema,
+            "data": self.data
+        }
+
         self.fixture = FixtureInterface(
-            schema=self.mock_schema,
-            data=self.data
+            config=self.config
         )
 
     def test_set_up_calls_schema_create_if_not_exists(self):

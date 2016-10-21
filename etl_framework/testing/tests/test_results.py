@@ -2,6 +2,7 @@
 import unittest
 from mock import MagicMock
 
+from etl_framework.testing.configs.result import ResultConfig
 from etl_framework.testing.results import ResultInterface, \
     Results
 
@@ -60,10 +61,16 @@ class ResultInterfaceTestCases(unittest.TestCase):
         ResultInterface.raw_result = MagicMock()
         ResultInterface.raw_result.return_value = self.raw_result
 
+        self.config = ResultConfig()
+        self.config.config = {
+            "schema": self.mock_schema,
+            "expected_result": self.expected_result,
+            "match_type": "exact"
+        }
+
+
         self.result = ResultInterface(
-            schema=self.mock_schema,
-            expected_result=self.expected_result,
-            match_type="exact"
+            config=self.config
         )
 
     def test_actual_result_with_match_type_exact(self):

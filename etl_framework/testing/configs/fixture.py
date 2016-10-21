@@ -13,6 +13,16 @@ class FixtureConfig(BaseConfig):
         return self.config["schema"]["from_filepath"]
 
     @property
+    def schema(self):
+
+        return self.config["schema"]
+
+    @schema.setter
+    def schema(self, schema):
+
+        self.config["schema"] = schema
+
+    @property
     def data(self):
 
         return self.config["data"]

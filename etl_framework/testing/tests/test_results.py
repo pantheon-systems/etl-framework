@@ -76,7 +76,7 @@ class ResultInterfaceTestCases(unittest.TestCase):
     def test_actual_result_with_match_type_exact(self):
         """stuff"""
 
-        self.result.match_type = 'exact'
+        self.config.config["match_type"] = 'exact'
 
         actual_result = self.result.actual_result()
         self.assertEqual(actual_result, self.raw_result)
@@ -84,7 +84,7 @@ class ResultInterfaceTestCases(unittest.TestCase):
     def test_actual_result_with_match_type_subset(self):
         """stuff"""
 
-        self.result.match_type = 'subset'
+        self.config.config["match_type"] = 'subset'
 
         actual_result = self.result.actual_result()
         self.assertEqual(actual_result, self.subset_result)
@@ -92,7 +92,7 @@ class ResultInterfaceTestCases(unittest.TestCase):
     def test_actual_result_with_unsupported_match_type_raises_exception(self):
         """stuff"""
 
-        self.result.match_type = 'NO TYPE'
+        self.config.config["match_type"] = 'NO TYPE'
 
         self.assertRaises(Exception, self.result.actual_result)
 

@@ -1,0 +1,14 @@
+{
+    "config_class": "SqlSchemaConfig",
+    "etl_class": "PostgreSqlSchema",
+    "fields": {
+		"field1": "character varying (31)",
+		"field2": "integer"
+    },
+    "identifier": "schema.postgresql",
+    "primary_key": [
+    ],
+    "table": "test",
+    "unique_keys": [
+    ]
+}

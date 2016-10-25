@@ -8,9 +8,9 @@ class ResultConfig(BaseConfig):
     """parses configuration files"""
 
     @property
-    def error_message(self):
+    def message(self):
 
-        return self.config["error_message"]
+        return self.config["message"]
 
     @property
     def schema_from_filepath(self):
@@ -36,3 +36,8 @@ class ResultConfig(BaseConfig):
     def data(self):
 
         return self.config["data"]
+
+    @property
+    def match_type(self):
+
+        return self.config["match_type"]

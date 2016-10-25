@@ -2,7 +2,7 @@
 
 from etl_framework.testing.results import ResultInterface
 
-class MySqlResult(ResultInterface):
+class PostgreSqlResult(ResultInterface):
     """result for mysql tables"""
 
     def raw_result(self):

@@ -41,6 +41,8 @@ class BaseEtlSetUp(object):
       `{2}` varchar(127) DEFAULT NULL,
       `{3}` datetime DEFAULT NULL,
       `{4}` datetime DEFAULT NULL,
+      estimated_completion_at datetime,
+      record_updated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (`id`),
       KEY `job_id` (`{1}`)
     ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8

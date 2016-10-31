@@ -19,6 +19,16 @@ class EnvironmentConfig(BaseConfig):
 
         self.environment = None
 
+    def __getattr__(self, key):
+        """Get attribute on config if not in EtlClass object"""
+
+        # Get attribute if Config doesnt exist
+        # we don't need a special call to super here because getattr is only
+        # called when an attribute is NOT found in the instance's dictionary
+        environment = self.__dict__["environment"]
+
+        return environment[key]
+
     def get_environment_settings(self):
         """ stuff """
 

@@ -41,8 +41,7 @@ class MySqlResultTestCases(unittest.TestCase):
         self.env.set_environment()
 
         # Setup config
-        config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH)
-        config.set_dsn(self.env.environment['mysql_dsn'])
+        config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH, environment=self.env)
         self.schema = config.create(etl_classes=mysql_schema)
 
     def test_raw_result(self):

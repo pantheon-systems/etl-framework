@@ -18,6 +18,10 @@ class EnvironmentConfig(BaseConfig):
         super(EnvironmentConfig, self).__init__(*args, **kwargs)
 
         self.environment = None
+        # NOTE config_dict should be a mandatory argument to instantiate config
+        # In meantime, only set environment if self.config is set
+        if self.config:
+            self.set_environment()
 
     def __getattr__(self, key):
         """Get attribute on config if not in EtlClass object"""

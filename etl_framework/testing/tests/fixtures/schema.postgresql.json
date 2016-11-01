@@ -1,6 +1,7 @@
 {
     "config_class": "SqlSchemaConfig",
     "etl_class": "PostgreSqlSchema",
+    "credentials_attribute": "postgresql_dsn",
     "fields": {
 		"field1": "character varying (31)",
 		"field2": "integer"

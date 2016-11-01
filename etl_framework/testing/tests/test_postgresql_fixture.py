@@ -50,8 +50,7 @@ class PostgreSqlFixtureTestCases(unittest.TestCase):
         self.data = json.load(open(self.DATA_FILEPATH))
 
         # Setup config
-        config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH)
-        config.set_dsn(self.env.environment['postgresql_dsn'])
+        config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH, environment=self.env)
 
         self.schema = config.create(etl_classes=postgresql_schema)
 

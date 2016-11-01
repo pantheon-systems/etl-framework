@@ -13,17 +13,21 @@ class BaseConfig(object):
     ETL_CLASS_ATTR = 'etl_class'
     CONFIG_CLASS_ATTR = 'config_class'
 
-    def __init__(self, config_dir=None, config_filename=None, config_dict=None):
+    def __init__(self, config_dir=None, config_filename=None, config_dict=None, environment=None):
         """intialize Parser"""
 
+        self.environment = environment
         self.config_dir = None
         self.config_filename = None
         #self.config will be set later
 
         # If you create config with config_dict, filename and directory attributes
         # will be left as None
+
+        self.config = config_dict
+
         if config_dict:
-            self.config = config_dict
+            pass
 
         elif config_dir:
 
@@ -114,7 +118,7 @@ class BaseConfig(object):
         config_class_name = self.get_config_class()
         ConfigClass = getattr(configs, config_class_name)
 
-        return ConfigClass(config_dict=self.config)
+        return ConfigClass(config_dict=self.config, environment=self.environment)
 
     def create(self, etl_classes):
         """

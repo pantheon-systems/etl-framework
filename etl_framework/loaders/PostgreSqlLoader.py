@@ -12,9 +12,3 @@ class PostgreSqlLoader(
     PostgreSqlDatabase,
 ):
     """loads data into database"""
-
-    def set_credentials_from_config(self):
-        """stuff"""
-
-        self.set_credentials_from_dsn(self.config.get_dsn())
-

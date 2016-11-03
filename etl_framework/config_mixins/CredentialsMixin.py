@@ -9,6 +9,18 @@ class CredentialsMixin(object):
     CREDENTIALS_ATTR = 'credentials'
     CREDENTIALS_TYPE = 'cred_type'
 
+    @property
+    def credentials_attribute(self):
+
+        return self.config["credentials_attribute"]
+
+    @property
+    def credentials(self):
+
+        credentials_attribute = self.credentials_attribute
+
+        return getattr(self.environment, credentials_attribute)
+
     @check_config_attr_default_none
     def get_credentials(self):
         """yup"""

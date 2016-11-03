@@ -18,11 +18,6 @@ class SetConfigMixin(object):
         self.set_config(config)
 
         if config:
-            self.set_credentials_from_config()
+            # Config must have a credentials attribute
+            self.set_credentials(config.credentials)
             self.clear_connection()
-
-    def set_credentials_from_config(self):
-        """stuff"""
-
-        raise NotImplementedError
-

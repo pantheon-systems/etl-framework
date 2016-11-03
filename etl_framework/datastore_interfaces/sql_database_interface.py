@@ -33,12 +33,15 @@ class SqlDatabaseInterface(DatastoreInterface):
     def create_from_dsn(cls, dsn):
         """creates instance of data_loader from dsn (i.e. a sql url)"""
 
-        return cls(credentials=cls.parse_dsn(dsn))
+        print "DEPRECATED : just instantiate class"
+        return cls(credentials=dsn)
 
     def set_credentials_from_dsn(self, dsn):
         """sets credentials from dsn"""
 
-        self.set_credentials(self.parse_dsn(dsn))
+        print "DEPRECATED : just use set_credentials"
+
+        self.set_credentials(dsn)
 
     @staticmethod
     def parse_dsn(dsn):
@@ -72,6 +75,9 @@ class SqlDatabaseInterface(DatastoreInterface):
 
     def set_credentials(self, credentials):
         """sets the database credentials"""
+
+        # NOTE credentials is a dsn string. We then convert to tuples
+        credentials = self.parse_dsn(credentials)
 
         if len(credentials) not in [4, 5]:
             raise Exception('Db credentials must be array of 4(for unix socket) or ' +\

@@ -11,7 +11,7 @@ class EtlClass(object):
 
         if key == "config":
             self.__dict__[key] = value
-        elif hasattr(self.config, key):
+        elif "config" in self.__dict__ and hasattr(self.config, key):
             setattr(self.config, key, value)
         else:
             self.__dict__[key] = value
@@ -22,6 +22,6 @@ class EtlClass(object):
         # Get attribute if Config doesnt exist
         # we don't need a special call to super here because getattr is only
         # called when an attribute is NOT found in the instance's dictionary
-        config = self.config
+        config = self.__dict__["config"]
         return getattr(config, key)
 

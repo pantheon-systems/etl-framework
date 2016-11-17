@@ -1,6 +1,7 @@
 {
     "config_class": "SqlSchemaConfig",
     "etl_class": "MySqlSchema",
+    "credentials_attribute": "mysql_dsn",
     "fields": {
 		"field1": "varchar(31)",
 		"field2": "int(8)"

@@ -180,3 +180,24 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         config.set_environment()
 
         self.assertEqual(config.environment, expected_environment)
+
+    def test_get_environment_attribute(self):
+        """ tests that environment variable can be accessed as attribute """
+
+        config = EnvironmentConfig()
+        config.environment = {"a_field": "a_value"}
+
+        self.assertEqual("a_value", config.a_field)
+
+    def test_get_non_existent_environment_attribute_raises_error(self):
+
+        config = EnvironmentConfig()
+        config.environment = {}
+
+        def test_function():
+
+            return config.a_field
+
+        self.assertRaises(KeyError, test_function)
+
+

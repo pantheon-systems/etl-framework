@@ -1,16 +1,16 @@
-"""tests mysql_result"""
+"""tests postgresql_result"""
 import os
 
 import unittest
 from mock import MagicMock
 
-from etl_framework.datastores.mysql_database import MySqlDatabase
+from etl_framework.datastores.postgresql_database import PostgreSqlDatabase
 from etl_framework.configs.environment import EnvironmentConfig
 from etl_framework.SqlSchemaConfig import SqlSchemaConfig
-from etl_framework.testing.mysql_result import MySqlResult
-from etl_framework.schemas import mysql_schema
+from etl_framework.testing.postgresql_result import PostgreSqlResult
+from etl_framework.schemas import postgresql_schema
 
-class MySqlResultTestCases(unittest.TestCase):
+class PostgreSqlResultTestCases(unittest.TestCase):
     """class for results tests"""
 
     FIXTURES_DIR = os.path.join(
@@ -20,7 +20,7 @@ class MySqlResultTestCases(unittest.TestCase):
 
     SCHEMA_FILEPATH = os.path.join(
         FIXTURES_DIR,
-        'schema.mysql.json'
+        'schema.postgresql.json'
     )
 
     ENVIRONMENT_FILEPATH = os.path.join(
@@ -42,13 +42,13 @@ class MySqlResultTestCases(unittest.TestCase):
 
         # Setup config
         config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH, environment=self.env)
-        self.schema = config.create(etl_classes=mysql_schema)
+        self.schema = config.create(etl_classes=postgresql_schema)
 
     def test_raw_result(self):
         """tests raw result method"""
 
         mock_run_statement = MagicMock()
-        MySqlDatabase.run_statement = mock_run_statement
+        PostgreSqlDatabase.run_statement = mock_run_statement
         mock_run_statement.return_value = (
             ((2L, u'value1'), ),
             ['field2', 'field1']
@@ -58,7 +58,7 @@ class MySqlResultTestCases(unittest.TestCase):
         config.schema = self.schema
         config.expected_result = None
         config.match_type = "exact"
-        result = MySqlResult(
+        result = PostgreSqlResult(
             config=config
         )
 

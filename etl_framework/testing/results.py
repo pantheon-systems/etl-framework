@@ -1,5 +1,7 @@
 """ Results classes """
 
+from etl_framework.etl_class import EtlClass
+
 class Results(object):
 
     def __init__(self, results):
@@ -25,18 +27,7 @@ class Results(object):
         for result in self.results:
             yield result.actual_and_expected_result()
 
-class ResultInterface(object):
-
-    def __init__(self, schema, expected_result, match_type):
-        """
-        schema : schema object
-        expected_result: list of dicts
-        match_type : current supported types are 'exact' and 'subset'
-        """
-
-        self.schema = schema
-        self.expected_result = expected_result
-        self.match_type = match_type
+class ResultInterface(EtlClass):
 
     def set_up(self):
         """ sets up"""

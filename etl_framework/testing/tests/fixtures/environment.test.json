@@ -4,6 +4,11 @@
             "from_attribute": "MYSQL_DSN",
             "to_attribute": "mysql_dsn",
             "type": "environment_variable"
+        },
+        {
+            "from_attribute": "POSTGRESQL_DSN",
+            "to_attribute": "postgresql_dsn",
+            "type": "environment_variable"
         }
     ],
     "identifier": "environment.test"

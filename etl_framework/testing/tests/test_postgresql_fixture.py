@@ -1,18 +1,18 @@
-"""tests mysql_fixture"""
+"""tests postgresql_fixture"""
 import os
 import json
 
 import unittest
 from mock import MagicMock
 
-from etl_framework.datastores.mysql_database import MySqlDatabase
-from etl_framework.config_mixins.InsertStatementMixin import MySqlInsertStatementMixin
+from etl_framework.datastores.postgresql_database import PostgreSqlDatabase
+from etl_framework.config_mixins.InsertStatementMixin import PostgreSqlInsertStatementMixin
 from etl_framework.configs.environment import EnvironmentConfig
 from etl_framework.SqlSchemaConfig import SqlSchemaConfig
-from etl_framework.testing.mysql_fixture import MySqlFixture
-from etl_framework.schemas import mysql_schema
+from etl_framework.testing.postgresql_fixture import PostgreSqlFixture
+from etl_framework.schemas import postgresql_schema
 
-class MySqlFixtureTestCases(unittest.TestCase):
+class PostgreSqlFixtureTestCases(unittest.TestCase):
     """class for fixtures tests"""
 
     FIXTURES_DIR = os.path.join(
@@ -22,7 +22,7 @@ class MySqlFixtureTestCases(unittest.TestCase):
 
     SCHEMA_FILEPATH = os.path.join(
         FIXTURES_DIR,
-        'schema.mysql.json'
+        'schema.postgresql.json'
     )
 
     ENVIRONMENT_FILEPATH = os.path.join(
@@ -32,7 +32,7 @@ class MySqlFixtureTestCases(unittest.TestCase):
 
     DATA_FILEPATH = os.path.join(
         FIXTURES_DIR,
-        'data.mysql.json'
+        'data.postgresql.json'
     )
 
     def setUp(self):
@@ -52,18 +52,18 @@ class MySqlFixtureTestCases(unittest.TestCase):
         # Setup config
         config = SqlSchemaConfig.create_from_filepath(self.SCHEMA_FILEPATH, environment=self.env)
 
-        self.schema = config.create(etl_classes=mysql_schema)
+        self.schema = config.create(etl_classes=postgresql_schema)
 
     def test_load(self):
         """tests load method"""
 
         mock_run_statement = MagicMock()
-        MySqlDatabase.run_statement = mock_run_statement
+        PostgreSqlDatabase.run_statement = mock_run_statement
 
         config = MagicMock()
         config.schema = self.schema
         config.data = self.data
-        fixture = MySqlFixture(
+        fixture = PostgreSqlFixture(
             config=config
         )
 
@@ -72,7 +72,7 @@ class MySqlFixtureTestCases(unittest.TestCase):
         # Brittle way of testing that insert statement is run
         # Assumes the keys of first row in self.data are the fields to insert
         data_row = self.data[0]
-        stmnt_fields, expected_statement = MySqlInsertStatementMixin.create_insert_statement(
+        stmnt_fields, expected_statement = PostgreSqlInsertStatementMixin.create_insert_statement(
             table=self.schema.config.get_table(),
             fields=data_row.keys(),
             statement_string=True

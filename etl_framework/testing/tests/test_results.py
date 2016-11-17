@@ -2,6 +2,7 @@
 import unittest
 from mock import MagicMock
 
+from etl_framework.testing.configs.result import ResultConfig
 from etl_framework.testing.results import ResultInterface, \
     Results
 
@@ -60,16 +61,22 @@ class ResultInterfaceTestCases(unittest.TestCase):
         ResultInterface.raw_result = MagicMock()
         ResultInterface.raw_result.return_value = self.raw_result
 
+        self.config = ResultConfig()
+        self.config.config = {
+            "schema": self.mock_schema,
+            "expected_result": self.expected_result,
+            "match_type": "exact"
+        }
+
+
         self.result = ResultInterface(
-            schema=self.mock_schema,
-            expected_result=self.expected_result,
-            match_type="exact"
+            config=self.config
         )
 
     def test_actual_result_with_match_type_exact(self):
         """stuff"""
 
-        self.result.match_type = 'exact'
+        self.config.config["match_type"] = 'exact'
 
         actual_result = self.result.actual_result()
         self.assertEqual(actual_result, self.raw_result)
@@ -77,7 +84,7 @@ class ResultInterfaceTestCases(unittest.TestCase):
     def test_actual_result_with_match_type_subset(self):
         """stuff"""
 
-        self.result.match_type = 'subset'
+        self.config.config["match_type"] = 'subset'
 
         actual_result = self.result.actual_result()
         self.assertEqual(actual_result, self.subset_result)
@@ -85,7 +92,7 @@ class ResultInterfaceTestCases(unittest.TestCase):
     def test_actual_result_with_unsupported_match_type_raises_exception(self):
         """stuff"""
 
-        self.result.match_type = 'NO TYPE'
+        self.config.config["match_type"] = 'NO TYPE'
 
         self.assertRaises(Exception, self.result.actual_result)
 

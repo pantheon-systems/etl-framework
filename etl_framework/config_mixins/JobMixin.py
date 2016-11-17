@@ -18,6 +18,12 @@ class JobMixin(object):
     CONFIG_DIR_ATTR = 'config_dir'
     CONFIG_FILENAMES_ATTR = 'config_filenames'
     CONFIG_FILENAME_ATTR = 'config_filename'
+    TESTS_ATTR = 'tests'
+
+    def get_test(self, name):
+        """gets test attribute by filepath"""
+
+        return self.config[self.TESTS_ATTR][name]
 
     @check_config_attr
     def get_job_id(self):

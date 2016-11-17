@@ -3,17 +3,12 @@
 
 import abc
 
-class Extractor(object):
+from etl_framework.etl_class import EtlClass
+
+class Extractor(EtlClass):
     """class for authenticating to api and extracting data"""
 
     __metaclass__ = abc.ABCMeta
-
-    def __init__(self, config, *args, **kwargs):
-        """initialize data api object"""
-
-        super(Extractor, self).__init__(*args, **kwargs)
-
-        self.config = config
 
     def get_credentials(self):
         """gets credentials"""

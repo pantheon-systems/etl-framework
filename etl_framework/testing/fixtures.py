@@ -1,16 +1,9 @@
 """ fixture base classes for testing """
 
-class FixtureInterface(object):
+from etl_framework.etl_class import EtlClass
+
+class FixtureInterface(EtlClass):
     """One fixture should have exactly 1 schema"""
-
-    def __init__(self, schema, data):
-        """
-        data : list of dictionaries
-        schema : schema object created from SchemaConfig
-        """
-
-        self.schema = schema
-        self.data = data
 
     def load(self):
         """loads fixtures"""

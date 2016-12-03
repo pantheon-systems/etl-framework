@@ -53,7 +53,7 @@ class PostgreSqlUpsertStatementMixin(PostgreSqlInsertStatementMixin):
     COALESCE_MAP = {
         None: 'EXCLUDED.{0}',
         'new_values': 'COALESE(EXCLUDED.{0}, {table}.{0})',
-        'old_values': 'COALESCE({0}, EXCLUDED.{0})'
+        'old_values': 'COALESCE({table}.{0}, EXCLUDED.{0})'
     }
 
     UPSERT_CONSTRAINT_FIELDS = 'upsert_constraint_fields'

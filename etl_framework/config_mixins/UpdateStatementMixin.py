@@ -4,6 +4,7 @@ from etl_framework.utilities.SqlClause import SqlClause
 from etl_framework.config_mixins.LoaderMixin import LoaderMixin
 from etl_framework.config_mixins.SqlStatementMixin import SqlStatementMixin
 
+
 class UpdateStatementMixin(LoaderMixin, SqlStatementMixin):
     """requires LoaderMixin and SqlStatement Mixin"""
 
@@ -15,26 +16,31 @@ class UpdateStatementMixin(LoaderMixin, SqlStatementMixin):
         where_fields : list of dictionaries with format:
             dictionary {"field_name": "field1", "operator": "<"}
         """
-
         update_field_phrases = [field + ' = %s' for field in fields]
         update_clause = SqlClause(header='UPDATE {}'.format(table))
         update_values = SqlClause(header='SET', phrases=update_field_phrases)
+        phrases = [update_clause, update_values]
+
+        # Statement fields are fields + where_fields
+        statement_fields = list(fields)
 
         if where_fields is not None:
+            where_phrase = list()
+            for field in where_fields:
+                # Field values is an explicit override in a where clause,
+                # used for more fine grained control of where_fields
+                # Does not add a field to statement_fields.
+                where_phrase.append(' '.join([field['field_name'], field['operator'], field.get('field_value', '%s')]))
             where_phrase = SqlClause(
                 header='WHERE',
-                phrases=[field["field_name"] + ' {} %s'.format(field["operator"])
-                    for field in where_fields],
+                phrases=where_phrase,
                 phrase_separator=' AND\n'
             )
+            for field in where_fields:
+                if field.get('field_value') is None:
+                    statement_fields.append(field["field_name"])
+            phrases.append(where_phrase)
 
-            # Statement fields are fields + where_fields
-            statement_fields = fields + [field["field_name"] for field in where_fields]
-            phrases = [update_clause, update_values, where_phrase]
-
-        else:
-            statement_fields = fields
-            phrases = [update_clause, update_values]
 
         if statement_string:
             return statement_fields, SqlClause(phrases=phrases,

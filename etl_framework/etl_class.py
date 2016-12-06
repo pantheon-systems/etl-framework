@@ -2,7 +2,9 @@
 
 class EtlClass(object):
 
-    def __init__(self, config):
+    def __init__(self, config, *args, **kwargs):
+
+        super(EtlClass, self).__init__(*args, **kwargs)
 
         self.config = config
 

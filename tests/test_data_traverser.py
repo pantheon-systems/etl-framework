@@ -34,60 +34,71 @@ class DataTraverserTestCases(unittest.TestCase):
                                         ]
                         }
 
-        field_paths1 = [['output_id', ['id']],
-                        ['output_id2', ['id2']]
-                        ]
+        field_paths1 = {
+            'output_id': ['id'],
+            'output_id2': ['id2']
+        }
+
         expected_output1 = [
                             {'output_id': 'id_value', 'output_id2': 'id_value2'}
                             ]
 
-        field_paths2 = [['output_id', ['id']]
-                        ]
+        field_paths2 = {
+            'output_id': ['id']
+        }
 
         expected_output2 = [
                             {'output_id': 'id_value'}
                             ]
 
-        field_paths3 = [['output_id', ['id']],
-                        ['output_name', ['names', None]]
-                        ]
+        field_paths3 = {
+            'output_id': ['id'],
+            'output_name': ['names', None]
+        }
+
         expected_output3 = [
                                 {'output_id': 'id_value', 'output_name': 'name1'},
                                 {'output_id': 'id_value', 'output_name': 'name2'},
                                 {'output_id': 'id_value', 'output_name': 'name3'}
                             ]
 
-        field_paths4 = [['output_id', ['id']],
-                        ['output_name', ['names', None]],
-                        ['output_value', ['values', None]]
-                        ]
+        field_paths4 = {
+            'output_id': ['id'],
+            'output_name': ['names', None],
+            'output_value': ['values', None]
+        }
+
         expected_output4 = [
                                 {'output_id': 'id_value', 'output_name': 'name1', 'output_value': 'value1'},
                                 {'output_id': 'id_value', 'output_name': 'name2', 'output_value': 'value2'},
                                 {'output_id': 'id_value', 'output_name': 'name3', 'output_value': 'value3'}
                             ]
 
-        field_paths5 = [['output_id', ['id']],
-                        ['output_name', ['name_values', 'name']],
-                        ['output_value', ['name_values', 'value']]
-                        ]
+        field_paths5 = {
+            'output_id': ['id'],
+            'output_name': ['name_values', 'name'],
+            'output_value': ['name_values', 'value'],
+        }
+
         expected_output5 = [
                                 {'output_id': 'id_value', 'output_name': 'name1', 'output_value': 'value1'},
                                 {'output_id': 'id_value', 'output_name': 'name2', 'output_value': 'value2'},
                                 {'output_id': 'id_value', 'output_name': 'name3', 'output_value': 'value3'}
                             ]
 
-        field_paths6 = [['output_id', ['id']],
-                        ['null_name', ['null_names_values', 'names']],
-                        ['null_value', ['null_names_values', 'values']]
-                        ]
+        field_paths6 = {
+            'output_id': ['id'],
+            'null_name': ['null_names_values', 'names'],
+            'null_value': ['null_names_values', 'values']
+        }
 
         expected_output6 = [
                             ]
 
-        field_paths7 = [['output_id', ['id']],
-                        ['null_name', ['null_names', None]]
-                        ]
+        field_paths7 = {
+            'output_id': ['id'],
+            'null_name': ['null_names', None]
+        }
 
         expected_output7 = [
                             ]

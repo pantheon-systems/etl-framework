@@ -68,18 +68,17 @@ class DataTraverser(object):
                     yield source_data[field_path[0]]
 
     @staticmethod
-    def normalize(source_data, field_paths):
+    def normalize(source_data, fields):
         """
         yields normalized data
-        field_paths : [[fieldname, [path_element1, path_element2, ...] ], ....]
+        field_paths : {[fieldname, [path_element1, path_element2, ...], ...}
         """
 
-        field_names = tuple(field_path[0] for field_path in field_paths)
-
+        field_names, field_paths = zip(*fields.iteritems())
 
         #if there are iterators that yield nothing, BadIterationException will be raised
         try:
-            field_iterators = [CyclicIterator(DataTraverser.traverse_path, source_data, path[1])
+            field_iterators = [CyclicIterator(DataTraverser.traverse_path, source_data, path)
                             for path in field_paths]
         except BadIteratorException:
             return

@@ -3,6 +3,7 @@
 #pylint cant tell AddFiltersMixin is new class
 #pylint: disable=super-on-old-class
 
+from etl_framework.Exceptions import ConfigAttrNotSetException
 from etl_framework.config_mixins.AddFiltersMixin import AddFiltersMixin
 from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none
 
@@ -20,7 +21,7 @@ class FieldMappingsMixin(AddFiltersMixin):
             self.set_field_mappings({key: [filter_mappings.get(value[0]), value[1]]
                                         for key, value in self.get_field_mappings().iteritems()})
         else:
-            raise Exception
+            raise ConfigAttrNotSetException
 
     def add_filters_from_module(self, filters_module):
         """override add_filters_from_module method of config object"""
@@ -30,7 +31,7 @@ class FieldMappingsMixin(AddFiltersMixin):
             self.set_field_mappings({key: [getattr(filters_module, value[0]), value[1]]
                                         for key, value in self.get_field_mappings().iteritems()})
         else:
-            raise Exception
+            raise ConfigAttrNotSetException
 
     @check_config_attr_default_none
     def get_field_mappings(self):

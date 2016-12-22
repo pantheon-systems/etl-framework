@@ -5,9 +5,13 @@
 #pylint: disable=abstract-class-instantiated
 #pylint: disable=super-on-old-class
 
+from etl_framework.etl_class import EtlClass
 from etl_framework.loader_mixins.SetConfigMixin import SetConfigMixin
 
-class SchemaInterface(SetConfigMixin):
+class SchemaInterface(
+    EtlClass,
+    SetConfigMixin
+):
     """loads data into database"""
 
     def __init__(self, config, *args, **kwargs):
@@ -15,7 +19,7 @@ class SchemaInterface(SetConfigMixin):
 
         self.config = None
 
-        super(SchemaInterface, self).__init__(*args, **kwargs)
+        super(SchemaInterface, self).__init__(config=config, *args, **kwargs)
 
         self.set_config_and_credentials(config)
 

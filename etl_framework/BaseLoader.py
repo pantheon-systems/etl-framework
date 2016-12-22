@@ -4,19 +4,11 @@
 #pylint: disable=too-many-arguments
 #pylint: disable=abstract-class-instantiated
 
-from loader_mixins.SetConfigMixin import SetConfigMixin
+from etl_framework.etl_class import EtlClass
+from etl_framework.mixins.datastore_mixin import DatastoreMixin
 
-class BaseLoader(SetConfigMixin):
+class BaseLoader(EtlClass, DatastoreMixin):
     """loads data into database"""
-
-    def __init__(self, config, *args, **kwargs):
-        """initializes base data loader"""
-
-        self.config = None
-
-        super(BaseLoader, self).__init__(*args, **kwargs)
-
-        self.set_config_and_credentials(config)
 
     def load(self, row):
         """stuff"""

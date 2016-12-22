@@ -6,22 +6,13 @@
 #pylint: disable=super-on-old-class
 
 from etl_framework.etl_class import EtlClass
-from etl_framework.loader_mixins.SetConfigMixin import SetConfigMixin
+from etl_framework.mixins.datastore_mixin import DatastoreMixin
 
 class SchemaInterface(
     EtlClass,
-    SetConfigMixin
+    DatastoreMixin
 ):
     """loads data into database"""
-
-    def __init__(self, config, *args, **kwargs):
-        """initializes base data loader"""
-
-        self.config = None
-
-        super(SchemaInterface, self).__init__(config=config, *args, **kwargs)
-
-        self.set_config_and_credentials(config)
 
     def create(self):
         """creates schema in datastore"""

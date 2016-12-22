@@ -12,7 +12,7 @@ class PostgreSqlResult(ResultInterface):
 
         # Hack to access db object of schema
         # Gets all the rows from a table
-        values, columns = self.schema.run_statement(
+        values, columns = self.schema.datastore.run_statement(
             "SELECT * FROM {}".format(table),
             fetch_data=True,
             commit=True,

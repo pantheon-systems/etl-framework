@@ -84,10 +84,7 @@ class SqlDatabaseInterface(DatastoreInterface):
                 '5(for tcp connection) items. %d given'%len(credentials)
             )
 
-        # Hack to avoid issues settings credentials on config
-        # This can be removed once EtlClasses dont inherit from
-        # Datastore clients
-        self.__dict__["credentials"] = credentials
+        self.credentials = credentials
 
     def get_connection(self):
         """Satisfies Datastore Interface"""

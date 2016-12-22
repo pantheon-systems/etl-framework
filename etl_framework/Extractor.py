@@ -4,16 +4,15 @@
 import abc
 
 from etl_framework.etl_class import EtlClass
+from etl_framework.mixins.datastore_mixin import DatastoreMixin
 
-class Extractor(EtlClass):
+class Extractor(
+    EtlClass,
+    DatastoreMixin
+):
     """class for authenticating to api and extracting data"""
 
     __metaclass__ = abc.ABCMeta
-
-    def get_credentials(self):
-        """gets credentials"""
-
-        return self.config.get_credentials()
 
     def extract(self):
         """extracts data"""

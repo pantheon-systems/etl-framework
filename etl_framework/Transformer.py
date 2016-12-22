@@ -3,15 +3,12 @@
 
 import abc
 
-class Transformer(object):
+from etl_framework.etl_class import EtlClass
+
+class Transformer(EtlClass):
     """transforms extracted data and filters"""
 
     __metaclass__ = abc.ABCMeta
-
-    def __init__(self, config):
-        """stuff"""
-
-        self.config = config
 
     @abc.abstractmethod
     def iter_transform(self, row):

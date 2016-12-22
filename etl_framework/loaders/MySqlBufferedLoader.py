@@ -15,7 +15,7 @@ class MySqlBufferedLoader(MySqlLoader, BufferMixin):
 
         # NOTE this is specific to SQL loaders,
         # so this class could be renamed SqlBufferedLoader
-        self.run_statement(
+        self.datastore.run_statement(
             self.config.get_sql_statement(),
             multiple_values=self._buffered_values,
             commit=True

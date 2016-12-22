@@ -24,7 +24,7 @@ class PostgreSqlFixture(FixtureInterface):
             )
 
             # Hack to access db object of schema
-            self.schema.run_statement(
+            self.schema.datastore.run_statement(
                 statement,
                 params=[row[field] for field in stmnt_fields],
                 commit=True

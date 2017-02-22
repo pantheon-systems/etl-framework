@@ -14,6 +14,24 @@ class DestinationMixin(AddDestinationMixin):
 
         self.set_destination_chooser(destination_chooser_mappings[self.get_identifier()])
 
+    @property
+    def iter_destination_chooser(self):
+        """
+        iter_destination_chooser is a function with input of row
+        that returns a generator of destinations
+        """
+
+        return self.config["iter_destination_chooser"]
+
+    @iter_destination_chooser.setter
+    def iter_destination_chooser(self, iter_destination_chooser):
+        """
+        iter_destination_chooser is a function with input of row
+        that returns a generator of destinations
+		"""
+
+        self.config["iter_destination_chooser"] = iter_destination_chooser
+
     @check_config_attr_default_none
     def get_destination(self):
         """gets destination for current configuration"""

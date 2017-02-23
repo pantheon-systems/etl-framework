@@ -12,7 +12,7 @@ class BigqueryPartitionedLoader(
 
         table_id = self.config.get_loader_table()
 
-        partition = self.bigquery_table_partition_chooser()()
+        partition = self.bigquery_table_partition_chooser()
 
         if partition is not None:
             table_id = table_id + partition

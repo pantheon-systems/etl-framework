@@ -5,8 +5,8 @@ import unittest
 from mock import MagicMock
 from mock import ANY
 
-from gcloud.loaders.BigqueryPartitionedLoader import BigqueryPartitionedLoader
-from gcloud.configs.BigqueryLoaderConfig import BigqueryLoaderConfig
+from gcloud.loaders.bigquery_partitioned import BigqueryPartitionedLoader
+from gcloud.configs.bigquery_loader import BigqueryLoaderConfig
 from gcloud import filter_functions
 
 class BigQueryLoaderTestCases(unittest.TestCase):
@@ -33,7 +33,7 @@ class BigQueryLoaderTestCases(unittest.TestCase):
 
         # Dont actually insert data
         self.mock_insert_data = MagicMock()
-        self.loader.insert_data = self.mock_insert_data
+        self.loader.datastore.insert_data = self.mock_insert_data
 
     def test_load_buffered(self):
         """tests load_buffered method"""

@@ -36,7 +36,7 @@ class PubsubExtractorConfig(
 
         return self.config.get('pubsub_topic_name')
 
-	@property
+    @property
     def extractor_loaders(self):
         """stuff"""
 

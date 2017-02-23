@@ -1,7 +1,7 @@
 {
     "identifier": "loader.test_bigquery.0",
     "buffer_size": 10,
-    "bigquery_dataset_id": "test_bigquery",
+    "bigquery_dataset_id": "test",
     "bigquery_table_partition_chooser": "choose_current_date_partition",
     "bigquery_insert_filter": "add_bigquery_insert_uuid",
     "gcloud_project_id": "pantheon-dev",
@@ -9,5 +9,5 @@
         "field1",
         "field2"
     ], 
-    "loader_table": "test_bigquery"
+    "loader_table": "test"
 }

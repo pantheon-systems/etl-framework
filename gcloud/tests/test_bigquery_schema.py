@@ -32,7 +32,7 @@ class BigQuerySchemaModifierTestCases(unittest.TestCase):
         # NOTE attributes like table_id are defined in schema_configuration fixture
         self.schema.datastore.insert_table.assert_called_with(
             table_id="test",
-            schema=self.schema_config.get_bigquery_schema(),
+            schema=self.schema.bigquery_schema,
             expiration_time=None,
             time_partitioning=True,
             time_partitioning_expiration=None,

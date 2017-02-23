@@ -7,7 +7,7 @@ from mock import MagicMock
 from mock import ANY
 
 from gcloud.loaders.bigquery import BigqueryLoader
-from gcloud.configs.BigqueryLoader import BigqueryLoaderConfig
+from gcloud.configs.bigquery_loader import BigqueryLoaderConfig
 from gcloud import filter_functions
 
 class BigQueryLoaderTestCases(unittest.TestCase):
@@ -30,7 +30,7 @@ class BigQueryLoaderTestCases(unittest.TestCase):
 
         # Dont actually insert data
         self.mock_insert_data = MagicMock()
-        self.loader.insert_data = self.mock_insert_data
+        self.loader.datastore.insert_data = self.mock_insert_data
 
     def test_load(self):
         """tests load method"""

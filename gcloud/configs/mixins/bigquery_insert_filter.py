@@ -12,10 +12,9 @@ class BigqueryInsertFilterMixin(AddFiltersMixin):
 
         super(BigqueryInsertFilterMixin, self).add_filters_from_module(filter_functions)
 
-        self.set_bigquery_insert_filter(
-            getattr(filter_functions,
-                self.get_bigquery_insert_filter()
-            )
+        self.bigquery_insert_filter = getattr(
+            filter_functions,
+            self.bigquery_insert_filter
         )
 
     @property

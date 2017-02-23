@@ -7,7 +7,7 @@ from gcloud.configs.mixins.bigquery import BigqueryMixin
 from gcloud.configs.mixins.gcloud import GcloudMixin
 from gcloud.configs.mixins.bigquery_insert_filter import BigqueryInsertFilterMixin
 from gcloud.configs.mixins.bigquery_table_partition import \
-	import BigqueryTablePartitionMixin
+    BigqueryTablePartitionMixin
 
 class BigqueryLoaderConfig(
     LoaderConfig,

@@ -40,5 +40,5 @@ class BigqueryLoader(
     def load(self, row):
         """stuff"""
 
-        row = self.bigquery_insert_filter()(row)
+        row = self.bigquery_insert_filter(row)
         self.write_to_buffer(row)

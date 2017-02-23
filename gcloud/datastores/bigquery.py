@@ -2,12 +2,12 @@
 #pylint: disable=super-on-old-class
 #pylint: disable=too-many-arguments
 
-from etl_framework.datastore_interfaces.datastore_inteface import DatastoreInterface
+from etl_framework.datastore_interfaces.datastore_interface import DatastoreInterface
 from gcloud.datastores.mixins.project import ProjectMixin
 from gcloud.datastores.mixins.client import ClientMixin
 from gcloud.datastores.exceptions import BigqueryInsertError
 
-class BigqueryClient(ProjectMixin, ClientMixin):
+class BigqueryClient(DatastoreInterface, ProjectMixin, ClientMixin):
     """client with useful methods"""
 
     # These attributes should be overriden
@@ -30,7 +30,7 @@ class BigqueryClient(ProjectMixin, ClientMixin):
         pass
 
     def _create_connection(self):
-    
+
         pass
 
     def set_dataset_id(self, dataset_id):
@@ -266,6 +266,9 @@ class BigqueryClient(ProjectMixin, ClientMixin):
 
         if schema is not None:
             body["schema"] = schema
+
+        if expiration_time:
+            body["expirationTime"] = expiration_time
 
         if time_partitioning:
             time_partitioning_body = {

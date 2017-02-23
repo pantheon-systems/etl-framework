@@ -15,7 +15,7 @@ from gcloud.datastores.utils.pubsub_messages import PublisherMessage
 class PubSubTestCases(unittest.TestCase):
     """tests pubsub classes"""
 
-    PROJECT_NAME = 'test'
+    PROJECT_NAME = 'pantheon-dev'
     TOPIC_NAME = 'pubusb-test'
     SUBSCRIPTION = 'pubsub-test'
     LOG_SUBSCRIPTION = 'logging'

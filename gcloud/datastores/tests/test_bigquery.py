@@ -11,8 +11,8 @@ class BigqueryClientTestCases(unittest.TestCase):
     def setUpClass(cls):
 
         cls.project_id = 'pantheon-dev'
-        cls.dataset_id = 'test'
-        cls.table_id = 'test'
+        cls.dataset_id = 'etl_test'
+        cls.table_id = 'etl_test'
         cls.table_schema = {
             "fields": [
                 {

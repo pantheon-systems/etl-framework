@@ -15,7 +15,7 @@ class MySqlSchema(
 
     def __init__(self, config, *args, **kwargs):
 
-        super(SchemaInterface, self).__init__(config, *args, **kwargs)
+        super(MySqlSchema, self).__init__(config, *args, **kwargs)
 
         self.datastore = MySqlDatabase(config.credentials)
 

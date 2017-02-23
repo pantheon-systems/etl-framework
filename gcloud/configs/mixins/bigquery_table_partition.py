@@ -12,10 +12,9 @@ class BigqueryTablePartitionMixin(AddFiltersMixin):
 
         super(BigqueryTablePartitionMixin, self).add_filters_from_module(filter_functions)
 
-        self.set_bigquery_tbigquery_table_partition_chooser(
-            getattr(filter_functions,
-                self.get_bigquery_table_partition_chooser()
-            )
+        self.bigquery_table_partition_chooser = getattr(
+            filter_functions,
+            self.bigquery_table_partition_chooser
         )
 
     @property
@@ -25,7 +24,7 @@ class BigqueryTablePartitionMixin(AddFiltersMixin):
         return self.config.get('bigquery_table_partition_chooser')
 
     @bigquery_table_partition_chooser.setter
-    def bigquery_tbigquery_table_partition_chooser(self, partition_chooser):
+    def bigquery_table_partition_chooser(self, partition_chooser):
         """stuff"""
 
         self.config['bigquery_table_partition_chooser'] = partition_chooser

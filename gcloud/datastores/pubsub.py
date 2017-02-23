@@ -8,12 +8,13 @@ import json
 
 from googleapiclient.errors import HttpError
 
+from etl_framework.datastore_interfaces.datastore_interface import DatastoreInterface
+
 from gcloud.datastores.mixins.message_acker import MessageAckerMixin
 from gcloud.datastores.utils.pubsub_messages import SubscriberMessage
-from etl_framework.datastore_interfaces.datastore_inteface import DatastoreInterface
 from gcloud.datastores.mixins.project import ProjectMixin
 from gcloud.datastores.mixins.client import ClientMixin
-from etl_framework.glcoud.datastores.mixins.topic import TopicMixin
+from gcloud.datastores.mixins.topic import TopicMixin
 
 PUBSUB_SCOPES = ['https://www.googleapis.com/auth/pubsub']
 

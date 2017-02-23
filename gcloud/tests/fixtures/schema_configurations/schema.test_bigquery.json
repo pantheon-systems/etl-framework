@@ -1,6 +1,6 @@
 {
     "identifier": "schema.test_bigquery",
-    "bigquery_dataset_id": "test_bigquery",
+    "bigquery_dataset_id": "test",
     "bigquery_table_id": "test",
     "bigquery_table_time_partitioning": true,
     "bigquery_schema": {

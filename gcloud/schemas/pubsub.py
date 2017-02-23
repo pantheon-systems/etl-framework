@@ -1,7 +1,7 @@
 from googleapiclient.errors import HttpError
 
 from etl_framework.schemas.schema_interface import SchemaInterface
-from gcloud.datastores.PubsubClient import PubsubClient
+from gcloud.datastores.pubsub import PubsubClient
 
 class PubsubSchema(
     SchemaInterface

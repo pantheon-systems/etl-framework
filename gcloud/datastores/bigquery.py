@@ -2,9 +2,10 @@
 #pylint: disable=super-on-old-class
 #pylint: disable=too-many-arguments
 
-from etl_framework.gcloud.datastores.mixins.ProjectMixin import ProjectMixin
-from etl_framework.gcloud.datastores.mixins.client import ClientMixin
-from etl_framework.gcloud.datastores.exceptions import BigqueryInsertError
+from etl_framework.datastore_interfaces.datastore_inteface import DatastoreInterface
+from gcloud.datastores.mixins.project import ProjectMixin
+from gcloud.datastores.mixins.client import ClientMixin
+from gcloud.datastores.exceptions import BigqueryInsertError
 
 class BigqueryClient(ProjectMixin, ClientMixin):
     """client with useful methods"""
@@ -20,9 +21,16 @@ class BigqueryClient(ProjectMixin, ClientMixin):
 
         super(BigqueryClient, self).__init__(*args, **kwargs)
 
-    def clear_connection(self):
-        """method necesary to satisfy inteface for a datastore"""
+    def set_credentials(self, credentials):
 
+        pass
+
+    def get_connection(self):
+
+        pass
+
+    def _create_connection(self):
+    
         pass
 
     def set_dataset_id(self, dataset_id):

@@ -6,11 +6,11 @@ import unittest
 
 from googleapiclient.errors import HttpError
 
-from etl_framework.gcloud.datastores.PubsubClient import PubsubClient
-from etl_framework.gcloud.datastores.PubsubPublisher import PubsubPublisher
-from etl_framework.gcloud.datastores.PubsubSubscriber import PubsubSubscriber
-from etl_framework.gcloud.datastores.TopicLogger import TopicLogger
-from etl_framework.gcloud.datastores.utils.PublisherMessage import PublisherMessage
+from gcloud.datastores.pubsub import PubsubClient
+from gcloud.datastores.pubsub import PubsubPublisher
+from gcloud.datastores.pubsub import PubsubSubscriber
+from gcloud.datastores.pubsub import TopicLogger
+from gcloud.datastores.utils.pubsub_messages import PublisherMessage
 
 class PubSubTestCases(unittest.TestCase):
     """tests pubsub classes"""

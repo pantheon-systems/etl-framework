@@ -1,7 +1,7 @@
 """Mixin for PubsubClient to ack messages"""
 #pylint: disable=super-on-old-class
 
-from etl_framework.gcloud.datastores.mixins.SubscriptionMixin import SubscriptionMixin
+from gcloud.datastores.mixins.subscription import SubscriptionMixin
 
 class MessageAckerMixin(SubscriptionMixin):
     """mixin to ack Pubsub messages"""

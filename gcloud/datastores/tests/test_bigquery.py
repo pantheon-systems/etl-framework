@@ -2,7 +2,7 @@
 
 import unittest
 
-from clients.bigquery.BigqueryClient import BigqueryClient
+from gcloud.datastores.bigquery import BigqueryClient
 
 class BigqueryClientTestCases(unittest.TestCase):
     """stuff"""

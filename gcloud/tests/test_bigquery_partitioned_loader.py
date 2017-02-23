@@ -5,9 +5,9 @@ import unittest
 from mock import MagicMock
 from mock import ANY
 
-from etl_framework.gcloud.loaders.BigqueryPartitionedLoader import BigqueryPartitionedLoader
-from etl_framework.gcloud.configs.BigqueryLoaderConfig import BigqueryLoaderConfig
-from etl_framework.gcloud import filter_functions
+from gcloud.loaders.BigqueryPartitionedLoader import BigqueryPartitionedLoader
+from gcloud.configs.BigqueryLoaderConfig import BigqueryLoaderConfig
+from gcloud import filter_functions
 
 class BigQueryLoaderTestCases(unittest.TestCase):
     """test cases for bigquery loader"""

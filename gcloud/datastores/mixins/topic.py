@@ -1,6 +1,6 @@
 """Mixin for PubsubClient to have Topic name attribute"""
 
-from etl_framework.gcloud.datastores.mixins.ProjectMixin import ProjectMixin
+from gcloud.datastores.mixins.project import ProjectMixin
 
 class TopicMixin(ProjectMixin):
     """mixin to ack Pubsub messages"""

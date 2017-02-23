@@ -1,7 +1,7 @@
 """Mixin for PubsubClient to have subscription attribute"""
 #pylint: disable=super-on-old-class
 
-from etl_framework.gcloud.datastores.mixins.ProjectMixin import ProjectMixin
+from gcloud.datastores.mixins.project import ProjectMixin
 
 class SubscriptionMixin(ProjectMixin):
     """mixin to ack Pubsub messages"""

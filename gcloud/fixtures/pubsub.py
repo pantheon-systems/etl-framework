@@ -1,6 +1,6 @@
 from etl_framework.testing.fixtures import FixtureInterface
-from etl_framework.gcloud.datastores.utils.PublisherMessage import PublisherMessage
-from etl_framework.gcloud.datastores.PubsubPublisher import PubsubPublisher
+from gcloud.datastores.utils.pubsub_messages import PublisherMessage
+from gcloud.datastores.pubsub import PubsubPublisher
 
 class PubsubFixture(FixtureInterface):
 

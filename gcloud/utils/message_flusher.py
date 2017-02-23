@@ -1,8 +1,8 @@
 """Acks messages"""
 #pylint: disable=super-on-old-class
 
-from etl_framework.gcloud.datastores.PubsubClient import PubsubClient
-from etl_framework.gcloud.datastores.mixins.MessageAckerMixin import MessageAckerMixin
+from gcloud.datastores.pubsub import PubsubClient
+from gcloud.datastores.mixins.message_acker import MessageAckerMixin
 
 class MessageFlusher(PubsubClient, MessageAckerMixin):
     """writes buffered data to datastore and acks messages"""

@@ -4,7 +4,7 @@
     "bigquery_dataset_id": "test",
     "bigquery_table_partition_chooser": "choose_current_date_partition",
     "bigquery_insert_filter": "add_bigquery_insert_uuid",
-    "gcloud_project_id": "pantheon-dev",
+    "gcloud_project_id": "test",
     "loader_fields": [
         "field1",
         "field2"

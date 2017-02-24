@@ -1,5 +1,6 @@
 """Extractor to get messages from Pubsub"""
 #pylint: disable=super-on-old-class
+#pylint: disable=too-many-nested-blocks
 
 import time
 

@@ -1,0 +1,19 @@
+{
+    "identifier": "schema.test_bigquery",
+    "bigquery_dataset_id": "test",
+    "bigquery_table_id": "test",
+    "bigquery_table_time_partitioning": true,
+    "bigquery_schema": {
+        "fields": [
+            {
+                "name": "field1",
+                "type": "string"
+            },
+            {
+                "name": "field2",
+                "type": "integer"
+            }
+        ]
+    },
+    "gcloud_project_id": "test"
+}

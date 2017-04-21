@@ -1,4 +1,5 @@
 """Base class for Etl SetUp"""
+#pylint: disable=unsubscriptable-object
 #pylint: disable=relative-import
 
 import os

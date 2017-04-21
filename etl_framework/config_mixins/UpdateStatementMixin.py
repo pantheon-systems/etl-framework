@@ -1,4 +1,5 @@
 """parses configuration and returns useful things"""
+#pylint: disable=redefined-variable-type
 #pylint: disable=relative-import
 from etl_framework.utilities.SqlClause import SqlClause
 from etl_framework.config_mixins.LoaderMixin import LoaderMixin

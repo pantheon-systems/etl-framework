@@ -1,4 +1,5 @@
 """parses configuration and returns useful things"""
+#pylint: disable=too-many-ancestors
 
 from etl_framework.LoaderConfig import LoaderConfig
 from etl_framework.config_mixins.BufferMixin import BufferMixin

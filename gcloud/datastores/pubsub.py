@@ -2,6 +2,7 @@
 client for google pubsub
 this code was more or less copied from https://cloud.google.com/pubsub/configure
 """
+#pylint: disable=too-many-ancestors
 #pylint: disable=super-on-old-class
 import os
 import json

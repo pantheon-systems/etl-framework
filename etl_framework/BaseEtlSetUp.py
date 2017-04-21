@@ -1,4 +1,5 @@
 """Base class for Etl SetUp"""
+#pylint: disable=unsubscriptable-object
 #pylint: disable=relative-import
 
 import os
@@ -78,10 +79,9 @@ class BaseEtlSetUp(object):
                                     ETL_JOB_WHERE_PHRASE,
                                     ])
 
-    ETL_JOB_SELECT_ALL_JOBS_STATEMENT = '\n'.join([
-                                    'SELECT',
-                                    ETL_JOBS_ID_FIELD,
-                                    'FROM {0}'.format(ETL_JOBS_TABLE),
+    ETL_JOB_INSERT_JOB_STATEMENT = '\n'.join([
+                                    'INSERT IGNORE INTO {0} (job_id, job_name)'.format(ETL_JOBS_TABLE),
+                                    'VALUES ({0}, \'{1}\')'
                                     ])
 
     ETL_JOB_SET_CUTOFF_STATEMENT = '\n'.join([
@@ -247,13 +247,11 @@ class BaseEtlSetUp(object):
     def create_etl_job_row_if_not_exists(self):
         """ Inserts the requisite row into the ETL job table if it does not yet exist """
 
-        sql_statement = self.ETL_JOB_SELECT_ALL_JOBS_STATEMENT
-        job_ids = self.sql_database.run_statement(sql_statement, fetch_data=True)[0]
-        job_ids = [int(job_id[0]) for job_id in job_ids]
-
-        if self.etl_job_id not in job_ids:
-            sql_statement = self.ETL_JOB_CREATE_JOB_STATEMENT%(self.etl_job_id, self.etl_job_name, )
-            self.sql_database.run_statement(sql_statement)
+        sql_statement = self.ETL_JOB_INSERT_JOB_STATEMENT.format(
+            self.etl_job_id,
+            self.etl_job_name
+        )
+        self.sql_database.run_statement(sql_statement)
 
     def set_etl_job_cutoff_value(self, datetime_cutoff=None):
         """sets etl cutoff datetime value"""

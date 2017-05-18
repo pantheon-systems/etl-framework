@@ -2,7 +2,6 @@
 
 class CompositeConfigInterface(object):
 
-    @staticmethod
-    def compose_config(config, builder):
+    def compose_config(self, builder):
 
         raise NotImplementedError()

@@ -53,61 +53,104 @@ class BaseConfig(object):
         BaseConfig.create_subclasses(self.config, builder)
 
     @staticmethod
-    def create_subclasses(config_dict, builder):
-        """Creates subclasses from nested configs"""
+    def create_subclasses(component, builder):
+        """
+        Creates subclasses from nested configs
+        Note that the environment is taken from the parent
+        """
 
         print "WARNING: Environment isnt set for subclasses yet"
 
-        if not isinstance(config_dict, dict):
+        if not isinstance(component, dict):
             return
 
-        for key in config_dict.keys():
+        for key in component.keys():
             if key.endswith("__config"):
-                value = config_dict.pop(key)
-                subclass = BaseConfig(
-                    config_dict=value,
+                value = component.pop(key)
+                component[key[:-8]] = BaseConfig(
+                    component=value,
                 ).morph(
-                    configs=builder.etl_module
+                    configs=builder.etl_module,
+                    environment=builder.environment,
                 ).create(etl_classes=builder.etl_module)
 
-                config_dict[key[:-8]] = subclass
-
+                BaseConfig.create_subclasses(
+                    component=value,
+                    builder=builder
+                )
+                
             elif key.endswith("__configs"):
-                values = config_dict.pop(key)
-                config_dict[key[:-9]] = [
+                values = component.pop(key)
+                component[key[:-9]] = [
                     BaseConfig(
-                        config_dict=value,
+                        component=value,
                     ).morph(
-                        configs=builder.etl_module
+                        configs=builder.etl_module,
+                        environment=builder.environment,
                     ).create(
                         etl_classes=builder.etl_module)
                     for value in values
                 ]
 
+                for value in values:
+                    BaseConfig.create_subclasses(
+                        component=value,
+                        builder=builder
+                    )
+
             elif key.endswith("__by_identifier"):
-                value = config_dict.pop(key)
-                config_dict[key[:-15]] = builder.get_etl_class(value)
+                value = component.pop(key)
+
+                component[key[:-15]] = builder.get_config(
+                    value
+                ).morph(
+                    configs=builder.etl_module,
+                    environment=builder.environment,
+                ).create(
+                    etl_classes=builder.etl_module
+                )
+
+                # Process any subclasses in value
+                BaseConfig.create_subclasses(
+                    component=value,
+                    builder=builder
+                )
 
             elif key.endswith("__by_identifiers"):
-                values = config_dict.pop(key)
-                config_dict[key[:-16]] = [
-                    builder.get_etl_class(value)
+                values = component.pop(key)
+
+                component[key[:-16]] = [
+                    builder.get_config(
+                        value
+                    ).morph(
+                        configs=builder.etl_module,
+                        environment=builder.environment,
+                    ).crete(
+                        etl_classes=builder.etl_module
+                    )
                     for value in values
                 ]
 
-            # NOTE this doesnt handle lists of lists
-            elif isinstance(config_dict[key], list):
-                value = config_dict[key]
-                for element in value:
+                for value in values:
                     BaseConfig.create_subclasses(
-                        config_dict=element,
+                        component=value,
+                        builder=builder
+                    )
+
+            # NOTE this doesnt handle lists of lists
+            elif isinstance(component[key], list):
+                value = component[key]
+                for element in value:
+
+                    BaseConfig.create_subclasses(
+                        component=element,
                         builder=builder,
                     )
 
             else:
-                value = config_dict[key]
+                value = component[key]
                 BaseConfig.create_subclasses(
-                    config_dict=value,
+                    component=value,
                     builder=builder
                 )
 

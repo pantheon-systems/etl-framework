@@ -1,9 +1,8 @@
 {
     "config_class": "SqlSchemaConfig",
     "etl_class": "MySqlSchema",
-    "component_schemas": [
-        {
-            "schema_id": "schema.sql",
+    "component_schemas": {
+        "schema.sql": {
             "ignored_fields": [
                 "field2"
             ],
@@ -30,7 +29,7 @@
                 ]
             ]
         }
-    ],
+    },
     "fields": {
         "id": "INT(8) AUTO_INCREMENT",
         "record_updated": "timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",

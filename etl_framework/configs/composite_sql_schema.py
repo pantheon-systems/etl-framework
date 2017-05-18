@@ -27,8 +27,8 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
 
     def _compose_unique_keys(self, builder):
 
-        for schema_config in self.component_schemas:
-            schema = builder.get_config(schema_config["schema_id"])
+        for schema_id, schema_config in self.component_schemas.iteritems():
+            schema = builder.get_config(schema_id)
             ignored_unique_keys = schema_config["ignored_unique_keys"]
             field_renames = schema_config["field_renames"]
             for unique_key in schema.unique_keys:
@@ -39,8 +39,8 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
 
     def _compose_indexes(self, builder):
 
-        for schema_config in self.component_schemas:
-            schema = builder.get_config(schema_config["schema_id"])
+        for schema_id, schema_config in self.component_schemas.iteritems():
+            schema = builder.get_config(schema_id)
             ignored_indexes = schema_config["ignored_indexes"]
             field_renames = schema_config["field_renames"]
             for index in schema.indexes:
@@ -51,8 +51,8 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
 
     def _compose_fields(self, builder):
 
-        for schema_config in self.component_schemas:
-            schema = builder.get_config(schema_config["schema_id"])
+        for schema_id, schema_config in self.component_schemas.iteritems():
+            schema = builder.get_config(schema_id)
             ignored_fields = set(schema_config["ignored_fields"])
             field_renames = schema_config["field_renames"]
 

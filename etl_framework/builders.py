@@ -9,11 +9,12 @@ class Builder(object):
 
     def __init__(
         self,
-        configs={},
+        configs=None,
         etl_module=None
     ):
 
-        self.configs = configs
+        if not configs:
+            self.configs = {}
 
         self.etl_module = etl_module
 

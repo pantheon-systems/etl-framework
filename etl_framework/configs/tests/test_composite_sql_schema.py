@@ -56,7 +56,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
 
         self.config._compose_indexes(self.builder)
 
-        self.assertTrue(sorted(expected_output), sorted(self.config.indexes))
+        self.assertEqual(sorted(expected_output), sorted(self.config.indexes))
 
     def test__compose_fields(self):
 

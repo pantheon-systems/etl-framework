@@ -7,8 +7,7 @@ class BuildTestCases(unittest.TestCase):
 
     def setUp(self):
 
-        self.mock_config = BaseConfig()
-        self.mock_config.identifier = "Test"
+        self.mock_config = BaseConfig(config_dict={"identifier": "Test"})
         self.builder = Builder()
 
     def test_add_config_twice_raises_exception(self):
@@ -28,4 +27,4 @@ class BuildTestCases(unittest.TestCase):
             "Test": self.mock_config,
         }
 
-        self.assertTrue(self.builder.configs, expected_configs)
+        self.assertEqual(self.builder.configs, expected_configs)

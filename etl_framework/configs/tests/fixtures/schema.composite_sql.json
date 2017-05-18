@@ -1,5 +1,5 @@
 {
-    "config_class": "SqlSchemaConfig",
+    "config_class": "CompositeSqlSchemaConfig",
     "etl_class": "MySqlSchema",
     "component_schemas": {
         "schema.sql": {

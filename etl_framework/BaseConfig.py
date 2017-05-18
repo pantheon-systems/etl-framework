@@ -65,21 +65,20 @@ class BaseConfig(object):
         for key in component.keys():
             if key.endswith("__config"):
                 value = component.pop(key)
-                component[key[:-8]] = BaseConfig(
+                subclass = BaseConfig(
                     config_dict=value,
                 ).morph(
                     configs=builder.etl_module,
                     environment=builder.environment,
                 ).create(etl_classes=builder.etl_module)
 
-                BaseConfig.create_subclasses(
-                    component=value,
-                    builder=builder
-                )
+                component[key[:-8]] = subclass
+
+                subclass.config.configure(builder)
                 
             elif key.endswith("__configs"):
                 values = component.pop(key)
-                component[key[:-9]] = [
+                subclasses = [
                     BaseConfig(
                         config_dict=value,
                     ).morph(
@@ -90,16 +89,14 @@ class BaseConfig(object):
                     for value in values
                 ]
 
-                for value in values:
-                    BaseConfig.create_subclasses(
-                        component=value,
-                        builder=builder
-                    )
+                component[key[:-9]] = subclasses
+                for subclass in subclasses:
+                    subclass.config.configure(builder)
 
             elif key.endswith("__by_identifier"):
                 value = component.pop(key)
 
-                component[key[:-15]] = builder.get_config(
+                subclass = builder.get_config(
                     value
                 ).morph(
                     configs=builder.etl_module,
@@ -108,16 +105,14 @@ class BaseConfig(object):
                     etl_classes=builder.etl_module
                 )
 
+                component[key[:-15]] = subclass
                 # Process any subclasses in value
-                BaseConfig.create_subclasses(
-                    component=value,
-                    builder=builder
-                )
+                subclass.config.configure(builder)
 
             elif key.endswith("__by_identifiers"):
                 values = component.pop(key)
 
-                component[key[:-16]] = [
+                subclasses = [
                     builder.get_config(
                         value
                     ).morph(
@@ -129,11 +124,10 @@ class BaseConfig(object):
                     for value in values
                 ]
 
-                for value in values:
-                    BaseConfig.create_subclasses(
-                        component=value,
-                        builder=builder
-                    )
+                component[key[:-16]] = subclasses
+
+                for subclass in subclasses:
+                    subclass.config.configure(builder)
 
             # NOTE this doesnt handle lists of lists
             elif isinstance(component[key], list):

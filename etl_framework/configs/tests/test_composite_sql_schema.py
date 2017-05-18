@@ -1,4 +1,5 @@
 """ test the environment config """
+#pylint: disable=protected-access
 
 import os
 

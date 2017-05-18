@@ -75,7 +75,7 @@ class BaseConfig(object):
                 component[key[:-8]] = subclass
 
                 subclass.config.configure(builder)
-                
+
             elif key.endswith("__configs"):
                 values = component.pop(key)
                 subclasses = [

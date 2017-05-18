@@ -1,6 +1,7 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
 #pylint: disable=super-on-old-class
+#pylint: disable=too-many-ancestors
 
 from etl_framework.SqlSchemaConfig import SqlSchemaConfig
 from etl_framework.interfaces.configs import CompositeConfigInterface

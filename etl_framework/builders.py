@@ -79,7 +79,7 @@ class Builder(object):
 
         config = BaseConfig.create_from_filepath(config_filepath)
         config = config.morph(
-            etl_classes=self.etl_module
+            configs=self.etl_module
         )
 
         self.add_config(config)

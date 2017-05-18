@@ -19,17 +19,37 @@ class BaseConfigTestCases(unittest.TestCase):
     def test_create_subclasses_with_identifiers(self):
 
         self.builder.etl_classes = {
-            "Class1": etl_module.TestClass1(None),
-            "Class2": etl_module.TestClass2(None)
+            "etl_class.1": etl_module.TestClass1(None),
+            "etl_class.2": etl_module.TestClass2(None)
+        }
+
+        self.builder.configs = {
+            "etl_class.1": etl_module.TestConfig1(
+                config_dict={
+                    "config_class": "TestConfig1",
+                    "etl_class": "TestClass1"
+                }
+            ),
+            "etl_class.2": etl_module.TestConfig2(
+                config_dict={
+                    "config_class": "TestConfig2",
+                    "etl_class": "TestClass2"
+                }
+            ),
+        }
+
+        self.builder.etl_classes = {
+            "etl_class.1": etl_module.TestClass1(config=self.builder.configs["etl_class.1"]),
+            "etl_class.2": etl_module.TestClass2(config=self.builder.configs["etl_class.2"])
         }
 
         config_dict = {
-            "a_config__by_identifier":  "Class1",
+            "a_config__by_identifier":  "etl_class.1",
             "field_a": {
-                "b_config__by_identifier": "Class2"
+                "b_config__by_identifier": "etl_class.2"
             },
             "field_b": "value_b",
-            "a_configs__by_identifiers": ["Class1", "Class2"]
+            "a_configs__by_identifiers": ["etl_class.1", "etl_class.2"]
         }
 
         self.config.create_subclasses(config_dict, self.builder)

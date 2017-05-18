@@ -19,6 +19,8 @@ class Builder(object):
         self.etl_module = etl_module
 
         self.etl_classes = None
+        self.environment = None
+
         self.clear_etl_classes()
 
     def clear_etl_classes(self):

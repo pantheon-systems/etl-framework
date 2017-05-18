@@ -59,8 +59,6 @@ class BaseConfig(object):
         Note that the environment is taken from the parent
         """
 
-        print "WARNING: Environment isnt set for subclasses yet"
-
         if not isinstance(component, dict):
             return
 
@@ -68,7 +66,7 @@ class BaseConfig(object):
             if key.endswith("__config"):
                 value = component.pop(key)
                 component[key[:-8]] = BaseConfig(
-                    component=value,
+                    config_dict=value,
                 ).morph(
                     configs=builder.etl_module,
                     environment=builder.environment,
@@ -83,7 +81,7 @@ class BaseConfig(object):
                 values = component.pop(key)
                 component[key[:-9]] = [
                     BaseConfig(
-                        component=value,
+                        config_dict=value,
                     ).morph(
                         configs=builder.etl_module,
                         environment=builder.environment,
@@ -125,7 +123,7 @@ class BaseConfig(object):
                     ).morph(
                         configs=builder.etl_module,
                         environment=builder.environment,
-                    ).crete(
+                    ).create(
                         etl_classes=builder.etl_module
                     )
                     for value in values
@@ -238,7 +236,7 @@ class BaseConfig(object):
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
 
-    def morph(self, configs):
+    def morph(self, configs, environment=None):
         """
         returns a config of different class
         configs should be a module with config classes
@@ -247,9 +245,11 @@ class BaseConfig(object):
         config_class_name = self.get_config_class()
         ConfigClass = getattr(configs, config_class_name)
 
+        environment = environment or self.environment
+
         return ConfigClass(
             config_dict=self.config,
-            environment=self.environment
+            environment=environment
         )
 
     def create(self, etl_classes):

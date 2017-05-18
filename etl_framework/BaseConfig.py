@@ -13,7 +13,13 @@ class BaseConfig(object):
     ETL_CLASS_ATTR = 'etl_class'
     CONFIG_CLASS_ATTR = 'config_class'
 
-    def __init__(self, config_dir=None, config_filename=None, config_dict=None, environment=None):
+    def __init__(
+        self,
+        config_dir=None,
+        config_filename=None,
+        config_dict=None,
+        environment=None,
+    ):
         """intialize Parser"""
 
         self.environment = environment
@@ -39,6 +45,71 @@ class BaseConfig(object):
             #set config dir only if config dir given
             else:
                 self.set_config_dir(config_dir=config_dir)
+
+    def configure(self, builder):
+        """Middle step that sets up subconfigs and possibly other things"""
+
+        # This transforms self.config object in place
+        BaseConfig.create_subclasses(self.config, builder)
+
+    @staticmethod
+    def create_subclasses(config_dict, builder):
+        """Creates subclasses from nested configs"""
+
+        print "WARNING: Environment isnt set for subclasses yet"
+
+        if not isinstance(config_dict, dict):
+            return
+
+        for key in config_dict.keys():
+            if key.endswith("__config"):
+                value = config_dict.pop(key)
+                subclass = BaseConfig(
+                    config_dict=value,
+                ).morph(
+                    configs=builder.etl_module
+                ).create(etl_classes=builder.etl_module)
+
+                config_dict[key[:-8]] = subclass
+
+            elif key.endswith("__configs"):
+                values = config_dict.pop(key)
+                config_dict[key[:-9]] = [
+                    BaseConfig(
+                        config_dict=value,
+                    ).morph(
+                        configs=builder.etl_module
+                    ).create(
+                        etl_classes=builder.etl_module)
+                    for value in values
+                ]
+
+            elif key.endswith("__by_identifier"):
+                value = config_dict.pop(key)
+                config_dict[key[:-15]] = builder.get_etl_class(value)
+
+            elif key.endswith("__by_identifiers"):
+                values = config_dict.pop(key)
+                config_dict[key[:-16]] = [
+                    builder.get_etl_class(value)
+                    for value in values
+                ]
+
+            # NOTE this doesnt handle lists of lists
+            elif isinstance(config_dict[key], list):
+                value = config_dict[key]
+                for element in value:
+                    BaseConfig.create_subclasses(
+                        config_dict=element,
+                        builder=builder,
+                    )
+
+            else:
+                value = config_dict[key]
+                BaseConfig.create_subclasses(
+                    config_dict=value,
+                    builder=builder
+                )
 
     @classmethod
     def create_from_filepath(cls, filepath, *args, **kwargs):
@@ -118,7 +189,10 @@ class BaseConfig(object):
         config_class_name = self.get_config_class()
         ConfigClass = getattr(configs, config_class_name)
 
-        return ConfigClass(config_dict=self.config, environment=self.environment)
+        return ConfigClass(
+            config_dict=self.config,
+            environment=self.environment
+        )
 
     def create(self, etl_classes):
         """

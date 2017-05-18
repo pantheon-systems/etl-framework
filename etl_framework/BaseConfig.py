@@ -122,6 +122,21 @@ class BaseConfig(object):
             **kwargs
         )
 
+    @property
+    def identifier(self):
+
+        return self.config["identifier"]
+
+    @property
+    def etl_class(self):
+
+        return self.config["etl_class"]
+
+    @property
+    def config_class(self):
+
+        return self.config["config_class"]
+
     @check_config_attr_default_none
     def get_identifier(self):
         """gets identifier for current configuration"""

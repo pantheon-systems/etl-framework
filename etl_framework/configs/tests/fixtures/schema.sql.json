@@ -1,0 +1,45 @@
+{
+    "config_class": "SqlSchemaConfig",
+    "etl_class": "MySqlSchema",
+    "fields": {
+        "id": "INT(8) AUTO_INCREMENT",
+        "record_updated": "timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+        "field1": "varchar(36)",
+        "field2": "varchar(36)",
+        "field3": "varchar(36)",
+        "field4": "varchar(36)"
+    },
+    "identifier": "schema.sql",
+    "indexes": [
+        [
+            "",
+            [
+                "field1"
+            ]
+        ],
+        [
+            "",
+            [
+                "field2"
+            ]
+        ]
+    ],
+    "primary_key": [
+        "id"
+    ],
+    "table": "test",
+    "unique_keys": [
+        [
+            "",
+            [
+                "field3"
+            ]
+        ],
+        [
+            "",
+            [
+                "field4"
+            ]
+        ]
+    ]
+}

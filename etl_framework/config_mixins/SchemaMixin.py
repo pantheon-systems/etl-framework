@@ -17,7 +17,7 @@ class SchemaMixin(object):
     @property
     def fields(self):
 
-        return self.config["fields"]
+        return self.config.get("fields", {})
 
     @fields.setter
     def fields(self, fields):
@@ -27,7 +27,7 @@ class SchemaMixin(object):
     @property
     def indexes(self):
 
-        return self.config["indexes"]
+        return self.config.get("indexes", [])
 
     @indexes.setter
     def indexes(self, indexes):
@@ -37,7 +37,7 @@ class SchemaMixin(object):
     @property
     def unique_keys(self):
 
-        return self.config["unique_keys"]
+        return self.config.get("unique_keys", [])
 
     @unique_keys.setter
     def unique_keys(self, unique_keys):

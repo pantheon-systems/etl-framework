@@ -55,6 +55,10 @@ class Builder(object):
 
         return self.etl_classes[identifier]
 
+    def get_config(self, identifier):
+
+        return self.configs[identifier]
+
     def add_configs_from_directories(self, directories):
         """
         Adds all configs found in a directories

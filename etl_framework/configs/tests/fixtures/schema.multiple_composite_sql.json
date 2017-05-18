@@ -1,0 +1,90 @@
+{
+    "config_class": "CompositeSqlSchemaConfig",
+    "etl_class": "MySqlSchema",
+    "component_schemas": {
+        "schema.sql": {
+            "ignored_fields": [
+                "field2",
+				"id",
+				"record_updated"
+            ],
+            "field_renames": {
+                "field1": "fielda",
+                "field2": "fieldb",
+                "field3": "fieldc",
+                "field4": "fieldd"
+            },
+            "ignored_indexes": [
+                [
+                    "",
+                    [
+                        "field1"
+                    ]
+                ]
+            ],
+            "ignored_unique_keys": [
+                [
+                    "",
+                    [
+                        "field3"
+                    ]
+                ]
+            ]
+        },
+        "schema.sql2": {
+            "ignored_fields": [
+                "field11",
+				"record_updated"
+            ],
+            "field_renames": {
+                "field11": "fieldaa",
+                "field12": "fieldbb",
+                "field13": "fieldcc",
+                "field14": "fielddd"
+            },
+            "ignored_indexes": [
+                [
+                    "",
+                    [
+                        "field11"
+                    ]
+                ]
+            ],
+            "ignored_unique_keys": [
+                [
+                    "",
+                    [
+                        "field13"
+                    ]
+                ]
+            ]
+        }
+    },
+    "fields": {
+        "id": "INT(8) AUTO_INCREMENT",
+        "record_updated": "timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+        "field5": "varchar(36)",
+        "field6": "varchar(36)"
+    },
+    "identifier": "schema.composite_sql",
+    "indexes": [
+        [
+            "",
+            [
+                "field5"
+            ]
+        ]
+    ],
+    "primary_key": [
+        "id"
+    ],
+    "table": "multiple_composite_test",
+    "unique_keys": [
+        [
+            "",
+            [
+                "field6"
+            ]
+        ]
+    ]
+}

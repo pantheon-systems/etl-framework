@@ -22,9 +22,15 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
 
     def compose_config(self, builder):
 
+        self._compose_schemas(builder)
         self._compose_fields(builder)
         self._compose_indexes(builder)
         self._compose_unique_keys(builder)
+
+    def _compose_schemas(self, builder):
+
+        for schema_id, schema_config in self.component_schemas.iteritems():
+            schema_config["config"] = builder.get_config(schema_id)
 
     def _compose_unique_keys(self, builder):
 

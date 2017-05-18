@@ -15,6 +15,16 @@ class SchemaMixin(object):
     RECORD_UPDATED_FIELD_ATTR = 'record_updated_field'
 
     @property
+    def table(self):
+
+        return self.config["table"]
+
+    @table.setter
+    def table(self, table):
+
+        self.config["table"] = table
+
+    @property
     def fields(self):
 
         return self.config.get("fields", {})

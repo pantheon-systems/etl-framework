@@ -37,6 +37,14 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
 
         self.builder.configs[self.schema_config.identifier] = self.schema_config
 
+    def test__compose_schemas(self):
+
+        self.config._compose_schemas(self.builder)
+
+        # Test that a config attribute is set with the Component Config
+        component_schema = self.config.component_schemas.values()[0]
+        self.assertEqual(component_schema["config"], self.schema_config)
+
     def test__compose_unique_keys(self):
 
         expected_output = [

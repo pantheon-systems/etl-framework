@@ -160,7 +160,7 @@ class CompositeMySqlStatementsConfigMixin(object):
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
-                and field != schema_join_key 
+                and field != schema_join_key
             ])
 
             all_fields.extend(fields)
@@ -190,7 +190,7 @@ class CompositeMySqlStatementsConfigMixin(object):
                 header="ON",
                 phrases=["{}.{} = {}.{}".format(
                     self.table,
-                    schema_join_key,
+                    join_key,
                     table,
                     schema_join_key)
                 ]

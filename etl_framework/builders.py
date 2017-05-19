@@ -39,7 +39,7 @@ class Builder(object):
 
         self.etl_classes[etl_class.identifier] = etl_class
 
-    def set_etl_classes(self):
+    def build_etl_classes(self):
         """
         Sets etl_classes attribute by processing configs
         """
@@ -48,11 +48,17 @@ class Builder(object):
 
         for config in self.configs.itervalues():
 
-            etl_class = config.create(
-                etl_classes=self.etl_module,
-            )
+            etl_class = self.build(config)
 
             self.add_etl_class(etl_class)
+
+    def build(self, config):
+        """builds a config"""
+
+        return config.create(
+            etl_classes=self.etl_module,
+            builder=self,
+        )
 
     def get_etl_class(self, identifier):
 
@@ -78,9 +84,6 @@ class Builder(object):
         """Yeah"""
 
         config = BaseConfig.create_from_filepath(config_filepath)
-        config = config.morph(
-            configs=self.etl_module
-        )
 
         self.add_config(config)
 

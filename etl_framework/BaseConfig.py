@@ -246,16 +246,25 @@ class BaseConfig(object):
             environment=environment
         )
 
-    def create(self, etl_classes):
+    def create(self, etl_classes, builder=None):
         """
         returns an EtlClass object with this config
         etl_classes should be a module with Etl Classes
+        pass the builder if you want to configure
         """
 
-        etl_class_name = self.get_etl_class()
+        if builder:
+            config = self.morph(
+                configs=builder.etl_module,
+                environment=builder.environment
+            )
+            config.configure(builder=builder)
+        else:
+            config = self
+        etl_class_name = config.get_etl_class()
         EtlClass = getattr(etl_classes, etl_class_name)
 
-        return EtlClass(config=self)
+        return EtlClass(config=config)
 
     @classmethod
     def show_example_config(cls):

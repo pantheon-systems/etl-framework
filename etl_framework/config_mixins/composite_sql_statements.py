@@ -104,7 +104,7 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         if time_cutoff_field:
             greatest_phrase = ", ".join(table + "."+ time_cutoff_field for table in all_tables)
-            where_phrases.append("GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase))
+            where_phrases.append("GREATEST({greatest_phrase}) >= (%s)".format(greatest_phrase=greatest_phrase))
             output_fields.append(time_cutoff_field)
 
         if where_phrases:
@@ -209,7 +209,7 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         if time_cutoff_field:
             greatest_phrase = ", ".join(table + "."+ time_cutoff_field for table in all_tables)
-            where_phrases.append("GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase))
+            where_phrases.append("GREATEST({greatest_phrase}) >= (%s)".format(greatest_phrase=greatest_phrase))
             output_fields.append(time_cutoff_field)
 
         if where_phrases:

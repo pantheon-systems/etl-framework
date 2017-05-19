@@ -43,7 +43,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
 
         # Test that a config attribute is set with the Component Config
         component_schema = self.config.component_schemas.values()[0]
-        self.assertEqual(component_schema["config"], self.schema_config)
+        self.assertEqual(component_schema["config"].config, self.schema_config.config)
 
     def test__compose_unique_keys(self):
 
@@ -52,6 +52,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
             ["", ["field6"]]
         ]
 
+        self.config._compose_schemas(self.builder)
         self.config._compose_unique_keys(self.builder)
 
         self.assertEqual(sorted(expected_output), sorted(self.config.unique_keys))
@@ -63,6 +64,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
             ["", ["field5"]]
         ]
 
+        self.config._compose_schemas(self.builder)
         self.config._compose_indexes(self.builder)
 
         self.assertEqual(sorted(expected_output), sorted(self.config.indexes))
@@ -79,5 +81,6 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
             "fieldd": "varchar(36)"
         }
 
+        self.config._compose_schemas(self.builder)
         self.config._compose_fields(self.builder)
         self.assertEqual(expected_output, self.config.fields)

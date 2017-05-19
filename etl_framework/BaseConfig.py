@@ -230,13 +230,14 @@ class BaseConfig(object):
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
 
-    def morph(self, configs, environment=None):
+    def morph(self, configs, environment=None, override=None):
         """
         returns a config of different class
         configs should be a module with config classes
+        override gives explicit config class to morph into
         """
 
-        config_class_name = self.get_config_class()
+        config_class_name = override or self.get_config_class()
         ConfigClass = getattr(configs, config_class_name)
 
         environment = environment or self.environment

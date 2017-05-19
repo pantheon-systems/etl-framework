@@ -9,6 +9,7 @@ import unittest
 from etl_framework.SqlSchemaConfig import SqlSchemaConfig
 from etl_framework.configs.composite_sql_schema import CompositeSqlSchemaConfig
 from etl_framework.config_mixins.composite_sql_statements import CompositeMySqlStatementsConfigMixin
+from etl_framework.configs.tests.fixtures import etl_module
 from etl_framework.builders import Builder
 
 class TestConfig(CompositeSqlSchemaConfig, CompositeMySqlStatementsConfigMixin):
@@ -35,7 +36,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
 
     def setUp(self):
 
-        self.builder = Builder()
+        self.builder = Builder(etl_module=etl_module)
 
         self.schema_config = SqlSchemaConfig.create_from_filepath(
             self.SCHEMA_CONFIG_FILEPATH

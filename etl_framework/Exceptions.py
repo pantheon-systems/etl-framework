@@ -34,6 +34,12 @@ class SchemaValidationException(Exception):
 
     pass
 
+class ConfigNotFoundException(Exception):
+    pass
+
+class SchemaConfigNotFoundException(Exception):
+    pass
+
 class SchemaNotFoundException(Exception):
     """SchemaNotFoundException is thrown when a jsl schema is not provided
     when necessary"""

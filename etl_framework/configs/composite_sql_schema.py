@@ -13,29 +13,33 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
 
         super(CompositeSqlSchemaConfig, self).configure(builder)
 
-        self.compose_config(builder)
+        return self.compose(builder)
 
     @property
     def component_schemas(self):
 
         return self.config["component_schemas"]
 
-    def compose_config(self, builder):
+    def compose(self, builder):
 
         self._compose_schemas(builder)
-        self._compose_fields(builder)
-        self._compose_indexes(builder)
-        self._compose_unique_keys(builder)
+        self._compose_fields()
+        self._compose_indexes()
+        self._compose_unique_keys()
+
+        return self
 
     def _compose_schemas(self, builder):
 
         for schema_id, schema_config in self.component_schemas.iteritems():
-            schema_config["config"] = builder.get_config(schema_id)
+            schema_config["config"] = builder.get_config(schema_id).morph(
+                configs=builder.etl_module
+            )
 
-    def _compose_unique_keys(self, builder):
+    def _compose_unique_keys(self):
 
         for schema_id, schema_config in self.component_schemas.iteritems():
-            schema = builder.get_config(schema_id)
+            schema = schema_config["config"]
             ignored_unique_keys = schema_config["ignored_unique_keys"]
             field_renames = schema_config["field_renames"]
             for unique_key in schema.unique_keys:
@@ -44,10 +48,10 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
                     unique_key[1] = [field_renames.get(field, field) for field in unique_key[1]]
                     self.unique_keys.append(unique_key)
 
-    def _compose_indexes(self, builder):
+    def _compose_indexes(self):
 
         for schema_id, schema_config in self.component_schemas.iteritems():
-            schema = builder.get_config(schema_id)
+            schema = schema_config["config"]
             ignored_indexes = schema_config["ignored_indexes"]
             field_renames = schema_config["field_renames"]
             for index in schema.indexes:
@@ -56,10 +60,10 @@ class CompositeSqlSchemaConfig(SqlSchemaConfig, CompositeConfigInterface):
                     index[1] = [field_renames.get(field, field) for field in index[1]]
                     self.indexes.append(index)
 
-    def _compose_fields(self, builder):
+    def _compose_fields(self):
 
         for schema_id, schema_config in self.component_schemas.iteritems():
-            schema = builder.get_config(schema_id)
+            schema = schema_config["config"]
             ignored_fields = set(schema_config["ignored_fields"])
             field_renames = schema_config["field_renames"]
 

@@ -9,6 +9,7 @@ import unittest
 from etl_framework.SqlSchemaConfig import SqlSchemaConfig
 from etl_framework.configs.composite_sql_schema import CompositeSqlSchemaConfig
 from etl_framework.config_mixins.composite_sql_statements import CompositeMySqlStatementsConfigMixin
+from etl_framework.configs.tests.fixtures import etl_module
 from etl_framework.builders import Builder
 
 class TestConfig(CompositeSqlSchemaConfig, CompositeMySqlStatementsConfigMixin):
@@ -35,7 +36,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
 
     def setUp(self):
 
-        self.builder = Builder()
+        self.builder = Builder(etl_module=etl_module)
 
         self.schema_config = SqlSchemaConfig.create_from_filepath(
             self.SCHEMA_CONFIG_FILEPATH
@@ -53,6 +54,30 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         self.builder.configs[self.schema_config2.identifier] = self.schema_config2
 
         self.config._compose_schemas(self.builder)
+
+    def test_create_composite_sql_table_delete_statement(self):
+
+        fields, statement = self.config.create_composite_sql_table_delete_statement(
+            ["schema.sql", "schema.sql2"],
+            "id"
+        )
+
+        self.assertEqual(fields, [])
+
+        # This is a pretty lame test
+        self.assertTrue("DELETE" in statement.get_sql_clause())
+
+    def test_create_composite_sql_table_delete_statement_with_where_clause(self):
+
+        fields, statement = self.config.create_composite_sql_table_delete_statement(
+            ["schema.sql", "schema.sql2"],
+            "id",
+            where_phrases=["table.field1 IS NOT NULL", "table.field2 LIKE '%a%'"]
+        )
+
+        self.assertEqual(fields, [])
+        # This is a pretty lame test
+        self.assertTrue("WHERE" in statement.get_sql_clause())
 
     def test_create_composite_sql_table_upsert_statement(self):
 

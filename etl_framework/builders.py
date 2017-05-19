@@ -3,7 +3,7 @@
 import os
 
 from etl_framework.BaseConfig import BaseConfig
-from etl_framework.Exceptions import DuplicateConfigException
+from etl_framework.Exceptions import DuplicateConfigException, ConfigNotFoundException
 
 class Builder(object):
 
@@ -66,7 +66,10 @@ class Builder(object):
 
     def get_config(self, identifier):
 
-        return self.configs[identifier]
+        try:
+            return self.configs[identifier]
+        except KeyError:
+            raise ConfigNotFoundException()
 
     def add_configs_from_directories(self, directories):
         """

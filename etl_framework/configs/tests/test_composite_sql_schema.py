@@ -53,7 +53,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
         ]
 
         self.config._compose_schemas(self.builder)
-        self.config._compose_unique_keys(self.builder)
+        self.config._compose_unique_keys()
 
         self.assertEqual(sorted(expected_output), sorted(self.config.unique_keys))
 
@@ -65,7 +65,7 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
         ]
 
         self.config._compose_schemas(self.builder)
-        self.config._compose_indexes(self.builder)
+        self.config._compose_indexes()
 
         self.assertEqual(sorted(expected_output), sorted(self.config.indexes))
 
@@ -82,5 +82,5 @@ class CompositeSqlSchemaConfigTestCases(unittest.TestCase):
         }
 
         self.config._compose_schemas(self.builder)
-        self.config._compose_fields(self.builder)
+        self.config._compose_fields()
         self.assertEqual(expected_output, self.config.fields)

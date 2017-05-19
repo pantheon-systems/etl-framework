@@ -55,6 +55,30 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
 
         self.config._compose_schemas(self.builder)
 
+    def test_create_composite_sql_table_delete_statement(self):
+
+        fields, statement = self.config.create_composite_sql_table_delete_statement(
+            ["schema.sql", "schema.sql2"],
+            "id"
+        )
+
+        self.assertEqual(fields, [])
+
+        # This is a pretty lame test
+        self.assertTrue("DELETE" in statement.get_sql_clause())
+
+    def test_create_composite_sql_table_delete_statement_with_where_clause(self):
+
+        fields, statement = self.config.create_composite_sql_table_delete_statement(
+            ["schema.sql", "schema.sql2"],
+            "id",
+            where_phrases=["table.field1 IS NOT NULL", "table.field2 LIKE '%a%'"]
+        )
+
+        self.assertEqual(fields, [])
+        # This is a pretty lame test
+        self.assertTrue("WHERE" in statement.get_sql_clause())
+
     def test_create_composite_sql_table_upsert_statement(self):
 
         fields, statement = self.config.create_composite_sql_table_upsert_statement(
@@ -63,7 +87,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         )
 
         self.assertEqual(fields, [])
-
+        
         # This is a pretty lame test
         self.assertTrue("INSERT INTO" in statement.get_sql_clause())
 
@@ -100,7 +124,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         )
 
         self.assertEqual(fields, [])
-
+        
         # This is a pretty lame test
         self.assertTrue("UPDATE" in statement.get_sql_clause())
 

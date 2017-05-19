@@ -1,3 +1,6 @@
+#pylint: disable=too-many-locals
+#pylint: disable=used-before-assignment
+
 from etl_framework.utilities.SqlClause import SqlClause
 
 class CompositeMySqlStatementsConfigMixin(object):
@@ -88,7 +91,7 @@ class CompositeMySqlStatementsConfigMixin(object):
                 )
 
                 all_clauses.append(next_clause)
- 
+
             else:
                 next_clause = SqlClause(
                     header="FROM",

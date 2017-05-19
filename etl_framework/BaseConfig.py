@@ -13,7 +13,13 @@ class BaseConfig(object):
     ETL_CLASS_ATTR = 'etl_class'
     CONFIG_CLASS_ATTR = 'config_class'
 
-    def __init__(self, config_dir=None, config_filename=None, config_dict=None, environment=None):
+    def __init__(
+        self,
+        config_dir=None,
+        config_filename=None,
+        config_dict=None,
+        environment=None,
+    ):
         """intialize Parser"""
 
         self.environment = environment
@@ -40,6 +46,106 @@ class BaseConfig(object):
             else:
                 self.set_config_dir(config_dir=config_dir)
 
+    def configure(self, builder):
+        """Middle step that sets up subconfigs and possibly other things"""
+
+        # This transforms self.config object in place
+        BaseConfig.create_subclasses(self.config, builder)
+
+    @staticmethod
+    def create_subclasses(component, builder):
+        """
+        Creates subclasses from nested configs
+        Note that the environment is taken from the parent
+        """
+
+        if not isinstance(component, dict):
+            return
+
+        for key in component.keys():
+            if key.endswith("__config"):
+                value = component.pop(key)
+                subclass = BaseConfig(
+                    config_dict=value,
+                ).morph(
+                    configs=builder.etl_module,
+                    environment=builder.environment,
+                ).create(etl_classes=builder.etl_module)
+
+                component[key[:-8]] = subclass
+
+                subclass.config.configure(builder)
+
+            elif key.endswith("__configs"):
+                values = component.pop(key)
+                subclasses = [
+                    BaseConfig(
+                        config_dict=value,
+                    ).morph(
+                        configs=builder.etl_module,
+                        environment=builder.environment,
+                    ).create(
+                        etl_classes=builder.etl_module)
+                    for value in values
+                ]
+
+                component[key[:-9]] = subclasses
+                for subclass in subclasses:
+                    subclass.config.configure(builder)
+
+            elif key.endswith("__by_identifier"):
+                value = component.pop(key)
+
+                subclass = builder.get_config(
+                    value
+                ).morph(
+                    configs=builder.etl_module,
+                    environment=builder.environment,
+                ).create(
+                    etl_classes=builder.etl_module
+                )
+
+                component[key[:-15]] = subclass
+                # Process any subclasses in value
+                subclass.config.configure(builder)
+
+            elif key.endswith("__by_identifiers"):
+                values = component.pop(key)
+
+                subclasses = [
+                    builder.get_config(
+                        value
+                    ).morph(
+                        configs=builder.etl_module,
+                        environment=builder.environment,
+                    ).create(
+                        etl_classes=builder.etl_module
+                    )
+                    for value in values
+                ]
+
+                component[key[:-16]] = subclasses
+
+                for subclass in subclasses:
+                    subclass.config.configure(builder)
+
+            # NOTE this doesnt handle lists of lists
+            elif isinstance(component[key], list):
+                value = component[key]
+                for element in value:
+
+                    BaseConfig.create_subclasses(
+                        component=element,
+                        builder=builder,
+                    )
+
+            else:
+                value = component[key]
+                BaseConfig.create_subclasses(
+                    component=value,
+                    builder=builder
+                )
+
     @classmethod
     def create_from_filepath(cls, filepath, *args, **kwargs):
         """creates instance of Config from filepath"""
@@ -50,6 +156,21 @@ class BaseConfig(object):
             *args,
             **kwargs
         )
+
+    @property
+    def identifier(self):
+
+        return self.config["identifier"]
+
+    @property
+    def etl_class(self):
+
+        return self.config["etl_class"]
+
+    @property
+    def config_class(self):
+
+        return self.config["config_class"]
 
     @check_config_attr_default_none
     def get_identifier(self):
@@ -109,7 +230,7 @@ class BaseConfig(object):
         except IOError:
             raise Exception('Configuration filepath %s doesnt exist'%(filepath, ))
 
-    def morph(self, configs):
+    def morph(self, configs, environment=None):
         """
         returns a config of different class
         configs should be a module with config classes
@@ -118,18 +239,32 @@ class BaseConfig(object):
         config_class_name = self.get_config_class()
         ConfigClass = getattr(configs, config_class_name)
 
-        return ConfigClass(config_dict=self.config, environment=self.environment)
+        environment = environment or self.environment
 
-    def create(self, etl_classes):
+        return ConfigClass(
+            config_dict=self.config,
+            environment=environment
+        )
+
+    def create(self, etl_classes, builder=None):
         """
         returns an EtlClass object with this config
         etl_classes should be a module with Etl Classes
+        pass the builder if you want to configure
         """
 
-        etl_class_name = self.get_etl_class()
+        if builder:
+            config = self.morph(
+                configs=builder.etl_module,
+                environment=builder.environment
+            )
+            config.configure(builder=builder)
+        else:
+            config = self
+        etl_class_name = config.get_etl_class()
         EtlClass = getattr(etl_classes, etl_class_name)
 
-        return EtlClass(config=self)
+        return EtlClass(config=config)
 
     @classmethod
     def show_example_config(cls):

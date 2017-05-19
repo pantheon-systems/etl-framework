@@ -1,5 +1,8 @@
 """some exceptions"""
 
+class DuplicateConfigException(Exception):
+    """ Raise when a config with the same identifier already set"""
+
 class EnvironmentSettingNotFoundException(Exception):
     """ Raises an exception when an environment setting cant be found from source """
 

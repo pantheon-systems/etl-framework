@@ -14,6 +14,46 @@ class SchemaMixin(object):
     SYNC_FIELD_ATTR = 'sync_field'
     RECORD_UPDATED_FIELD_ATTR = 'record_updated_field'
 
+    @property
+    def table(self):
+
+        return self.config["table"]
+
+    @table.setter
+    def table(self, table):
+
+        self.config["table"] = table
+
+    @property
+    def fields(self):
+
+        return self.config.get("fields", {})
+
+    @fields.setter
+    def fields(self, fields):
+
+        self.config["fields"] = fields
+
+    @property
+    def indexes(self):
+
+        return self.config.get("indexes", [])
+
+    @indexes.setter
+    def indexes(self, indexes):
+
+        self.config["indexes"] = indexes
+
+    @property
+    def unique_keys(self):
+
+        return self.config.get("unique_keys", [])
+
+    @unique_keys.setter
+    def unique_keys(self, unique_keys):
+
+        self.config["unique_keys"] = unique_keys
+
     @check_config_attr_default_none
     def get_fields(self):
         """target fields is dict of field names and datatypes"""

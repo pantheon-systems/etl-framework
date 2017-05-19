@@ -87,7 +87,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         )
 
         self.assertEqual(fields, [])
-        
+
         # This is a pretty lame test
         self.assertTrue("INSERT INTO" in statement.get_sql_clause())
 
@@ -124,7 +124,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         )
 
         self.assertEqual(fields, [])
-        
+ 
         # This is a pretty lame test
         self.assertTrue("UPDATE" in statement.get_sql_clause())
 

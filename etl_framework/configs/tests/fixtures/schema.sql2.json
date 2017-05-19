@@ -2,7 +2,7 @@
     "config_class": "SqlSchemaConfig",
     "etl_class": "MySqlSchema",
     "fields": {
-        "id": "INT(8) AUTO_INCREMENT",
+        "id2": "INT(8) AUTO_INCREMENT",
         "record_updated": "timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
         "field11": "varchar(36)",
         "field22": "varchar(36)",
@@ -25,7 +25,7 @@
         ]
     ],
     "primary_key": [
-        "id"
+        "id2"
     ],
     "table": "test2",
     "unique_keys": [

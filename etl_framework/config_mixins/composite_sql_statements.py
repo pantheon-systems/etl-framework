@@ -7,7 +7,8 @@ class CompositeMySqlStatementsConfigMixin(object):
         self,
         component_schema_ids,
         join_key,
-        time_cutoff_field=None
+        time_cutoff_field=None,
+        where_phrases=None
     ):
 
         all_fields = list()
@@ -16,28 +17,37 @@ class CompositeMySqlStatementsConfigMixin(object):
         all_join_keys = list()
         all_clauses = list()
         output_fields = list()
+        if where_phrases is None:
+            where_phrases = list()
 
         for schema_id in component_schema_ids:
             component = self.component_schemas[schema_id]
             schema = component["config"]
             ignored_fields = set(component["ignored_fields"])
             field_renames = component["field_renames"]
+            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
+            schema_join_key = reverse_field_renames.get(join_key, join_key)
+
             table = schema.table
+
+            # NOTE we ignore the join key in the fields
             fields, mapped_fields = zip(*[
                 (
                     "{}.{}".format(table, field),
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
+                and field != schema_join_key
             ])
-
-            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
-            schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             all_fields.extend(fields)
             all_mapped_fields.extend(mapped_fields)
             all_tables.append(table)
             all_join_keys.append(schema_join_key)
+
+        # Add the join key to fields ONCE
+        all_fields.append("{}.{}".format(table, schema_join_key))
+        all_mapped_fields.append(join_key)
 
         insert_clause = SqlClause(
             header="INSERT INTO {table} (".format(table=self.table),
@@ -91,12 +101,16 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         if time_cutoff_field:
             greatest_phrase = ", ".join(table + "."+ time_cutoff_field for table in all_tables)
+            where_phrases.append("GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase))
+            output_fields.append(time_cutoff_field)
+
+        if where_phrases:
             where_clause = SqlClause(
                 header="WHERE",
-                phrases=["GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase)]
+                phrases=["({})".format(phrase) for phrase in where_phrases],
+                phrase_separator=' AND\n'
             )
             all_clauses.append(where_clause)
-            output_fields.append(time_cutoff_field)
 
         duplicate_update_clause = SqlClause(
             header="ON DUPLICATE KEY UPDATE",
@@ -113,7 +127,8 @@ class CompositeMySqlStatementsConfigMixin(object):
         self,
         component_schema_ids,
         join_key,
-        time_cutoff_field=None
+        time_cutoff_field=None,
+        where_phrases=None
     ):
 
         all_fields = list()
@@ -122,6 +137,8 @@ class CompositeMySqlStatementsConfigMixin(object):
         all_join_keys = list()
         all_clauses = list()
         output_fields = list()
+        if where_phrases is None:
+            where_phrases = list()
 
         for schema_id in component_schema_ids:
             component = self.component_schemas[schema_id]
@@ -129,16 +146,19 @@ class CompositeMySqlStatementsConfigMixin(object):
             ignored_fields = set(component["ignored_fields"])
             field_renames = component["field_renames"]
             table = schema.table
+
+            # NOTE we dont update the schema_join_key
+            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
+            schema_join_key = reverse_field_renames.get(join_key, join_key)
+
             fields, mapped_fields = zip(*[
                 (
                     "{}.{}".format(table, field),
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
+                and field != schema_join_key 
             ])
-
-            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
-            schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             all_fields.extend(fields)
             all_mapped_fields.extend(mapped_fields)
@@ -186,11 +206,15 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         if time_cutoff_field:
             greatest_phrase = ", ".join(table + "."+ time_cutoff_field for table in all_tables)
+            where_phrases.append("GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase))
+            output_fields.append(time_cutoff_field)
+
+        if where_phrases:
             where_clause = SqlClause(
                 header="WHERE",
-                phrases=["GREATEST({greatest_phrase}) > (%s)".format(greatest_phrase=greatest_phrase)]
+                phrases=["({})".format(phrase) for phrase in where_phrases],
+                phrase_separator=' AND\n'
             )
             all_clauses.append(where_clause)
-            output_fields.append(time_cutoff_field)
 
         return output_fields, SqlClause(phrases=all_clauses, phrase_indents=0, phrase_separator="\n")

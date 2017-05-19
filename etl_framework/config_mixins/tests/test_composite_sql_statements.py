@@ -66,6 +66,18 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         # This is a pretty lame test
         self.assertTrue("INSERT INTO" in statement.get_sql_clause())
 
+    def test_create_composite_sql_table_upsert_statement_with_where_phrase(self):
+
+        fields, statement = self.config.create_composite_sql_table_upsert_statement(
+            ["schema.sql", "schema.sql2"],
+            "id",
+            where_phrases=["table.field1 IS NOT NULL", "table.field2 LIKE '%a%'"]
+        )
+
+        self.assertEqual(fields, [])
+        # This is a pretty lame test
+        self.assertTrue("WHERE" in statement.get_sql_clause())
+
     def test_create_composite_sql_table_upsert_statement_with_cutoff(self):
 
         fields, statement = self.config.create_composite_sql_table_upsert_statement(
@@ -78,7 +90,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
 
         # This is a pretty lame test
         self.assertTrue("INSERT INTO" in statement.get_sql_clause())
-
+    
     def test_create_composite_sql_table_update_statement(self):
 
         fields, statement = self.config.create_composite_sql_table_update_statement(
@@ -91,6 +103,18 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         # This is a pretty lame test
         self.assertTrue("UPDATE" in statement.get_sql_clause())
 
+    def test_create_composite_sql_table_update_statement_with_where_phrase(self):
+
+        fields, statement = self.config.create_composite_sql_table_update_statement(
+            ["schema.sql", "schema.sql2"],
+            "id",
+            where_phrases=["table.field1 IS NOT NULL", "table.field2 LIKE '%a%'"]
+        )
+
+        self.assertEqual(fields, [])
+        # This is a pretty lame test
+        self.assertTrue("WHERE" in statement.get_sql_clause())
+
     def test_create_composite_sql_table_update_statement_with_cutoff(self):
 
         fields, statement = self.config.create_composite_sql_table_update_statement(
@@ -100,6 +124,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         )
 
         self.assertEqual(fields, ["test_cutoff"])
-
+        
         # This is a pretty lame test
         self.assertTrue("UPDATE" in statement.get_sql_clause())
+

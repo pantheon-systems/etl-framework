@@ -5,7 +5,6 @@
         "schema.sql": {
             "ignored_fields": [
                 "field2",
-				"id",
 				"record_updated"
             ],
             "field_renames": {
@@ -40,7 +39,8 @@
                 "field11": "fieldaa",
                 "field12": "fieldbb",
                 "field13": "fieldcc",
-                "field14": "fielddd"
+                "field14": "fielddd",
+				"id2": "id"
             },
             "ignored_indexes": [
                 [

@@ -80,6 +80,7 @@ class CompositeMySqlStatementsConfigMixin(object):
         self,
         component_schema_ids,
         join_key,
+        row_deleted_field,
         time_cutoff_field=None,
         where_phrases=None
     ):
@@ -91,7 +92,6 @@ class CompositeMySqlStatementsConfigMixin(object):
         if where_phrases is None:
             where_phrases = list()
 
-        all_tables.append(self.table)
         all_join_keys.append(join_key)
 
         for schema_id in component_schema_ids:
@@ -112,7 +112,10 @@ class CompositeMySqlStatementsConfigMixin(object):
         )
 
         all_clauses.append(delete_clause)
-        all_clauses.extend(self._create_join_clauses(all_tables, all_join_keys))
+        all_clauses.extend(self._create_join_clauses([self.table] + all_tables, all_join_keys))
+
+        if row_deleted_field:
+            where_phrases.extend(["{}.{} = 1".format(table, row_deleted_field) for table in all_tables])
 
         where_fields, where_clauses = self._create_where_clauses(all_tables, time_cutoff_field, where_phrases)
         output_fields.extend(where_fields)

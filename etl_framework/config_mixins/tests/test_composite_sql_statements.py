@@ -59,7 +59,8 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
 
         fields, statement = self.config.create_composite_sql_table_delete_statement(
             ["schema.sql", "schema.sql2"],
-            "id"
+            "id",
+            row_deleted_field=None,
         )
 
         self.assertEqual(fields, [])
@@ -72,6 +73,7 @@ class CompositeSqlStatementsConfigTestCases(unittest.TestCase):
         fields, statement = self.config.create_composite_sql_table_delete_statement(
             ["schema.sql", "schema.sql2"],
             "id",
+            row_deleted_field=None,
             where_phrases=["table.field1 IS NOT NULL", "table.field2 LIKE '%a%'"]
         )
 

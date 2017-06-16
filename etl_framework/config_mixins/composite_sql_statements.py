@@ -156,22 +156,22 @@ class CompositeMySqlStatementsConfigMixin(object):
             table = schema.table
 
             # NOTE we ignore the join key in the fields
-            fields, mapped_fields = zip(*[
+            table_fields, mapped_fields = zip(*[
                 (
-                    "{}.{}".format(table, field),
+                    (table, field),
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
                 and field != schema_join_key
             ])
 
-            all_fields.extend(fields)
+            all_fields.extend(table_fields)
             all_mapped_fields.extend(mapped_fields)
             all_tables.append(table)
             all_join_keys.append(schema_join_key)
 
         # Add the join key to fields ONCE
-        all_fields.append("{}.{}".format(table, schema_join_key))
+        all_fields.append((table, schema_join_key))
         all_mapped_fields.append(join_key)
 
         insert_clause = SqlClause(
@@ -184,7 +184,7 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         select_clause = SqlClause(
             header="SELECT",
-            phrases=all_fields
+            phrases=["{}.{}".format(table, field) for table, field in all_fields]
         )
 
         all_clauses.append(select_clause)
@@ -196,8 +196,8 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         duplicate_update_clause = SqlClause(
             header="ON DUPLICATE KEY UPDATE",
-            phrases=["{} = VALUES({})".format(mapped_field, field)
-                for field, mapped_field in zip(all_fields, all_mapped_fields)
+            phrases=["{} = VALUES({})".format(mapped_field, table_field[1])
+                for table_field, mapped_field in zip(all_fields, all_mapped_fields)
             ]
         )
 

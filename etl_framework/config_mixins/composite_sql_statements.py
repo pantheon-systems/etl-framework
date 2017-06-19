@@ -19,7 +19,7 @@ class CompositeMySqlStatementsConfigMixin(object):
 
         if time_cutoff_field:
             greatest_list = [table + "."+ time_cutoff_field for table in all_tables]
-            greatest_list.append("NULL")
+            greatest_list.append("0")
             where_phrases.append(
                 "GREATEST({greatest_phrase}) >= (%s)".format(
                     greatest_phrase=", ".join(greatest_list)

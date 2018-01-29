@@ -10,16 +10,17 @@ class Builder(object):
     def __init__(
         self,
         configs=None,
-        etl_module=None
+        etl_module=None,
+        environment=None,
     ):
 
         if not configs:
             self.configs = {}
 
         self.etl_module = etl_module
+        self.environment = environment
 
         self.etl_classes = None
-        self.environment = None
 
         self.clear_etl_classes()
 

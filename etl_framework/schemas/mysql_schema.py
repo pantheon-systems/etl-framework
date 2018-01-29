@@ -55,8 +55,8 @@ class MySqlSchema(
     def recreate(self):
         """stuff"""
 
-        self.drop_table()
-        self.create_table()
+        self.delete()
+        self.create()
 
     def truncate(self):
         """ stuff """

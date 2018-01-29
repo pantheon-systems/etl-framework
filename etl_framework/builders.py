@@ -61,6 +61,12 @@ class Builder(object):
             builder=self,
         )
 
+    def build_from_filepath(self, filepath):
+
+        config = BaseConfig.create_from_filepath(filepath)
+
+        return self.build(config)
+
     def get_etl_class(self, identifier):
 
         return self.etl_classes[identifier]

@@ -85,12 +85,7 @@ class Builder(object):
         """
 
         for directory in directories:
-            try:
-                filenames = next(os.walk(directory))[2]
-            except StopIteration:
-                print "WARNING {} directory has no files".format(directory)
-                continue
-            for filename in filenames:
+            for filename in next(os.walk(directory))[2]:
 
                 filepath = os.path.join(directory, filename)
                 self.add_config_from_filepath(filepath)

@@ -2,10 +2,8 @@
 #pylint: disable=unsubscriptable-object
 #pylint: disable=relative-import
 
-import os
 import datetime
 
-from Exceptions import EnvironmentVariableNotSetException
 from method_wrappers.check_attr_set import _check_attr_set
 from utilities.DatetimeConverter import DatetimeConverter
 

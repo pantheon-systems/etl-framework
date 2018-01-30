@@ -27,6 +27,10 @@ class SqlDatabaseInterface(DatastoreInterface, metaclass=abc.ABCMeta):
 
         return object.__new__(cls, *args, **kargs)
 
+    def __init__(self, *args, **kwargs):
+
+        super(SqlDatabaseInterface, self).__init__(*args, **kwargs)
+
     @classmethod
     def create_from_dsn(cls, dsn):
         """creates instance of data_loader from dsn (i.e. a sql url)"""

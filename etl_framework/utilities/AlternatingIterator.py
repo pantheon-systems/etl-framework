@@ -24,7 +24,7 @@ class AlternatingIterator(object):
 
                 #shit might raise StopIterationException
                 for iterator in self._component_iterators:
-                    yield iterator.next()
+                    yield next(iterator)
 
         if self._iterator is None:
             self._iterator = alternate_iterate()

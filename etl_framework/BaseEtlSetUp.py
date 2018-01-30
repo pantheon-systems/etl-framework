@@ -6,14 +6,12 @@ import os
 import abc
 import datetime
 
-from Exceptions import EnvironmentVariableNotSetException
-from method_wrappers.check_attr_set import _check_attr_set
-from utilities.DatetimeConverter import DatetimeConverter
+from .Exceptions import EnvironmentVariableNotSetException
+from .method_wrappers.check_attr_set import _check_attr_set
+from .utilities.DatetimeConverter import DatetimeConverter
 
-class BaseEtlSetUp(object):
+class BaseEtlSetUp(object, metaclass=abc.ABCMeta):
     """class to setup etl process, get etl settings/credentials, and teardown"""
-
-    __metaclass__ = abc.ABCMeta
 
     CONFIG_DIR = ''
 
@@ -23,7 +21,7 @@ class BaseEtlSetUp(object):
     LOADER_CONFIG_DIR = ''
     SCHEMA_CONFIG_DIR = ''
 
-    ETL_JOB_EARLIEST_TIME = datetime.datetime(1000, 01, 01, 0, 0, 0, 0)
+    ETL_JOB_EARLIEST_TIME = datetime.datetime(1000, 0o1, 0o1, 0, 0, 0, 0)
     ETL_JOBS_TABLE = '_etl_jobs_'
     ETL_JOBS_STARTED_AT_FIELD = 'most_recent_started_at'
     ETL_JOBS_CUTOFF_AT_FIELD = 'cutoff_at'
@@ -139,7 +137,7 @@ class BaseEtlSetUp(object):
             raise EnvironmentVariableNotSetException('%s must be set as ENV'%(env_variable, ))
         else:
             if display:
-                print 'self.%s is : %s'%(attribute_name, getattr(self, attribute_name))
+                print(('self.%s is : %s'%(attribute_name, getattr(self, attribute_name))))
 
     def _get_attr(self, attribute_name):
         """gets instance attribute given attribute name"""

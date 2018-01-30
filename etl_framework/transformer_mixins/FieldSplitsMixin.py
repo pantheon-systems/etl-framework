@@ -9,7 +9,7 @@ class FieldSplitsMixin(object):
     def iter_split_fields(self, row):
         """gets destination for current configuration"""
 
-        for destination, fields in self.config.get_field_splits().iteritems():
+        for destination, fields in list(self.config.get_field_splits().items()):
             for output_row in DataTraverser.normalize(row, fields):
                 yield destination, output_row
 

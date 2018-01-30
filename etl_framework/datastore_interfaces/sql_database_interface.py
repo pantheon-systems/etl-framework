@@ -16,17 +16,6 @@ class SqlDatabaseInterface(DatastoreInterface, metaclass=abc.ABCMeta):
     #CONNECTION_CLOSED_EXCEPTION = 'THIS NEEDS TO BE SET'
     #CONNECTION_GONE_EXCEPTION = 'THIS NEEDS TO BE SET'
 
-    def __new__(cls, *args, **kargs):
-        """check that ETL_JOB_ID and ETL_JOB_NAME are set"""
-
-        if hasattr(cls, 'CONNECTION_CLOSED_EXCEPTION') and hasattr(cls, 'CONNECTION_GONE_EXCEPTION'):
-            pass
-        else:
-            raise NotImplementedError('EtlSetUp should have CONNECTION_CLOSED_EXCEPTION and \
-                                        CONNECTION_GONE_EXCEPTION attributes set!')
-
-        return object.__new__(cls, *args, **kargs)
-
     def __init__(self, *args, **kwargs):
 
         super(SqlDatabaseInterface, self).__init__(*args, **kwargs)

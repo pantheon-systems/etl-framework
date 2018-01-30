@@ -63,10 +63,10 @@ class PubsubExtractor(
                                 has_appended_ack = True
                             yield destination, message
                         if not has_appended_ack:
-                            print 'WARNING: No destination for message {}'.format(message)
+                            print('WARNING: No destination for message {}'.format(message))
                 else:
                     self.message_flusher.flush()
-                    print 'SlEEPING for {} seconds'.format(sleep_time)
+                    print('SlEEPING for {} seconds'.format(sleep_time))
                     time.sleep(sleep_time)
                     sleep_time = min(sleep_time*2, sleep_max_time)
 

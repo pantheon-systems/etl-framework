@@ -11,5 +11,5 @@ class Segmenter(object):
     def yield_segments(self, data):
         """yields equally segmented chunks"""
 
-        for offset in xrange(0, len(data), self.chunk_size):
+        for offset in range(0, len(data), self.chunk_size):
             yield data[offset:offset+self.chunk_size]

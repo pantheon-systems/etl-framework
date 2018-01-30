@@ -24,7 +24,7 @@ class DataTraverser(object):
             #print 'WARNING: Traversed data is None with key: {0}'.format(key)
             return None
 
-        elif isinstance(data, basestring):
+        elif isinstance(data, str):
             data = json.loads(data)
 
         return data.get(key, default_value)
@@ -33,7 +33,7 @@ class DataTraverser(object):
     def traverse_path(source_data, field_path):
         """helper method to traverse data for given field path"""
 
-        if isinstance(source_data, basestring):
+        if isinstance(source_data, str):
             source_data = json.loads(source_data)
 
         if len(field_path) > 1:
@@ -74,7 +74,7 @@ class DataTraverser(object):
         field_paths : {[fieldname, [path_element1, path_element2, ...], ...}
         """
 
-        field_names, field_paths = zip(*fields.iteritems())
+        field_names, field_paths = list(zip(*iter(fields.items())))
 
         #if there are iterators that yield nothing, BadIterationException will be raised
         try:
@@ -87,7 +87,7 @@ class DataTraverser(object):
                                                     for iterator in field_iterators]).get_iterator()
 
         while True:
-            row = DataRow({name: value for name, value in itertools.izip(field_names, alternating_iterator)})
+            row = DataRow({name: value for name, value in zip(field_names, alternating_iterator)})
 
             #only yield row if not all iterators have cycled through
             if not all(field_iterator.is_cycled() for field_iterator in field_iterators):

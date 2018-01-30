@@ -103,7 +103,7 @@ class EnvironmentConfig(BaseConfig):
 
         # Output can be a dictionary if its the default value
         # Otherwise, its a json string
-        if isinstance(output, basestring):
+        if isinstance(output, str):
             return json.loads(output)
         else:
             return output

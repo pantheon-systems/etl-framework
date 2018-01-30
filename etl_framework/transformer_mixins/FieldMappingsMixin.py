@@ -1,6 +1,7 @@
 """parses configuration and returns useful things"""
 #pylint: disable=relative-import
 from etl_framework.utilities.DataTable import DataRow
+from functools import reduce
 
 class FieldMappingsMixin(object):
     """stuff"""
@@ -10,7 +11,7 @@ class FieldMappingsMixin(object):
 
         mapped_row = DataRow()
 
-        for traverse_path, mapped_field_name in self.config.get_field_mapping_fields().iteritems():
+        for traverse_path, mapped_field_name in self.config.get_field_mapping_fields().items():
             mapped_row[mapped_field_name] = reduce(lambda key, value: key.get(value) if key else None,
                                                     traverse_path.split('|'), row)
 
@@ -21,21 +22,21 @@ class FieldMappingsMixin(object):
 
         mappings = self.config.get_field_mapping_fields()
 
-        return {value[0]: row.get(key) for key, value in mappings.iteritems()}
+        return {value[0]: row.get(key) for key, value in mappings.items()}
 
     def filter_fields(self, row):
         """stuff"""
 
         mappings = self.config.get_field_mapping_fields()
 
-        return {key: value[0](row.get(key)) for key, value in mappings.iteritems()}
+        return {key: value[0](row.get(key)) for key, value in mappings.items()}
 
     def filter_and_map_fields(self, row):
         """stuff"""
 
         mapped_row = DataRow()
 
-        for traverse_path, mapping in self.config.get_field_mappings().iteritems():
+        for traverse_path, mapping in self.config.get_field_mappings().items():
             mapped_row[mapping[1]] = mapping[0](reduce(lambda key, value: key.get(value) if key else None,
                                                         traverse_path.split('|'), row))
 
@@ -46,5 +47,5 @@ class FieldMappingsMixin(object):
 
         mappings = self.config.get_field_mappings()
 
-        return {value[0]: value[0](row.get(key)) for key, value in mappings.iteritems()}
+        return {value[0]: value[0](row.get(key)) for key, value in mappings.items()}
 

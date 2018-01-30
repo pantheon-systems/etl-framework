@@ -54,7 +54,7 @@ class ResultInterface(EtlClass):
             field_subset = set(self.expected_result[0].keys())
             result = [
                 {
-                    field: value for field, value in result.iteritems()
+                    field: value for field, value in result.items()
                         if field in field_subset
                 }
                 for result in raw_result

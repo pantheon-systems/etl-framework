@@ -17,11 +17,11 @@ class FieldSplitsMixin(object):
     def get_field_split_destinations(self):
         """yup"""
 
-        return self.get_field_splits().keys()
+        return list(self.get_field_splits().keys())
 
     def get_field_split_field_names(self):
         """yup"""
 
         return {key: tuple(field[0]for field in fields)
-                for key, fields in self.get_field_splits().iteritems()}
+                for key, fields in self.get_field_splits().items()}
 

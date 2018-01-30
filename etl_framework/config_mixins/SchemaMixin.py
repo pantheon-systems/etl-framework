@@ -63,7 +63,7 @@ class SchemaMixin(object):
     def get_field_names(self):
         """stuff"""
 
-        return self.get_fields().keys()
+        return list(self.get_fields().keys())
 
     @check_config_attr_default_none
     def get_table(self):

@@ -10,10 +10,8 @@ from contextlib import closing
 
 from etl_framework.datastore_interfaces.datastore_interface import DatastoreInterface
 
-class SqlDatabaseInterface(DatastoreInterface):
+class SqlDatabaseInterface(DatastoreInterface, metaclass=abc.ABCMeta):
     """loads data into database"""
-
-    __metaclass__ = abc.ABCMeta
 
     #CONNECTION_CLOSED_EXCEPTION = 'THIS NEEDS TO BE SET'
     #CONNECTION_GONE_EXCEPTION = 'THIS NEEDS TO BE SET'
@@ -33,13 +31,13 @@ class SqlDatabaseInterface(DatastoreInterface):
     def create_from_dsn(cls, dsn):
         """creates instance of data_loader from dsn (i.e. a sql url)"""
 
-        print "DEPRECATED : just instantiate class"
+        print("DEPRECATED : just instantiate class")
         return cls(credentials=dsn)
 
     def set_credentials_from_dsn(self, dsn):
         """sets credentials from dsn"""
 
-        print "DEPRECATED : just use set_credentials"
+        print("DEPRECATED : just use set_credentials")
 
         self.set_credentials(dsn)
 
@@ -99,19 +97,19 @@ class SqlDatabaseInterface(DatastoreInterface):
             self.clear_connection()
 
             if verbose:
-                print 'Creating new connection'
+                print('Creating new connection')
 
             return self._create_connection()
 
         #check if self.con is set
         elif not self.con:
-            print 'Cant return old connection because self.con isnt set. Creating new connection'
+            print('Cant return old connection because self.con isnt set. Creating new connection')
             return self._create_connection()
 
         #return old connection
         else:
             if verbose:
-                print 'Reusing old connection'
+                print('Reusing old connection')
 
             return self.con
 
@@ -121,7 +119,7 @@ class SqlDatabaseInterface(DatastoreInterface):
         """
 
         if self.con is not None:
-            print '\nCommitting sql transaction\n'
+            print('\nCommitting sql transaction\n')
             self.con.commit()
 
     def clear_connection(self):
@@ -136,7 +134,7 @@ class SqlDatabaseInterface(DatastoreInterface):
         try:
             self.con.close()
         except self.CONNECTION_CLOSED_EXCEPTION:
-            print 'Saved connection was already closed'
+            print('Saved connection was already closed')
 
         self.con = None
 
@@ -147,12 +145,12 @@ class SqlDatabaseInterface(DatastoreInterface):
 
         if con is self.con:
             if verbose:
-                print '\nResaving sql connection\n'
+                print('\nResaving sql connection\n')
 
         else:
             #first clear old connection
             if verbose:
-                print '\nSaving sql connection\n'
+                print('\nSaving sql connection\n')
 
             self.clear_connection()
 
@@ -175,7 +173,7 @@ class SqlDatabaseInterface(DatastoreInterface):
         """method to run an sql statement"""
 
         if verbose:
-            print '\nsql_statement is :\n%s\n'%(sql_statement,)
+            print('\nsql_statement is :\n%s\n'%(sql_statement,))
 
         con = self._get_connection(new_con, verbose=verbose)
 
@@ -189,7 +187,7 @@ class SqlDatabaseInterface(DatastoreInterface):
                                         params=params)
 
                 except self.CONNECTION_GONE_EXCEPTION:
-                    print 'WARNING: Attempting reconnect to MySQL db. Uncommitted transactions will rollback!'
+                    print('WARNING: Attempting reconnect to MySQL db. Uncommitted transactions will rollback!')
                     con = self._get_connection(new_con=True)
                     with closing(con.cursor()) as cursor:
                         self._execute_statement(cursor=cursor,
@@ -198,11 +196,11 @@ class SqlDatabaseInterface(DatastoreInterface):
                                                 params=params)
 
                 if verbose:
-                    print '\nNumber of rows affected: %s\n'%(cursor.rowcount, )
+                    print('\nNumber of rows affected: %s\n'%(cursor.rowcount, ))
 
                 if fetch_data:
                     if verbose:
-                        print '\nFetching data\n'
+                        print('\nFetching data\n')
 
                     values = cursor.fetchall()
                     try:
@@ -216,7 +214,7 @@ class SqlDatabaseInterface(DatastoreInterface):
                     output = None
 
             if commit:
-                print '\nCommitting sql transaction\n'
+                print('\nCommitting sql transaction\n')
                 con.commit()
 
         finally:

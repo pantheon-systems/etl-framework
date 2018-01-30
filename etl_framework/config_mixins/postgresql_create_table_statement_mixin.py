@@ -42,7 +42,7 @@ class PostgreSqlCreateTableStatementMixin(object):
                                 if_not_exists=False):
         """returns create table statement"""
 
-        schema_lines = ['{0} {1}'.format(field, datatype) for field, datatype in fields.iteritems()]
+        schema_lines = ['{0} {1}'.format(field, datatype) for field, datatype in fields.items()]
 
         if primary_key:
             #primary key is list, but pass dictionary since create_constraints requires list of lists

@@ -9,3 +9,7 @@ class JobConfig(BaseConfig,
 ):
     """parses configuration files"""
 
+    @property
+    def job_name(self):
+
+        return self.config['job_name']

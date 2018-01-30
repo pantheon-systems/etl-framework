@@ -137,7 +137,7 @@ class BaseEtlSetUp(object, metaclass=abc.ABCMeta):
             raise EnvironmentVariableNotSetException('%s must be set as ENV'%(env_variable, ))
         else:
             if display:
-                print('self.%s is : %s'%(attribute_name, getattr(self, attribute_name)))
+                print(('self.%s is : %s'%(attribute_name, getattr(self, attribute_name))))
 
     def _get_attr(self, attribute_name):
         """gets instance attribute given attribute name"""

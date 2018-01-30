@@ -74,7 +74,7 @@ class DataTraverser(object):
         field_paths : {[fieldname, [path_element1, path_element2, ...], ...}
         """
 
-        field_names, field_paths = list(zip(*iter(fields.items())))
+        field_names, field_paths = list(zip(*iter(list(fields.items()))))
 
         #if there are iterators that yield nothing, BadIterationException will be raised
         try:

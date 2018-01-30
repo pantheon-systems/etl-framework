@@ -19,7 +19,7 @@ class FieldMappingsMixin(AddFiltersMixin):
 
         if self.get_field_mappings():
             self.set_field_mappings({key: [filter_mappings.get(value[0]), value[1]]
-                                        for key, value in self.get_field_mappings().items()})
+                                        for key, value in list(self.get_field_mappings().items())})
         else:
             raise ConfigAttrNotSetException
 
@@ -29,7 +29,7 @@ class FieldMappingsMixin(AddFiltersMixin):
         super(FieldMappingsMixin, self).add_filters_from_module(filters_module)
         if self.get_field_mappings():
             self.set_field_mappings({key: [getattr(filters_module, value[0]), value[1]]
-                                        for key, value in self.get_field_mappings().items()})
+                                        for key, value in list(self.get_field_mappings().items())})
         else:
             raise ConfigAttrNotSetException
 
@@ -42,12 +42,12 @@ class FieldMappingsMixin(AddFiltersMixin):
     def get_field_mapping_fields(self):
         """returns only fields (without filters)"""
 
-        return {key: value[1] for key, value in self.get_field_mappings().items()}
+        return {key: value[1] for key, value in list(self.get_field_mappings().items())}
 
     def get_field_mappings_without_target_fields(self):
         """returns only fields (without filters)"""
 
-        return {key: value[0] for key, value in self.get_field_mappings().items()}
+        return {key: value[0] for key, value in list(self.get_field_mappings().items())}
 
     def get_field_mapping_target_fields(self):
         """returns target fields"""

@@ -47,7 +47,7 @@ class Builder(object):
 
         self.clear_etl_classes()
 
-        for config in self.configs.values():
+        for config in list(self.configs.values()):
 
             etl_class = self.build(config)
 

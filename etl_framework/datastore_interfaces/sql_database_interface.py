@@ -177,7 +177,7 @@ class SqlDatabaseInterface(DatastoreInterface, metaclass=abc.ABCMeta):
         """method to run an sql statement"""
 
         if verbose:
-            print('\nsql_statement is :\n%s\n'%(sql_statement,))
+            print(('\nsql_statement is :\n%s\n'%(sql_statement,)))
 
         con = self._get_connection(new_con, verbose=verbose)
 
@@ -200,7 +200,7 @@ class SqlDatabaseInterface(DatastoreInterface, metaclass=abc.ABCMeta):
                                                 params=params)
 
                 if verbose:
-                    print('\nNumber of rows affected: %s\n'%(cursor.rowcount, ))
+                    print(('\nNumber of rows affected: %s\n'%(cursor.rowcount, )))
 
                 if fetch_data:
                     if verbose:

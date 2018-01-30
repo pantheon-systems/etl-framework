@@ -103,7 +103,7 @@ class CompositeMySqlStatementsConfigMixin(object):
             component = self.component_schemas[schema_id]
             schema = component["config"]
             field_renames = component["field_renames"]
-            reverse_field_renames = {value: key for key, value in field_renames.items()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             table = schema.table
@@ -150,7 +150,7 @@ class CompositeMySqlStatementsConfigMixin(object):
             schema = component["config"]
             ignored_fields = set(component["ignored_fields"])
             field_renames = component["field_renames"]
-            reverse_field_renames = {value: key for key, value in field_renames.items()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             table = schema.table
@@ -230,7 +230,7 @@ class CompositeMySqlStatementsConfigMixin(object):
             table = schema.table
 
             # NOTE we dont update the schema_join_key
-            reverse_field_renames = {value: key for key, value in field_renames.items()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             fields, mapped_fields = list(zip(*[

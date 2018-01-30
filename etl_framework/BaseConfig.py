@@ -275,4 +275,4 @@ class BaseConfig(object):
             if attribute.endswith("_ATTR") or attribute.endswith("_ATTRIBUTE")
         }
 
-        print(json.dumps(example, indent=4, sort_keys=True))
+        print((json.dumps(example, indent=4, sort_keys=True)))

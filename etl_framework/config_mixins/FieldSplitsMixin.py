@@ -23,5 +23,5 @@ class FieldSplitsMixin(object):
         """yup"""
 
         return {key: tuple(field[0]for field in fields)
-                for key, fields in self.get_field_splits().items()}
+                for key, fields in list(self.get_field_splits().items())}
 

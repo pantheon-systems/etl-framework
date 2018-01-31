@@ -17,3 +17,8 @@ class TransformerConfig(BaseConfig,
                             AddFiltersMixin):
     """parses configuration files"""
 
+    def configure(self, builder):
+
+        super(TransformerConfig, self).configure(builder)
+
+        self.add_filters_from_module(builder.etl_module)

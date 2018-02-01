@@ -10,6 +10,7 @@ checkout:
 
 dependencies:
   pre:
+    - sudo apt-get update
     - sudo apt-get install python3-setuptools
     - sudo apt-get install python3-dev
     - pip3 install -U setuptools

@@ -15,7 +15,7 @@ dependencies:
     - pip3 install -U setuptools
     - python3 setup.py develop
   override:
-    - pip install --allow-all-external -r requirements.txt
+    - pip3 install --allow-all-external -r requirements.txt
   cache_directories:
     - venv
 

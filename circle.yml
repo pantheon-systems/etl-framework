@@ -29,7 +29,7 @@ test:
     override:
         # Syntax Checks
         - find . -path ./venv -prune -o -name "*.py" -print
-        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 python -m py_compile
+        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 python3 -m py_compile
 
         # Lint
         # Lint json files (the 'exit 255' fails xargs fast):

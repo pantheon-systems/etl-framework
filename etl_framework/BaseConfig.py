@@ -4,7 +4,7 @@
 import os
 import json
 
-from method_wrappers.check_config_attr import check_config_attr_default_none
+from .method_wrappers.check_config_attr import check_config_attr_default_none
 
 class BaseConfig(object):
     """parses configuration files"""
@@ -62,7 +62,7 @@ class BaseConfig(object):
         if not isinstance(component, dict):
             return
 
-        for key in component.keys():
+        for key in list(component.keys()):
             if key.endswith("__config"):
                 value = component.pop(key)
                 subclass = BaseConfig(
@@ -275,4 +275,4 @@ class BaseConfig(object):
             if attribute.endswith("_ATTR") or attribute.endswith("_ATTRIBUTE")
         }
 
-        print json.dumps(example, indent=4, sort_keys=True)
+        print((json.dumps(example, indent=4, sort_keys=True)))

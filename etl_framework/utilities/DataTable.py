@@ -35,7 +35,7 @@ class DataTable(object):
         if keys:
             self._keys = keys
         else:
-            self._keys = self.rows[0].keys()
+            self._keys = list(self.rows[0].keys())
 
     def keys(self):
         """returns keys of Table"""

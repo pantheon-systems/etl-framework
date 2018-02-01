@@ -47,9 +47,9 @@ class PubsubSchema(
             self.create()
         except HttpError as e:
             if  e.resp["status"] == "409":
-                print "\nWARNING : subscription {} already exists\n".format(
+                print(("\nWARNING : subscription {} already exists\n".format(
                     self.config.subscription
-                )
+                )))
             else:
                 raise e
 
@@ -60,9 +60,9 @@ class PubsubSchema(
             self.delete()
         except HttpError as e:
             if  e.resp["status"] == "404":
-                print "\nWARNING : subscription {} doesnt exist\n".format(
+                print(("\nWARNING : subscription {} doesnt exist\n".format(
                     self.config.subscription
-                )
+                )))
             else:
                 raise e
 

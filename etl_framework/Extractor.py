@@ -8,11 +8,9 @@ from etl_framework.mixins.datastore_mixin import DatastoreMixin
 
 class Extractor(
     EtlClass,
-    DatastoreMixin
+    DatastoreMixin, metaclass=abc.ABCMeta
 ):
     """class for authenticating to api and extracting data"""
-
-    __metaclass__ = abc.ABCMeta
 
     def extract(self):
         """extracts data"""

@@ -50,7 +50,7 @@ class PostgreSqlResultTestCases(unittest.TestCase):
         mock_run_statement = MagicMock()
         PostgreSqlDatabase.run_statement = mock_run_statement
         mock_run_statement.return_value = (
-            ((2L, u'value1'), ),
+            ((2, 'value1'), ),
             ['field2', 'field1']
         )
 

@@ -15,9 +15,9 @@ dependencies:
     - sudo apt-get install python3-dev
     - sudo easy_install3 pip
     - sudo pip3 install -U setuptools
-    - python3 setup.py develop
+    - sudo python3 setup.py develop
   override:
-    - pip3 install --allow-all-external -r requirements.txt
+    - sudo pip3 install --allow-all-external -r requirements.txt
   cache_directories:
     - venv
 

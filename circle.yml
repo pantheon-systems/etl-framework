@@ -15,7 +15,6 @@ dependencies:
     - sudo apt-get install python3-dev
     - sudo easy_install3 pip
     - sudo pip3 install -U setuptools
-    - sudo pip3 install pylint
     - sudo python3 setup.py develop
   override:
     - sudo pip3 install --allow-all-external -r requirements.txt
@@ -38,7 +37,7 @@ test:
 
         # Cutsie hack to find files for pylint.
         - find . -path ./venv -prune -o -name "*.py" -print
-        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint3 --rcfile=.pylint
+        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
 
         #run below line to run tests outside of docker 
         - python3 -m unittest discover .

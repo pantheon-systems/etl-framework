@@ -74,7 +74,7 @@ class MySqlFixtureTestCases(unittest.TestCase):
         data_row = self.data[0]
         stmnt_fields, expected_statement = MySqlInsertStatementMixin.create_insert_statement(
             table=self.schema.config.get_table(),
-            fields=data_row.keys(),
+            fields=list(data_row.keys()),
             statement_string=True
         )
 

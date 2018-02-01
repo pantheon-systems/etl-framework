@@ -3,7 +3,7 @@
 #pylint: disable=relative-import
 from etl_framework.utilities.SqlClause import SqlClause
 from etl_framework.method_wrappers.check_config_attr import check_config_attr_default_none
-from InsertStatementMixin import MySqlInsertStatementMixin, PostgreSqlInsertStatementMixin
+from .InsertStatementMixin import MySqlInsertStatementMixin, PostgreSqlInsertStatementMixin
 
 
 class MySqlUpsertStatementMixin(MySqlInsertStatementMixin):

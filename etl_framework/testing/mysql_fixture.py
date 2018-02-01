@@ -16,7 +16,7 @@ class MySqlFixture(FixtureInterface):
         # in each row.  If we don't want to allow this, we can get rid of this
         # for loop.
         for row in self.data:
-            fields, values = zip(*row.iteritems())
+            fields, values = list(zip(*iter(list(row.items()))))
             stmnt_fields, statement = MySqlInsertStatementMixin.create_insert_statement(
                 table,
                 fields,

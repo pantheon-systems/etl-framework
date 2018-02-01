@@ -103,7 +103,7 @@ class CompositeMySqlStatementsConfigMixin(object):
             component = self.component_schemas[schema_id]
             schema = component["config"]
             field_renames = component["field_renames"]
-            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             table = schema.table
@@ -150,20 +150,20 @@ class CompositeMySqlStatementsConfigMixin(object):
             schema = component["config"]
             ignored_fields = set(component["ignored_fields"])
             field_renames = component["field_renames"]
-            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
             table = schema.table
 
             # NOTE we ignore the join key in the fields
-            table_fields, mapped_fields = zip(*[
+            table_fields, mapped_fields = list(zip(*[
                 (
                     (table, field),
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
                 and field != schema_join_key
-            ])
+            ]))
 
             all_fields.extend(table_fields)
             all_mapped_fields.extend(mapped_fields)
@@ -230,17 +230,17 @@ class CompositeMySqlStatementsConfigMixin(object):
             table = schema.table
 
             # NOTE we dont update the schema_join_key
-            reverse_field_renames = {value: key for key, value in field_renames.iteritems()}
+            reverse_field_renames = {value: key for key, value in list(field_renames.items())}
             schema_join_key = reverse_field_renames.get(join_key, join_key)
 
-            fields, mapped_fields = zip(*[
+            fields, mapped_fields = list(zip(*[
                 (
                     "{}.{}".format(table, field),
                     field_renames.get(field, field)
                 )
                 for field in schema.fields if field not in ignored_fields
                 and field != schema_join_key
-            ])
+            ]))
 
             all_fields.extend(fields)
             all_mapped_fields.extend(mapped_fields)

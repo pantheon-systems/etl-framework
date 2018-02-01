@@ -29,7 +29,7 @@ class CyclicIterator(object):
         test_iterator = self._creator(*self._args, **self._kwargs)
 
         try:
-            test_iterator.next()
+            next(test_iterator)
         except StopIteration:
             raise BadIteratorException('Iterator doesnt yield anything')
 

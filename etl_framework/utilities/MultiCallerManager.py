@@ -56,11 +56,11 @@ class MultiCallerManager(object):
     def multicaller_ids(self):
         """returns multicaller ids"""
 
-        return self._multicallers.keys()
+        return list(self._multicallers.keys())
 
     def multicallers(self):
         """returns multicaller objects"""
 
-        return self._multicallers.values()
+        return list(self._multicallers.values())
 
 

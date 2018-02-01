@@ -5,10 +5,8 @@ import abc
 
 from etl_framework.etl_class import EtlClass
 
-class Transformer(EtlClass):
+class Transformer(EtlClass, metaclass=abc.ABCMeta):
     """transforms extracted data and filters"""
-
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def iter_transform(self, row):

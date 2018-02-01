@@ -57,7 +57,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         with self.assertRaises(EnvironmentSettingNotFoundException):
             output = EnvironmentConfig.create_environment_variable_attribute(setting)
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_file_attribute_use_default(self, open_mock):
 
         open_mock.side_effect = IOError()
@@ -72,7 +72,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         output = EnvironmentConfig.create_file_attribute(setting)
         self.assertEqual(output, "another_value")
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_file_attribute_dont_use_default(self, open_mock):
 
         mock_context = Mock()
@@ -95,7 +95,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         output = EnvironmentConfig.create_file_attribute(setting)
         self.assertEqual(output, "some_value")
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_file_attribute_no_default(self, open_mock):
 
         open_mock.side_effect = IOError()
@@ -109,7 +109,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         with self.assertRaises(EnvironmentSettingNotFoundException):
             output = EnvironmentConfig.create_file_attribute(setting)
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_json_file_attribute_use_default(self, open_mock):
 
         open_mock.side_effect = IOError()
@@ -124,7 +124,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         output = EnvironmentConfig.create_json_file_attribute(setting)
         self.assertEqual(output, {"another_value": None})
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_json_file_attribute_dont_use_default(self, open_mock):
 
         mock_context = Mock()
@@ -147,7 +147,7 @@ class EnvironmentConfigTestCases(unittest.TestCase):
         output = EnvironmentConfig.create_json_file_attribute(setting)
         self.assertEqual(output, {"some_value": None})
 
-    @patch('__builtin__.open')
+    @patch('builtins.open')
     def test_create_json_file_attribute_no_default(self, open_mock):
 
         open_mock.side_effect = IOError()

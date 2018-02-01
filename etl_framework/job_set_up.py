@@ -4,8 +4,8 @@
 
 import datetime
 
-from method_wrappers.check_attr_set import _check_attr_set
-from utilities.DatetimeConverter import DatetimeConverter
+from .method_wrappers.check_attr_set import _check_attr_set
+from .utilities.DatetimeConverter import DatetimeConverter
 
 from etl_framework.datastores.mysql_database import MySqlDatabase
 
@@ -20,7 +20,7 @@ class JobSetUp(object):
     LOADER_CONFIG_DIR = ''
     SCHEMA_CONFIG_DIR = ''
 
-    ETL_JOB_EARLIEST_TIME = datetime.datetime(1000, 01, 01, 0, 0, 0, 0)
+    ETL_JOB_EARLIEST_TIME = datetime.datetime(1000, 0o1, 0o1, 0, 0, 0, 0)
     ETL_JOBS_TABLE = '_etl_jobs_'
     ETL_JOBS_STARTED_AT_FIELD = 'most_recent_started_at'
     ETL_JOBS_CUTOFF_AT_FIELD = 'cutoff_at'

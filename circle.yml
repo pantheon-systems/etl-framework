@@ -9,9 +9,9 @@ checkout:
 
 dependencies:
   pre:
-    - python -m pip install -U pip
-    - pip install -U setuptools
-    - python setup.py develop
+    - python3 -m pip3 install -U pip3
+    - pip3 install -U setuptools
+    - python3 setup.py develop
   override:
     - pip install --allow-all-external -r requirements.txt
   cache_directories:
@@ -33,8 +33,8 @@ test:
 
         # Cutsie hack to find files for pylint.
         - find . -path ./venv -prune -o -name "*.py" -print
-        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
+        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint3 --rcfile=.pylint
 
         #run below line to run tests outside of docker 
-        - python -m unittest discover .
+        - python3 -m unittest discover .
 

@@ -36,8 +36,8 @@ test:
         - find . -name "*.json" -print | grep -v '/test/' | grep -v 'vendor' | xargs -Ixx bash -c "echo JSON linting xx 1>&2; cat xx | python -mjson.tool > /dev/null || exit 255"
 
         # Cutsie hack to find files for pylint.
-        - find . -path ./venv -prune -o -name "*.py" -print
-        - find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
+        #- find . -path ./venv -prune -o -name "*.py" -print
+        #- find . -path ./venv -prune -o -name "*.py" -print0 | xargs -0 pylint --rcfile=.pylint
 
         #run below line to run tests outside of docker 
         - python3 -m unittest discover .
